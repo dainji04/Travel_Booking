@@ -24,7 +24,18 @@ export class EmailService {
             text: `Bạn vừa đăng kí tài khoản của mình.`,
           };
       
-          await this.transporter.sendMail(mailOptions);
+          await this.transporter.sendMail(mailOptions); 
+          console.log(`📨 Email đã được gửi tới: ${email}`);
+    } async handleSendmailSignIn(email:string)
+    {
+        const mailOptions = {
+            from: process.env.EMAIL_USERNAME,
+            to: email,
+            subject: 'Thông báo đăng nhập',
+            text: `Bạn vừa đăng nhập tài khoản của mình.`,
+          };
+      
+          await this.transporter.sendMail(mailOptions); 
           console.log(`📨 Email đã được gửi tới: ${email}`);
     }
     
