@@ -17,4 +17,6 @@ export class User {
 
     @Column({ type: 'enum', enum: Roles, array: true, default: [Roles.USER] })
     roles: Roles[];
+    @Column({nullable:true})
+    resetToken:string
 }
