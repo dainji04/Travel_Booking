@@ -26,7 +26,8 @@ export class EmailService {
       
           await this.transporter.sendMail(mailOptions); 
           console.log(`📨 Email đã được gửi tới: ${email}`);
-    } async handleSendmailSignIn(email:string)
+    } 
+    async handleSendmailSignIn(email:string)
     {
         const mailOptions = {
             from: process.env.EMAIL_USERNAME,
