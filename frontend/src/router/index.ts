@@ -6,6 +6,7 @@ import DefaultLayout from '@/layouts/DefaultLayout.vue';
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
     routes: [
+        { path: '/', redirect: '/trang-chu' },
         {
             path: '/',
             component: EmptyLayout,
@@ -43,7 +44,6 @@ const router = createRouter({
                 },
             ],
         },
-        { path: '/', redirect: '/trang-chu' },
     ],
 });
 

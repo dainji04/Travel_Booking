@@ -8,6 +8,10 @@ import Header from '@/components/Header.vue';
         <main>
             <router-view />
         </main>
-        <footer>Your Footer</footer>
+        <footer
+            style="background-color: #000; height: 500px; margin-top: 100px"
+        >
+            Your Footer
+        </footer>
     </div>
 </template>

@@ -2,12 +2,17 @@ $font-primary: 'Italiana';
 $font-secondary: 'Agdasima';
 $font-tertiary: 'Italiana';
 
+$color-primary: #f37916;
+
 $primary-rgb-gradient-color: linear-gradient(
     90deg,
     rgba(238, 204, 81, 1),
     rgba(32, 60, 88, 1)
 );
 
-$secondary-rgb-gradient-color: linear-gradient(90deg, #d06814, #ffcdb2);
-
+$secondary-rgb-gradient-color: linear-gradient(
+    180deg,
+    #d06814 0%,
+    #ffcdb2 100%
+);
 $secondary-color: linear-gradient(to right, #d06814, #ffcdb2);
