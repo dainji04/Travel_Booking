@@ -44,12 +44,29 @@ export class UserController {
       maxAge: 7 * 24 * 60 * 60 * 1000,
     })
     return {accessToken:response.accessToken}
-    
+  }
+  @Get(':id')
+  async getOneUser(@Param('id') id:number) {
+    const res = await this.userService.getOneUser(id)
+    return res 
+  }
+  // @Get('all')
+  // async getAllUser()
+
   
-   
+  @Post('forgot-password')
+  async forgotPassword(@Body('email') email:string) {
+    const res = await this.userService.forgotPassword(email)
+    return res
+  }
+  @Post('reset-password')
+  async resetPassword(@Body('email')email:string,@Body('password')password:string , @Body('resetToken') resetToken:string) {
+    const res = await this.userService.resetPassword(email,password,resetToken)
+    return res
   }
  
 
   
  
 }
+                                                                                                                              

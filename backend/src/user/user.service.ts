@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -81,6 +81,47 @@ export class UserService {
       throw new UnauthorizedException('Invalid token')
     }
   }
-  
+  async getOneUser(id:number) {
+    const user = await this.userRepository.findOne({
+      where:{id}
+    })
+    if(!user) throw new NotFoundException('User not found')
+    return user 
+  }
 
+  async forgotPassword(email: string) {
+    const user = await this.userRepository.findOne({ where: { email } })
+    if (!user) throw new NotFoundException('User not found')
+  
+    const resetToken = sign({ email }, process.env.ACCESSTOKEN_KEY, { expiresIn: '1h' })
+    const hashedResetToken = await hash(resetToken, 10) 
+  
+    user.resetToken = hashedResetToken
+    await this.userRepository.save(user)
+    await this.emailService.handleForgotPassword(email, resetToken)
+    console.log(resetToken)
+  
+    return { message: 'Reset token sent to email' }
+  }
+  async resetPassword(email: string, password: string, resetToken: string) {
+    const user = await this.userRepository.findOne({ where: { email } })
+    if (!user) throw new NotFoundException('User not found')
+  
+    const isTokenValid = await compare(resetToken, user.resetToken) 
+    if (!isTokenValid) throw new BadRequestException('Invalid or expired reset token')
+  
+    user.password = await hash(password, 10)
+    user.resetToken = null
+    await this.userRepository.save(user)
+    await this.emailService.handleResetPassword(email)
+    try {
+      const decoded = verify(resetToken,process.env.ACCESSTOKEN_KEY)
+      if(decoded.email !== user.email) throw new BadRequestException('Invalid token')
+    } catch (error) {
+      throw new BadRequestException('Expired or invalid token')
+    }
+  
+    return { message: 'Password reset successfully' }
+  
+  }
 }

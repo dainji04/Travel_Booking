@@ -39,5 +39,29 @@ export class EmailService {
           await this.transporter.sendMail(mailOptions); 
           console.log(`📨 Email đã được gửi tới: ${email}`);
     }
-    
+
+    async handleForgotPassword(email:string,resetToken:string)
+    {
+      const mailOptions = {
+        from: process.env.EMAIL_USERNAME,
+        to:email,
+        subject: 'Reset Password',
+        text: `Click vào link sau để đặt lại mật khẩu: http://localhost:3000/reset-password?token=${resetToken}`,
+      };
+  
+      await this.transporter.sendMail(mailOptions);
+      console.log(`📨 Email đã được gửi tới: ${email}`);
+    }
+
+    async handleResetPassword(email:string) {
+      const mailOptions = {
+        from: process.env.EMAIL_USERNAME,
+        to: email,
+        subject: 'Reset Password',
+        text: 'Your password has been successfully reset. If you did not request this, please contact support immediately.',
+      };
+      await this.transporter.sendMail(mailOptions)
+      console.log(`📧 Password reset confirmation sent to ${email}`);
+
+    }
 }
