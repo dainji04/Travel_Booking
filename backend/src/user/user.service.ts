@@ -11,6 +11,7 @@ import { EmailModule } from 'src/email/email.module';
 import { EmailService } from 'src/email/email.service';
 import { SignInDto } from './dto/signIn.dto';
 import { decode } from 'punycode';
+import { GetUsersDto } from './dto/search.dto';
 
 @Injectable()
 export class UserService {
@@ -32,6 +33,19 @@ export class UserService {
     await this.emailService.handleSendmailSignUp(email)
     await this.userRepository.save(newUser)
 
+    return newUser
+
+  }
+  async createUserByAdmin(createUserDto:CreateUserDto) {
+    if(createUserDto.email) throw new BadRequestException('EMAIL VALID')
+    const hashPassword = await hash(createUserDto.password, 10)
+    const newUser = this.userRepository.create({
+      email:createUserDto.email,
+      name:createUserDto.name,
+      password:hashPassword,
+      roles:createUserDto.roles
+    })
+    await this.userRepository.save(newUser)
     return newUser
 
   }
@@ -123,5 +137,48 @@ export class UserService {
   
     return { message: 'Password reset successfully' }
   
+  }
+
+  async getUsers(query: GetUsersDto) {
+    let { search, roles, sortBy = 'id', sortOrder = 'ASC', limit = 10, page = 1 } = query;
+
+  
+    limit = Math.max(1, Math.min(limit, 100)); 
+    page = Math.max(1, page); 
+
+    //check validator field in db 
+    const validSortFields = ['id', 'name', 'email', 'roles', 'createdAt']; 
+    if (!validSortFields.includes(sortBy)) {
+      throw new BadRequestException(`Invalid sortBy field: ${sortBy}`);
+    }
+
+    const queryBuilder = this.userRepository.createQueryBuilder('user');
+
+    if (search) {
+      queryBuilder.andWhere('(LOWER(user.email) LIKE LOWER(:search) OR LOWER(user.name) LIKE LOWER(:search))', {
+        search: `%${search}%`,
+      });
+    }
+
+    //search for roles
+    if (roles && roles.length > 0) {
+      queryBuilder.andWhere(':roles = ANY(user.roles)', { roles });
+    }
+
+    //sort
+    queryBuilder.orderBy(`user.${sortBy}`, sortOrder as 'ASC' | 'DESC');
+
+    //paging
+    queryBuilder.skip((page - 1) * limit).take(limit);
+
+    const [users, total] = await queryBuilder.getManyAndCount();
+
+    return {
+      data: users,
+      total,
+      page,
+      limit,
+      totalPages: Math.ceil(total / limit),
+    };
   }
 }

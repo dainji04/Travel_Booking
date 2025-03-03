@@ -1,8 +1,9 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Res, UnauthorizedException, Req } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Res, UnauthorizedException, Req, Query } from '@nestjs/common';
 import { UserService } from './user.service';
 import { SignUpDto } from './dto/signUp.dto';
 import { SignInDto } from './dto/signIn.dto';
 import  {Request, Response} from'express'
+import { GetUsersDto } from './dto/search.dto';
 
 @Controller('user')
 export class UserController {
@@ -50,8 +51,7 @@ export class UserController {
     const res = await this.userService.getOneUser(id)
     return res 
   }
-  // @Get('all')
-  // async getAllUser()
+  
 
   
   @Post('forgot-password')
@@ -64,6 +64,11 @@ export class UserController {
     const res = await this.userService.resetPassword(email,password,resetToken)
     return res
   }
+  @Get()
+  async getUsers(@Query() query: GetUsersDto) {
+    return await this.userService.getUsers(query);
+  }
+
  
 
   
