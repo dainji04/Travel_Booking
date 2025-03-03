@@ -1,9 +1,12 @@
+<script setup>
+import Header from '@/components/Header.vue';
+</script>
+
 <template>
     <div>
-        <header>Your Header</header>
+        <Header />
         <main>
             <router-view />
-            <!-- Nơi hiển thị nội dung trang -->
         </main>
         <footer>Your Footer</footer>
     </div>

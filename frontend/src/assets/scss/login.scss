@@ -1,0 +1,166 @@
+@import 'variables';
+
+.login {
+    &__heading {
+        margin-top: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #000;
+        font-size: 50px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+    }
+
+    &__form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 56px;
+        z-index: 999;
+    }
+
+    &__input-group {
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+    }
+
+    &__form-group {
+        width: 424px;
+        height: 55px;
+        position: relative;
+    }
+
+    &__input {
+        width: 100%;
+        height: 100%;
+        border: none;
+        border-radius: 50px;
+        outline: none;
+        font-size: 25px;
+        padding: 5px 25px;
+        border: 2px solid #000;
+        background-color: #fff;
+    }
+
+    &__show-password {
+        position: absolute;
+        top: 2px;
+        right: 10px;
+        width: 50px;
+        height: 50px;
+        cursor: pointer;
+    }
+
+    &__submit {
+        position: relative;
+        margin-top: 40px;
+        background: $primary-rgb-gradient-color;
+        border-radius: 50px;
+        cursor: pointer;
+        font-size: 25px;
+        color: #fff;
+        overflow: hidden; // Ẩn phần thừa của pseudo-elements
+        transition: color 0.3s;
+        z-index: 1;
+        &::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 0;
+            height: 100%;
+            background: rgb(74, 208, 74);
+            transition: width 0.3s ease;
+            z-index: -1;
+        }
+
+        &:hover {
+            color: #000;
+
+            &::after {
+                width: 100%;
+            }
+        }
+        span {
+            position: relative;
+            z-index: 2;
+        }
+    }
+
+    &__submit:hover {
+        background: $secondary-color;
+    }
+
+    &__options {
+        margin-top: 25px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 18px;
+    }
+
+    &__remember {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    &__checkbox {
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+    }
+
+    &__forgot-password {
+        color: #000;
+    }
+
+    &__separator {
+        margin-top: 25px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 25px;
+        text-transform: uppercase;
+    }
+
+    &__line {
+        width: 100%;
+        height: 1px;
+        background-color: #000;
+    }
+
+    &__social-auth {
+        display: flex;
+        gap: 16px;
+    }
+
+    &__footer {
+        margin-top: 25px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+    }
+
+    &__footer-link {
+        color: $secondary-color;
+    }
+}
+
+@media (max-width: 1025px) {
+    .sign-up {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        &__left-side {
+            display: none;
+        }
+        &__wave {
+            display: none;
+        }
+    }
+}

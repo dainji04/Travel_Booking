@@ -1,0 +1,39 @@
+@import 'variables';
+#header {
+    background: $secondary-color;
+    display: flex;
+    padding: 20px 0;
+}
+
+.list {
+    list-style-type: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    gap: 72px;
+
+    &__text {
+        font-family: $font-primary;
+        font-size: 25px;
+        font-weight: 400;
+        color: #000;
+        cursor: pointer;
+        transition: all 0.3s;
+
+        &:hover {
+            color: $primary-rgb-gradient-color;
+        }
+    }
+}
+
+.options {
+    margin-right: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    &__icon {
+        cursor: pointer;
+    }
+}
