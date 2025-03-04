@@ -1,5 +1,12 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
+
+import { gsap } from 'gsap';
+
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
+
 // import Loading from '@/components/loadingPages.vue';
 // const loading = ref(true);
 
@@ -112,6 +119,113 @@ const resetAutoPlay = () => {
     startAutoPlay();
 };
 
+const gsapAnimate = () => {
+    const ImageLeft = tourTipsImageLeft.value[0];
+    const imageRight = tourTipsImageRight.value[0];
+    const contentLeft = tourTipsContentLeft.value[0];
+    const contentRight = tourTipsContentRight.value[0];
+
+    gsap.from(ImageLeft, {
+        scrollTrigger: {
+            trigger: ImageLeft,
+            start: 'top 80%',
+            toggleActions: 'restart reverse none none',
+        },
+        x: -100,
+        opacity: 0,
+        duration: 3,
+    });
+
+    gsap.to(ImageLeft, {
+        scrollTrigger: {
+            trigger: imageRight,
+            start: 'top bottom',
+            markers: true,
+            toggleActions: 'restart reverse none none',
+        },
+        x: 0,
+        opacity: 1,
+        duration: 3,
+    });
+
+    gsap.from(imageRight, {
+        scrollTrigger: {
+            trigger: imageRight,
+            start: 'top 80%',
+            toggleActions: 'restart reverse none none',
+        },
+        x: 100,
+        opacity: 0,
+        duration: 3,
+    });
+
+    gsap.to(imageRight, {
+        scrollTrigger: {
+            trigger: contentLeft,
+            start: 'top bottom',
+            toggleActions: 'restart reverse none none',
+        },
+        x: 0,
+        opacity: 1,
+        duration: 3,
+    });
+
+    gsap.from(contentLeft, {
+        scrollTrigger: {
+            trigger: contentLeft,
+            start: 'top 80%',
+            toggleActions: 'restart reverse none none',
+        },
+        x: -100,
+        opacity: 0,
+        duration: 3,
+    });
+
+    gsap.to(contentLeft, {
+        scrollTrigger: {
+            trigger: contentRight,
+            start: 'top bottom',
+            toggleActions: 'restart reverse none none',
+        },
+        delay: 1,
+        x: 0,
+        opacity: 1,
+        duration: 3,
+    });
+
+    gsap.from(contentRight, {
+        scrollTrigger: {
+            trigger: contentRight,
+            start: 'top 80%',
+            toggleActions: 'restart reverse none none',
+        },
+        x: 100,
+        opacity: 0,
+        duration: 3,
+    });
+
+    gsap.to(contentRight, {
+        scrollTrigger: {
+            trigger: contentRight,
+            start: 'top bottom',
+            toggleActions: 'restart reverse none none',
+        },
+        delay: 1,
+        x: 0,
+        opacity: 1,
+        duration: 3,
+    });
+};
+
+const tourTipsImageLeft = ref(null);
+const tourTipsImageRight = ref(null);
+const tourTipsContentLeft = ref(null);
+const tourTipsContentRight = ref(null);
+onMounted(() => {
+    startAutoPlay();
+    gsapAnimate();
+});
+
 // const load = setTimeout(() => {
 //     loading.value = false;
 // }, 4000);
@@ -189,6 +303,11 @@ const resetAutoPlay = () => {
                             :style="{
                                 background: `url(${tour.img}) center/cover no-repeat`,
                             }"
+                            :ref="
+                                index % 2 === 0
+                                    ? 'tourTipsImageLeft'
+                                    : 'tourTipsImageRight'
+                            "
                         ></div>
                         <div
                             class="tour-tips__content"
@@ -197,6 +316,11 @@ const resetAutoPlay = () => {
                                     ? 'tour-tips__content--right'
                                     : 'tour-tips__content--left',
                             ]"
+                            :ref="
+                                index % 2 == 0
+                                    ? 'tourTipsContentRight'
+                                    : 'tourTipsContentLeft'
+                            "
                         >
                             <div class="tour-tips__title-box">
                                 <img src="@/assets/fonts/calendar.svg" alt="" />
