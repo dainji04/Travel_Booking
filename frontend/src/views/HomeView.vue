@@ -128,92 +128,93 @@ const gsapAnimate = () => {
     gsap.from(ImageLeft, {
         scrollTrigger: {
             trigger: ImageLeft,
-            start: 'top 80%',
-            toggleActions: 'restart reverse none none',
+            start: 'top bottom',
+            toggleActions: 'restart none none none',
         },
         x: -100,
         opacity: 0,
-        duration: 3,
+        duration: 2,
     });
 
     gsap.to(ImageLeft, {
         scrollTrigger: {
-            trigger: imageRight,
+            trigger: ImageLeft,
             start: 'top bottom',
-            markers: true,
-            toggleActions: 'restart reverse none none',
+            toggleActions: 'restart none none none',
         },
+        delay: 0.5,
         x: 0,
         opacity: 1,
-        duration: 3,
+        duration: 2,
     });
 
     gsap.from(imageRight, {
         scrollTrigger: {
             trigger: imageRight,
-            start: 'top 80%',
-            toggleActions: 'restart reverse none none',
+            start: 'top bottom',
+            toggleActions: 'restart none none none',
         },
         x: 100,
         opacity: 0,
-        duration: 3,
+        duration: 2,
     });
 
     gsap.to(imageRight, {
         scrollTrigger: {
-            trigger: contentLeft,
+            trigger: imageRight,
             start: 'top bottom',
-            toggleActions: 'restart reverse none none',
+            toggleActions: 'restart none none none',
         },
+        delay: 0.5,
         x: 0,
         opacity: 1,
-        duration: 3,
+        duration: 2,
     });
 
     gsap.from(contentLeft, {
         scrollTrigger: {
             trigger: contentLeft,
-            start: 'top 80%',
-            toggleActions: 'restart reverse none none',
+            start: 'top bottom',
+            toggleActions: 'restart none none none',
         },
         x: -100,
         opacity: 0,
-        duration: 3,
+        duration: 2,
     });
 
     gsap.to(contentLeft, {
         scrollTrigger: {
-            trigger: contentRight,
+            trigger: contentLeft,
             start: 'top bottom',
-            toggleActions: 'restart reverse none none',
+            toggleActions: 'restart none none none',
         },
         delay: 1,
         x: 0,
         opacity: 1,
-        duration: 3,
+        duration: 2,
     });
 
     gsap.from(contentRight, {
         scrollTrigger: {
             trigger: contentRight,
-            start: 'top 80%',
-            toggleActions: 'restart reverse none none',
+            start: 'top bottom',
+            toggleActions: 'restart none none none',
         },
         x: 100,
         opacity: 0,
-        duration: 3,
+        duration: 2,
     });
 
     gsap.to(contentRight, {
         scrollTrigger: {
             trigger: contentRight,
             start: 'top bottom',
-            toggleActions: 'restart reverse none none',
+            toggleActions: 'restart none none none',
         },
         delay: 1,
         x: 0,
         opacity: 1,
-        duration: 3,
+        duration: 2,
     });
 };
 

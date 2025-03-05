@@ -216,6 +216,7 @@
         width: 551px;
         height: 100%;
         border-radius: 20px;
+        opacity: 0;
 
         &--right {
             right: 0;
@@ -223,7 +224,6 @@
 
         &--left {
             left: 0;
-            opacity: 0;
         }
     }
 
@@ -238,6 +238,7 @@
         border: 5px solid #f37916;
         background: url('../images//slide1.jpg') lightgray 50% / cover no-repeat;
         padding: 14px 20px 27px 20px;
+        opacity: 0;
 
         &--right {
             right: 0;
