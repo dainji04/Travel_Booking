@@ -12,10 +12,54 @@ body {
     font-family: $font-secondary;
 }
 
+.heading,
+.subheading {
+    text-transform: uppercase;
+    text-align: center;
+    font-family: $font-secondary;
+}
+
+.heading {
+    color: $font-primary;
+    font-size: 60px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.subheading {
+    text-align: center;
+    font-size: 70px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    background: linear-gradient(90deg, #000 0%, #666 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.button-primary {
+    font-family: $font-secondary;
+    border-radius: 999px;
+    background: $color-primary;
+    color: #fff;
+    text-align: center;
+    font-size: 25px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    text-transform: uppercase;
+    cursor: pointer;
+    border: none;
+    outline: none;
+}
+
 a {
     text-decoration: none;
 }
 
 button {
     font-family: $font-secondary;
+    cursor: pointer;
 }

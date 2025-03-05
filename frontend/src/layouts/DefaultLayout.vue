@@ -9,7 +9,7 @@ import Header from '@/components/Header.vue';
             <router-view />
         </main>
         <footer
-            style="background-color: #000; height: 500px; margin-top: 100px"
+            style="background-color: #000; height: 500px; margin-top: 600px"
         >
             Your Footer
         </footer>

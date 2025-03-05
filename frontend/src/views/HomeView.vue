@@ -388,6 +388,22 @@ onMounted(() => {
             </div>
         </div>
         <div class="ticket">
+            <div class="ticket__navigation">
+                <button class="ticket__btn-prev ticket__btn-primary">
+                    <img
+                        class="ticket__icon-prev ticket__icon-navigation"
+                        src="@/assets/fonts/left-arrow.svg"
+                        alt=""
+                    />
+                </button>
+                <button class="ticket__btn-next ticket__btn-primary">
+                    <img
+                        class="ticket__icon-next ticket__icon-navigation"
+                        src="@/assets/fonts/right-arrow.svg"
+                        alt=""
+                    />
+                </button>
+            </div>
             <template v-for="ticket in tourTicket">
                 <div class="ticket__item">
                     <div
@@ -446,9 +462,6 @@ onMounted(() => {
             </template>
             <div class="ticket__background">
                 <img src="@/assets/fonts/footer-background-ticket.svg" alt="" />
-                <!-- <button class="ticket__background-btn button-primary">
-                    Read more
-                </button> -->
             </div>
         </div>
         <div class="cities">
@@ -520,15 +533,17 @@ onMounted(() => {
                 </div>
             </div>
         </div>
-        <!-- <div class="advertisement">
+        <div class="advertisement">
             <div class="advertisement__left">
-                <h3 class="advertisement__title">Go & discover</h3>
+                <h3 class="advertisement__title heading">Go & discover</h3>
                 <h1 class="advertisement__heading">special offer</h1>
                 <p class="advertisement__description">
                     Discover unique special offers and exciting savings just for
                     you.
                 </p>
-                <button class="button-primary">get voucher</button>
+                <button class="advertisement__button button-primary">
+                    get voucher
+                </button>
             </div>
             <div class="advertisement__right">
                 <img
@@ -536,7 +551,10 @@ onMounted(() => {
                     alt=""
                 />
             </div>
-        </div> -->
+            <div class="advertisement__bg-icon">
+                <img src="@/assets/fonts/icon-bg-line-circle.svg" alt="" />
+            </div>
+        </div>
     </div>
 </template>
 
