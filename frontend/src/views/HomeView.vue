@@ -119,6 +119,11 @@ const resetAutoPlay = () => {
     startAutoPlay();
 };
 
+const tourTipsImageLeft = ref(null);
+const tourTipsImageRight = ref(null);
+const tourTipsContentLeft = ref(null);
+const tourTipsContentRight = ref(null);
+
 const gsapAnimate = () => {
     const ImageLeft = tourTipsImageLeft.value[0];
     const imageRight = tourTipsImageRight.value[0];
@@ -218,10 +223,6 @@ const gsapAnimate = () => {
     });
 };
 
-const tourTipsImageLeft = ref(null);
-const tourTipsImageRight = ref(null);
-const tourTipsContentLeft = ref(null);
-const tourTipsContentRight = ref(null);
 onMounted(() => {
     startAutoPlay();
     gsapAnimate();
@@ -252,7 +253,7 @@ onMounted(() => {
                         <p class="slide__description">
                             {{ image.description }}
                         </p>
-                        <button class="slide__button">
+                        <button class="slide__button button-primary">
                             <p>Booking now</p>
                         </button>
                     </div>
@@ -278,7 +279,7 @@ onMounted(() => {
                 <div
                     v-for="(_, index) in images"
                     :key="index"
-                    class="slide__number"
+                    class="slide__number button-primary"
                     @click="goToSlide(index)"
                     :class="{ active: index === activeIndex }"
                 >
@@ -287,10 +288,35 @@ onMounted(() => {
             </div>
         </div>
         <div class="tour-tips">
-            <h1 class="tour-tips__heading">tips</h1>
-            <h2 class="tour-tips__sub-heading">
-                Great Tips to Make Your Trip Great
-            </h2>
+            <div class="list-icon-bg">
+                <img
+                    src="@/assets/fonts/icon-bg-circle.svg"
+                    class="tour-tips__icon-bg tour-tips__icon-bg--circle"
+                    alt=""
+                />
+
+                <img
+                    src="@/assets/fonts/icon-bg-dots.svg"
+                    class="tour-tips__icon-bg tour-tips__icon-bg--dots"
+                    alt=""
+                />
+                <img
+                    src="@/assets/fonts/icon-bg-shape.svg"
+                    class="tour-tips__icon-bg tour-tips__icon-bg--shape"
+                    alt=""
+                />
+                <img
+                    src="@/assets/fonts/icon-bg-plane.svg"
+                    class="tour-tips__icon-bg tour-tips__icon-bg--plane"
+                    alt=""
+                />
+            </div>
+            <div class="tour-tips__header">
+                <h1 class="heading">tips</h1>
+                <h2 class="tour-tips__sub-heading subheading">
+                    Great Tips to Make Your Trip Great
+                </h2>
+            </div>
             <div class="tour-tips__list">
                 <template v-for="(tour, index) in tours">
                     <div class="tour-tips__box">
@@ -309,7 +335,21 @@ onMounted(() => {
                                     ? 'tourTipsImageLeft'
                                     : 'tourTipsImageRight'
                             "
-                        ></div>
+                        >
+                            <button
+                                class="tour-tips__camera-btn"
+                                :class="
+                                    index % 2 === 0
+                                        ? 'tour-tips__camera-btn--left'
+                                        : 'tour-tips__camera-btn--right'
+                                "
+                            >
+                                <img
+                                    src="@/assets/fonts/camera.svg"
+                                    alt=""
+                                />Camera
+                            </button>
+                        </div>
                         <div
                             class="tour-tips__content"
                             :class="[
@@ -335,15 +375,17 @@ onMounted(() => {
                             <p class="tour-tips__description">
                                 {{ tour.description }}
                             </p>
-                            <button class="tour-tips__button">read more</button>
+                            <button class="tour-tips__button button-primary">
+                                read more
+                            </button>
                         </div>
                     </div>
                 </template>
             </div>
-            <h2 class="tour-tips__sub-heading">
-                Great Tips to Make Your Trip Great
-            </h2>
-            <h3 class="tour-tips__footer-text">Great tours</h3>
+            <div class="tour-tips-footer">
+                <h3 class="heading">Great tours</h3>
+                <h2 class="subheading">Discover the most exciting tours</h2>
+            </div>
         </div>
         <div class="ticket">
             <template v-for="ticket in tourTicket">
@@ -396,14 +438,105 @@ onMounted(() => {
                         </div>
                     </div>
                     <div class="ticket__button-box">
-                        <button class="ticket__button">Booking now</button>
+                        <button class="ticket__button button-primary">
+                            Booking now
+                        </button>
                     </div>
                 </div>
             </template>
             <div class="ticket__background">
                 <img src="@/assets/fonts/footer-background-ticket.svg" alt="" />
+                <!-- <button class="ticket__background-btn button-primary">
+                    Read more
+                </button> -->
             </div>
         </div>
+        <div class="cities">
+            <div class="cities__header">
+                <h1 class="heading">beautiful cities with rich culture</h1>
+                <h2 class="cities__subheading">
+                    If you are passionate about exploring unique destinations
+                    and experiencing new cultures, we will take you to the most
+                    amazing cities on this memorable journey.
+                </h2>
+            </div>
+            <div class="cities__box">
+                <div class="cities__image">
+                    <button class="cities__image-btn">
+                        <img src="@/assets/fonts/circle-play.svg" alt="" />
+                        Video
+                    </button>
+                </div>
+            </div>
+            <div class="cities__list-options">
+                <div class="cities__option">
+                    <div class="cities__option__icon">
+                        <img src="@/assets/fonts/star.svg" alt="" />
+                    </div>
+                    <div class="cities__option__content">
+                        <h1 class="cities__option__heading">
+                            speacial activies
+                        </h1>
+                        <p class="cities__option__description">
+                            Special activities offer a different and unique
+                            experience
+                        </p>
+                    </div>
+                </div>
+                <div class="cities__option">
+                    <div class="cities__option__icon">
+                        <img src="@/assets/fonts/sign-post.svg" alt="" />
+                    </div>
+                    <div class="cities__option__content">
+                        <h1 class="cities__option__heading">tour guide</h1>
+                        <p class="cities__option__description">
+                            Friendly and enthusiastic tour guide
+                        </p>
+                    </div>
+                </div>
+                <div class="cities__option">
+                    <div class="cities__option__icon">
+                        <img src="@/assets/fonts/card.svg" alt="" />
+                    </div>
+                    <div class="cities__option__content">
+                        <h1 class="cities__option__heading">booking</h1>
+                        <p class="cities__option__description">
+                            Convenient car rental and hotel booking system
+                        </p>
+                    </div>
+                </div>
+                <div class="cities__option">
+                    <div class="cities__option__icon">
+                        <img src="@/assets/fonts/locate2.svg" alt="" />
+                    </div>
+                    <div class="cities__option__content">
+                        <h1 class="cities__option__heading">
+                            location management
+                        </h1>
+                        <p class="cities__option__description">
+                            Commitment to the booked tour
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="advertisement">
+            <div class="advertisement__left">
+                <h3 class="advertisement__title">Go & discover</h3>
+                <h1 class="advertisement__heading">special offer</h1>
+                <p class="advertisement__description">
+                    Discover unique special offers and exciting savings just for
+                    you.
+                </p>
+                <button class="button-primary">get voucher</button>
+            </div>
+            <div class="advertisement__right">
+                <img
+                    src="@/assets/images/advertisement-percent-sales.png"
+                    alt=""
+                />
+            </div>
+        </div> -->
     </div>
 </template>
 

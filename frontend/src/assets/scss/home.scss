@@ -8,6 +8,49 @@
     transition: 1s all;
 }
 
+.heading,
+.subheading {
+    text-transform: uppercase;
+    text-align: center;
+    font-family: $font-secondary;
+}
+
+.heading {
+    color: #f37916;
+    font-size: 60px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.subheading {
+    text-align: center;
+    font-size: 70px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    background: linear-gradient(90deg, #000 0%, #666 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.button-primary {
+    font-family: $font-secondary;
+    border-radius: 999px;
+    background: $color-primary;
+    color: #fff;
+    text-align: center;
+    font-size: 25px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    text-transform: uppercase;
+    cursor: pointer;
+    border: none;
+    outline: none;
+}
+
 .logo {
     height: 300px;
 
@@ -84,18 +127,9 @@
 
     &__button {
         width: 250px;
-        text-transform: uppercase;
-        background: $color-primary;
-        border-radius: 999px;
         padding: 15px 30px;
-        border: none;
-        outline: none;
-        color: #fff;
         font-size: 20px;
-        font-style: normal;
-        font-weight: 400;
-        line-height: normal;
-        cursor: pointer;
+        border-radius: 40px;
     }
 
     &__right {
@@ -138,8 +172,6 @@
         position: relative;
         width: 50px;
         height: 50px;
-        border-radius: 999px;
-        background-color: $color-primary;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -166,34 +198,61 @@
 }
 
 .tour-tips {
-    margin-top: 150px;
+    padding-top: 150px;
     font-family: $font-secondary;
+    position: relative;
 
-    &__heading,
-    &__sub-heading {
-        text-transform: uppercase;
-        text-align: center;
+    &__icon-bg {
+        position: absolute;
+        z-index: -1;
+
+        &--circle {
+            top: -8%;
+            left: 0;
+        }
+
+        &--shape {
+            bottom: 0;
+            right: 0;
+        }
+
+        &--dots {
+            top: 50%;
+            right: 17%;
+            transform: translateY(-90%);
+        }
+
+        &--plane {
+            bottom: 0;
+            left: 10%;
+        }
     }
 
-    &__heading {
-        color: #f37916;
-        font-size: 60px;
-        font-style: normal;
-        font-weight: 700;
-        line-height: normal;
-    }
+    // &__heading,
+    // &__sub-heading {
+    //     text-transform: uppercase;
+    //     text-align: center;
+    // }
 
-    &__sub-heading {
-        text-align: center;
-        font-size: 70px;
-        font-style: normal;
-        font-weight: 700;
-        line-height: normal;
-        background: linear-gradient(90deg, #000 0%, #666 100%);
-        background-clip: text;
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-    }
+    // &__heading {
+    //     color: #f37916;
+    //     font-size: 60px;
+    //     font-style: normal;
+    //     font-weight: 700;
+    //     line-height: normal;
+    // }
+
+    // &__sub-heading {
+    //     text-align: center;
+    //     font-size: 70px;
+    //     font-style: normal;
+    //     font-weight: 700;
+    //     line-height: normal;
+    //     background: linear-gradient(90deg, #000 0%, #666 100%);
+    //     background-clip: text;
+    //     -webkit-background-clip: text;
+    //     -webkit-text-fill-color: transparent;
+    // }
 
     &__list {
         margin-bottom: 100px;
@@ -224,6 +283,40 @@
 
         &--left {
             left: 0;
+        }
+    }
+
+    &__camera-btn {
+        position: absolute;
+        top: 10%;
+        border-radius: 20px;
+        background: #fff;
+        color: $color-primary;
+        text-align: center;
+        font-family: $font-secondary;
+        font-size: 20px;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        outline: none;
+        border: none;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        cursor: pointer;
+
+        &--left {
+            left: 0;
+            transform: translateX(-20%);
+            padding-left: 40px;
+            padding-right: 15px;
+        }
+
+        &--right {
+            right: 0;
+            transform: translateX(20%);
+            padding-left: 15px;
+            padding-right: 40px;
         }
     }
 
@@ -281,18 +374,10 @@
 
     &__button {
         width: 164px;
-        text-transform: uppercase;
         padding: 10px 20px;
         border-radius: 20px;
-        border: none;
-        background: $color-primary;
-        color: #fff;
         font-size: 20px;
-        font-style: normal;
-        font-weight: 400;
-        line-height: normal;
         margin-top: 20px;
-        cursor: pointer;
     }
 
     &__footer-text {
@@ -323,6 +408,14 @@
         top: 50%;
         transform: translateX(-50%);
         z-index: -1;
+
+        // &-btn {
+        //     padding: 10px 59px;
+        //     position: absolute;
+        //     bottom: 20%;
+        //     left: 50%;
+        //     transform: translateX(-50%);
+        // }
     }
 
     &__item {
@@ -405,16 +498,137 @@
     &__button {
         width: 100%;
         padding: 10px 0;
-        border-radius: 50px;
-        border: 0px solid #000;
-        background: $color-primary;
-        cursor: pointer;
-        color: #fff;
+    }
+}
+
+.cities {
+    margin-top: 200px;
+    max-width: 1300px;
+    margin-left: auto;
+    margin-right: auto;
+    font-family: $font-secondary;
+
+    &__subheading {
+        margin-top: 50px;
+        color: #000;
         text-align: center;
-        font-size: 25px;
+        font-size: 40px;
         font-style: normal;
         font-weight: 400;
         line-height: normal;
-        text-transform: uppercase;
+        max-width: 740px;
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    &__box {
+        border-radius: 25px;
+        border: 10px solid $color-primary;
+        margin-top: 100px;
+        position: relative;
+    }
+
+    &__image {
+        width: 100%;
+        height: 700px;
+        background: url('../images/tour-tips1.png') lightgray 50% / cover
+            no-repeat;
+        border-radius: 15px;
+
+        &-btn {
+            color: $color-primary;
+            font-family: $font-secondary;
+            font-weight: 700;
+            font-size: 40px;
+            background-color: #fff;
+            padding: 25px 100px 25px 100px;
+            position: absolute;
+            top: 20px;
+            left: 100px;
+            transform: translateX(-50%);
+            outline: none;
+            border: none;
+            border-radius: 25px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+    }
+
+    &__list-options {
+        margin-top: 100px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 45px;
+    }
+
+    &__option {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        gap: 15px;
+        background-color: $color-primary;
+        border-radius: 25px;
+        padding: 20px 0;
+        width: 291px;
+        height: 240px;
+
+        &__icon {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+            border-radius: 999px;
+            border: 5px solid #2ab1a4;
+            background-color: #fff;
+        }
+
+        &__content {
+            margin-top: 10px;
+            padding: 0 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        &__heading {
+            color: #fff;
+            text-align: center;
+            font-size: 28px;
+            font-weight: 700;
+            line-height: normal;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        &__description {
+            font-family: $font-secondary;
+            color: #fff;
+            text-align: center;
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: normal;
+            max-width: max-content;
+            margin-bottom: 15px;
+        }
+    }
+}
+
+.advertisement {
+    margin-top: 150px;
+    width: 100%;
+    height: 500px;
+    background: url('../images/slide1.jpg') lightgray 50% / cover no-repeat;
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    &__right {
+        height: 100%;
     }
 }
