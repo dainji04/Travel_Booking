@@ -18,8 +18,9 @@
             </router-link>
         </ul>
         <div class="options">
-            <img class="options__icon" src="@/assets/fonts/search.svg" alt="" />
-            <img class="options__icon" src="@/assets/fonts/list.svg" alt="" />
+            <!-- <img class="options__icon" src="@/assets/fonts/search.svg" alt="" />
+            <img class="options__icon" src="@/assets/fonts/list.svg" alt="" /> -->
+            <router-link :to="{ name: 'login' }"> Login </router-link>
         </div>
     </div>
 </template>

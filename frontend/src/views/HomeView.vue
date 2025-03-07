@@ -29,31 +29,52 @@ const tours = [
 
 const tourTicket = [
     {
-        img: 'src/assets/images/tour-ticket1.png',
+        img: 'src/assets/images/hueTicket.png',
         title: 'Hue tour',
         locate: 'Hue city',
         guide: 'Mr.Tuan',
-        times: '3 days 2 nights',
-        dollarsPrice: '2000$',
-        VietNamDongPrice: '48,000,000VND',
+        times: '7 days 6 nights',
+        dollarsPrice: '600$',
+        VietNamDongPrice: '14,400,000VND',
     },
     {
-        img: 'src/assets/images/tour-ticket1.png',
-        title: 'Hue tour',
-        locate: 'Hue city',
-        guide: 'Mr.Tuan',
+        img: 'src/assets/images/phuyenTicket.png',
+        title: 'Phu Yen tour',
+        locate: 'Tuy Hoa city',
+        guide: 'Mr.Minh Quy',
         times: '3 days 2 nights',
-        dollarsPrice: '2000$',
-        VietNamDongPrice: '48,000,000VND',
+        dollarsPrice: '400$',
+        VietNamDongPrice: '9,600,000VND',
     },
     {
-        img: 'src/assets/images/tour-ticket1.png',
+        img: 'src/assets/images/hanoiTicket.png',
         title: 'Hue tour',
         locate: 'Hue city',
-        guide: 'Mr.Tuan',
-        times: '3 days 2 nights',
-        dollarsPrice: '2000$',
-        VietNamDongPrice: '48,000,000VND',
+        guide: 'Mr.Thanh Nhan',
+        times: '7 days 6 nights',
+        dollarsPrice: '500$',
+        VietNamDongPrice: '12,000,000VND',
+    },
+];
+
+const newPosts = [
+    {
+        img: 'src/assets/images/hoianBlog.png',
+        title: 'Top 10 things to do when coming to Hoi An',
+        description:
+            "Hoi An's Ancient Town is a well-preserved historical site, known for its blend of traditional Vietnamese, Chinese, and Japanese architecture. The charming streets, lantern-lit evenings, and vibrant markets make it a UNESCO World Heritage gem.",
+    },
+    {
+        img: 'src/assets/images/daklakBlog.png',
+        title: 'Top 10 things to do when coming to Hoi An',
+        description:
+            "Hoi An's Ancient Town is a well-preserved historical site, known for its blend of traditional Vietnamese, Chinese, and Japanese architecture. The charming streets, lantern-lit evenings, and vibrant markets make it a UNESCO World Heritage gem.",
+    },
+    {
+        img: 'src/assets/images/phuyenBlog.png',
+        title: 'Top 10 things to do when coming to Hoi An',
+        description:
+            "Hoi An's Ancient Town is a well-preserved historical site, known for its blend of traditional Vietnamese, Chinese, and Japanese architecture. The charming streets, lantern-lit evenings, and vibrant markets make it a UNESCO World Heritage gem.",
     },
 ];
 
@@ -553,6 +574,33 @@ onMounted(() => {
             </div>
             <div class="advertisement__bg-icon">
                 <img src="@/assets/fonts/icon-bg-line-circle.svg" alt="" />
+            </div>
+        </div>
+        <div class="blogs">
+            <div class="blogs__header">
+                <h1 class="heading">blogs</h1>
+                <h3 class="subheading">new post</h3>
+            </div>
+            <div class="blogs__container">
+                <template v-for="post in newPosts" :key="post">
+                    <div class="blogs__post">
+                        <div
+                            class="blogs__image"
+                            :style="{
+                                background: ` url(${post.img}) lightgray 50% / cover no-repeat`,
+                            }"
+                        ></div>
+                        <div class="blogs__content">
+                            <h1 class="blogs__title">{{ post.title }}</h1>
+                            <p class="blogs__description">
+                                {{ post.description }}
+                            </p>
+                        </div>
+                        <button class="blogs__button button-primary">
+                            see details
+                        </button>
+                    </div>
+                </template>
             </div>
         </div>
     </div>
