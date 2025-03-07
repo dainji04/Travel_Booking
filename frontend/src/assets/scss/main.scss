@@ -5,6 +5,7 @@
 body {
     font-family: $font-primary;
     transition: 1s all;
+    overflow-x: hidden;
 }
 
 .error {

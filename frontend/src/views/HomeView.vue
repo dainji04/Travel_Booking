@@ -78,7 +78,7 @@ const newPosts = [
     },
 ];
 
-const images = [
+const imagesSlide = [
     {
         id: 1,
         image1: 'src/assets/images/image1.jpg',
@@ -258,14 +258,19 @@ onMounted(() => {
     <div class="home">
         <div class="logo">
             <div class="logo__box">
-                <img class="logo__image" src="@/assets/fonts/logo.svg" alt="" />
+                <img
+                    loading="lazy"
+                    class="logo__image"
+                    src="@/assets/fonts/logo.svg"
+                    alt=""
+                />
             </div>
         </div>
         <div class="container-slide">
             <div class="slide-list" ref="slider" :style="sliderStyle">
                 <div
                     class="slide"
-                    v-for="(image, index) in images"
+                    v-for="(image, index) in imagesSlide"
                     :key="index"
                 >
                     <div class="slide__left">
@@ -311,23 +316,27 @@ onMounted(() => {
         <div class="tour-tips">
             <div class="list-icon-bg">
                 <img
-                    src="@/assets/fonts/icon-bg-circle.svg"
+                    loading="lazy"
+                    src="@/assets/images/icon-bg-circle.gif"
                     class="tour-tips__icon-bg tour-tips__icon-bg--circle"
                     alt=""
                 />
 
                 <img
+                    loading="lazy"
                     src="@/assets/fonts/icon-bg-dots.svg"
                     class="tour-tips__icon-bg tour-tips__icon-bg--dots"
                     alt=""
                 />
                 <img
-                    src="@/assets/fonts/icon-bg-shape.svg"
+                    loading="lazy"
+                    src="@/assets/images/icon-bg-shape.gif"
                     class="tour-tips__icon-bg tour-tips__icon-bg--shape"
                     alt=""
                 />
                 <img
-                    src="@/assets/fonts/icon-bg-plane.svg"
+                    loading="lazy"
+                    src="@/assets/images/icon-bg-plane.gif"
                     class="tour-tips__icon-bg tour-tips__icon-bg--plane"
                     alt=""
                 />
@@ -366,6 +375,7 @@ onMounted(() => {
                                 "
                             >
                                 <img
+                                    loading="lazy"
                                     src="@/assets/fonts/camera.svg"
                                     alt=""
                                 />Camera
@@ -385,7 +395,11 @@ onMounted(() => {
                             "
                         >
                             <div class="tour-tips__title-box">
-                                <img src="@/assets/fonts/calendar.svg" alt="" />
+                                <img
+                                    loading="lazy"
+                                    src="@/assets/fonts/calendar.svg"
+                                    alt=""
+                                />
                                 <h3 class="tour-tips__title">
                                     {{ tour.calendar }}
                                 </h3>
@@ -412,6 +426,7 @@ onMounted(() => {
             <div class="ticket__navigation">
                 <button class="ticket__btn-prev ticket__btn-primary">
                     <img
+                        loading="lazy"
                         class="ticket__icon-prev ticket__icon-navigation"
                         src="@/assets/fonts/left-arrow.svg"
                         alt=""
@@ -419,6 +434,7 @@ onMounted(() => {
                 </button>
                 <button class="ticket__btn-next ticket__btn-primary">
                     <img
+                        loading="lazy"
                         class="ticket__icon-next ticket__icon-navigation"
                         src="@/assets/fonts/right-arrow.svg"
                         alt=""
@@ -439,6 +455,7 @@ onMounted(() => {
                             <div class="ticket__information">
                                 <div class="ticket__info-item ticket__location">
                                     <img
+                                        loading="lazy"
                                         src="@/assets/fonts/location.svg"
                                         alt=""
                                     />
@@ -447,13 +464,18 @@ onMounted(() => {
                                     </p>
                                 </div>
                                 <div class="ticket__info-item ticket__user">
-                                    <img src="@/assets/fonts/user.svg" alt="" />
+                                    <img
+                                        loading="lazy"
+                                        src="@/assets/fonts/user.svg"
+                                        alt=""
+                                    />
                                     <p class="ticket__text">
                                         {{ ticket.guide }}
                                     </p>
                                 </div>
                                 <div class="ticket__info-item ticket__times">
                                     <img
+                                        loading="lazy"
                                         src="@/assets/fonts/clock.svg"
                                         alt=""
                                     />
@@ -482,7 +504,11 @@ onMounted(() => {
                 </div>
             </template>
             <div class="ticket__background">
-                <img src="@/assets/fonts/footer-background-ticket.svg" alt="" />
+                <img
+                    loading="lazy"
+                    src="@/assets/fonts/footer-background-ticket.svg"
+                    alt=""
+                />
             </div>
         </div>
         <div class="cities">
@@ -497,7 +523,11 @@ onMounted(() => {
             <div class="cities__box">
                 <div class="cities__image">
                     <button class="cities__image-btn">
-                        <img src="@/assets/fonts/circle-play.svg" alt="" />
+                        <img
+                            loading="lazy"
+                            src="@/assets/fonts/circle-play.svg"
+                            alt=""
+                        />
                         Video
                     </button>
                 </div>
@@ -505,7 +535,11 @@ onMounted(() => {
             <div class="cities__list-options">
                 <div class="cities__option">
                     <div class="cities__option__icon">
-                        <img src="@/assets/fonts/star.svg" alt="" />
+                        <img
+                            loading="lazy"
+                            src="@/assets/fonts/star.svg"
+                            alt=""
+                        />
                     </div>
                     <div class="cities__option__content">
                         <h1 class="cities__option__heading">
@@ -519,7 +553,11 @@ onMounted(() => {
                 </div>
                 <div class="cities__option">
                     <div class="cities__option__icon">
-                        <img src="@/assets/fonts/sign-post.svg" alt="" />
+                        <img
+                            loading="lazy"
+                            src="@/assets/fonts/sign-post.svg"
+                            alt=""
+                        />
                     </div>
                     <div class="cities__option__content">
                         <h1 class="cities__option__heading">tour guide</h1>
@@ -530,7 +568,11 @@ onMounted(() => {
                 </div>
                 <div class="cities__option">
                     <div class="cities__option__icon">
-                        <img src="@/assets/fonts/card.svg" alt="" />
+                        <img
+                            loading="lazy"
+                            src="@/assets/fonts/card.svg"
+                            alt=""
+                        />
                     </div>
                     <div class="cities__option__content">
                         <h1 class="cities__option__heading">booking</h1>
@@ -541,7 +583,11 @@ onMounted(() => {
                 </div>
                 <div class="cities__option">
                     <div class="cities__option__icon">
-                        <img src="@/assets/fonts/locate2.svg" alt="" />
+                        <img
+                            loading="lazy"
+                            src="@/assets/fonts/locate2.svg"
+                            alt=""
+                        />
                     </div>
                     <div class="cities__option__content">
                         <h1 class="cities__option__heading">
@@ -568,12 +614,17 @@ onMounted(() => {
             </div>
             <div class="advertisement__right">
                 <img
+                    loading="lazy"
                     src="@/assets/images/advertisement-percent-sales.png"
                     alt=""
                 />
             </div>
             <div class="advertisement__bg-icon">
-                <img src="@/assets/fonts/icon-bg-line-circle.svg" alt="" />
+                <img
+                    loading="lazy"
+                    src="@/assets/fonts/icon-bg-line-circle.svg"
+                    alt=""
+                />
             </div>
         </div>
         <div class="blogs">
