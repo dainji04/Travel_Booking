@@ -1,5 +1,5 @@
 <template>
-    <div id="header">
+    <header id="header">
         <ul class="list">
             <router-link :to="{ name: 'home' }">
                 <li class="list__text">Home</li>
@@ -22,7 +22,7 @@
             <img class="options__icon" src="@/assets/fonts/list.svg" alt="" /> -->
             <router-link :to="{ name: 'login' }"> Login </router-link>
         </div>
-    </div>
+    </header>
 </template>
 
 <style lang="scss">

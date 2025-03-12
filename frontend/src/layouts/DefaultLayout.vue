@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import Header from '@/components/Header.vue';
+import Footer from '@/components/Footer.vue';
 </script>
 
 <template>
@@ -8,10 +9,6 @@ import Header from '@/components/Header.vue';
         <main>
             <router-view />
         </main>
-        <footer
-            style="background-color: #000; height: 500px; margin-top: 600px"
-        >
-            Your Footer
-        </footer>
+        <Footer />
     </div>
 </template>

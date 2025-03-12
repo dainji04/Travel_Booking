@@ -121,7 +121,7 @@ const sliderStyle = computed(() => ({
 // Chuyển slide tiếp theo
 const nextSlide = () => {
     activeIndex.value =
-        activeIndex.value < images.length - 1 ? activeIndex.value + 1 : 0;
+        activeIndex.value < imagesSlide.length - 1 ? activeIndex.value + 1 : 0;
 };
 
 // Nhảy đến slide cụ thể
@@ -303,7 +303,7 @@ onMounted(() => {
             <!-- Pagination -->
             <div class="slide__pagination">
                 <div
-                    v-for="(_, index) in images"
+                    v-for="(image, index) in imagesSlide"
                     :key="index"
                     class="slide__number button-primary"
                     @click="goToSlide(index)"
