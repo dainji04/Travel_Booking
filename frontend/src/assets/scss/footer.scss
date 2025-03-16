@@ -1,10 +1,10 @@
-@import 'variables';
+@use 'variables';
 
 .footer {
     margin-top: 250px;
     background-color: #000;
     height: 500px;
-    font-family: $font-secondary;
+    font-family: variables.$font-secondary;
     position: relative;
 }
 
@@ -19,7 +19,7 @@
     width: 1121px;
     height: 290px;
     margin: 0 auto;
-    background-color: $color-primary;
+    background-color: variables.$color-primary;
 
     &__left {
         padding: 48px 0 66px 73px;
@@ -70,7 +70,7 @@
     justify-content: space-between;
     align-items: center;
     padding-top: 200px;
-    font-family: $font-secondary;
+    font-family: variables.$font-secondary;
 
     &__left {
         height: 200px;
@@ -113,7 +113,7 @@
             top: 0;
             bottom: 0;
             width: 1px;
-            background: $color-primary;
+            background: variables.$color-primary;
         }
 
         &::after {
@@ -170,7 +170,7 @@
     }
 
     &__input {
-        color: $color-primary;
+        color: variables.$color-primary;
         font-size: 20px;
         padding: 20px 30px;
         border-radius: 50px;
@@ -201,9 +201,9 @@
 
     &__line {
         position: absolute;
-        width: 100%;
+        width: 91%;
         height: 1px;
-        background-color: $color-primary;
+        background-color: variables.$color-primary;
     }
 
     &__left,
@@ -227,7 +227,7 @@
         display: block;
         width: 1px;
         height: 20px;
-        background-color: $color-primary;
+        background-color: variables.$color-primary;
         margin: 0 20px;
     }
 }

@@ -2,7 +2,7 @@
 import { ref } from 'vue';
 import useVuelidate from '@vuelidate/core';
 import { required, email, minLength } from '@vuelidate/validators';
-import AuthLayout from '@/components/authLayout.vue';
+import AuthLayout from '@/layouts/AuthLayout.vue';
 
 const isHide = ref(false);
 const formData = ref({
@@ -135,5 +135,5 @@ const submit = async () => {
 </template>
 
 <style lang="scss">
-@import '@/assets/scss/login.scss';
+@use '@/assets/scss/login.scss';
 </style>

@@ -1,4 +1,4 @@
-@import 'variables';
+@use 'variables';
 
 .container-slide {
     position: relative;
@@ -6,26 +6,6 @@
     transition: 1s all;
     overflow: hidden;
     transition: 1s all;
-}
-
-.logo {
-    height: 300px;
-
-    &__box {
-        width: 256px;
-        height: 188px;
-        border-radius: 0px 0px 999px 999px;
-        border: 0px solid #000;
-        background: linear-gradient(180deg, #d06814 0%, #ffcdb2 96.56%);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-left: 90px;
-    }
-
-    &__image {
-        margin-bottom: 40px;
-    }
 }
 
 .slide {
@@ -38,7 +18,7 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     padding: 0 102px 0 150px;
-    font-family: $font-secondary;
+    font-family: variables.$font-secondary;
     flex: 0 0 100%;
     min-width: 100%;
 
@@ -55,7 +35,7 @@
         font-style: normal;
         font-weight: 700;
         text-transform: uppercase;
-        background: $secondary-rgb-gradient-color;
+        background: variables.$secondary-rgb-gradient-color;
         background-clip: text;
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
@@ -143,7 +123,7 @@
         left: 100%;
         top: 50%;
         transform: translateY(-50%);
-        background-color: $color-primary;
+        background-color: variables.$color-primary;
     }
 
     &__number-text {
@@ -156,7 +136,7 @@
 
 .tour-tips {
     padding-top: 150px;
-    font-family: $font-secondary;
+    font-family: variables.$font-secondary;
     position: relative;
 
     &__icon-bg {
@@ -250,9 +230,9 @@
         top: 10%;
         border-radius: 20px;
         background: #fff;
-        color: $color-primary;
+        color: variables.$color-primary;
         text-align: center;
-        font-family: $font-secondary;
+        font-family: variables.$font-secondary;
         font-size: 20px;
         font-weight: 700;
         display: flex;
@@ -312,7 +292,7 @@
         font-style: normal;
         font-weight: 700;
         line-height: normal;
-        color: $color-primary;
+        color: variables.$color-primary;
     }
 
     &__subtitle {
@@ -358,7 +338,7 @@
     padding: 50px 140px;
     margin: 50px 0 500px 0;
     background: linear-gradient(to top, #f0bb84 43.08%, #e89a48 79.34%);
-    font-family: $font-secondary;
+    font-family: variables.$font-secondary;
     position: relative;
 
     &__background {
@@ -380,7 +360,7 @@
         display: flex;
         justify-content: space-between;
         gap: 20px;
-        font-family: $font-secondary;
+        font-family: variables.$font-secondary;
     }
 
     &__btn-primary {
@@ -388,7 +368,7 @@
         width: 50px;
         height: 50px;
         border-radius: 999px;
-        border: 1px solid $color-primary;
+        border: 1px solid variables.$color-primary;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -488,7 +468,7 @@
     max-width: 1300px;
     margin-left: auto;
     margin-right: auto;
-    font-family: $font-secondary;
+    font-family: variables.$font-secondary;
 
     &__subheading {
         margin-top: 50px;
@@ -506,7 +486,7 @@
 
     &__box {
         border-radius: 25px;
-        border: 10px solid $color-primary;
+        border: 10px solid variables.$color-primary;
         margin-top: 100px;
         position: relative;
     }
@@ -519,8 +499,8 @@
         border-radius: 15px;
 
         &-btn {
-            color: $color-primary;
-            font-family: $font-secondary;
+            color: variables.$color-primary;
+            font-family: variables.$font-secondary;
             font-weight: 700;
             font-size: 40px;
             background-color: #fff;
@@ -552,7 +532,7 @@
         align-items: center;
         flex-direction: column;
         gap: 15px;
-        background-color: $color-primary;
+        background-color: variables.$color-primary;
         border-radius: 25px;
         padding: 20px 0;
         width: 291px;
@@ -590,7 +570,7 @@
         }
 
         &__description {
-            font-family: $font-secondary;
+            font-family: variables.$font-secondary;
             color: #fff;
             text-align: center;
             font-size: 18px;
@@ -612,7 +592,7 @@
     display: grid;
     grid-template-columns: 1.5fr 1fr;
     padding: 0 165px 0 200px;
-    font-family: $font-secondary;
+    font-family: variables.$font-secondary;
 
     &__bg-icon {
         position: absolute;
@@ -670,7 +650,7 @@
 
 .blogs {
     margin: 200px 0;
-    font-family: $font-secondary;
+    font-family: variables.$font-secondary;
     margin-left: 150px;
     margin-right: 150px;
 
@@ -690,7 +670,7 @@
     &__post {
         padding: 25px 20px 15px 20px;
         border-radius: 40px;
-        border: 10px solid $color-primary;
+        border: 10px solid variables.$color-primary;
         display: grid;
         gap: 20px;
     }

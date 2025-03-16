@@ -9,10 +9,13 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        z-index: 999;
+        position: relative;
     }
 
     &__left-side {
-        background-image: url('https://wallpapers.com/images/hd/travel-background-we1aqvt6zacj99uk.jpg');
+        // background-image: url('https://wallpapers.com/images/hd/travel-background-we1aqvt6zacj99uk.jpg');
+        background-image: url(../images/bg-panigation.jpg);
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
@@ -31,5 +34,20 @@
         position: absolute;
         left: -24%;
         z-index: 1;
+        scale: 1.2;
+    }
+}
+
+@media (max-width: 1025px) {
+    .auth-layout {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        &__left-side {
+            display: none;
+        }
+        &__wave {
+            display: none;
+        }
     }
 }

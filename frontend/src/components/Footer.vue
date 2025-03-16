@@ -30,19 +30,39 @@
                 <div class="main__nav-grid">
                     <!-- Cột 1 -->
                     <div class="main__nav-column">
-                        <a href="#" class="main__nav-link">Home</a>
-                        <a href="#" class="main__nav-link">Tour</a>
+                        <router-link
+                            :to="{ name: 'home' }"
+                            class="main__nav-link"
+                            >Home</router-link
+                        >
+                        <router-link
+                            :to="{ name: 'tour' }"
+                            class="main__nav-link"
+                            >Tour</router-link
+                        >
                     </div>
 
                     <!-- Cột 2 -->
                     <div class="main__nav-column">
-                        <a href="#" class="main__nav-link">About Us</a>
-                        <a href="#" class="main__nav-link">Blogs</a>
+                        <router-link
+                            :to="{ name: 'about' }"
+                            class="main__nav-link"
+                            >About Us</router-link
+                        >
+                        <router-link
+                            :to="{ name: 'blog' }"
+                            class="main__nav-link"
+                            >Blogs</router-link
+                        >
                     </div>
 
                     <!-- Cột 3 -->
                     <div class="main__nav-column">
-                        <a href="#" class="main__nav-link">Contact</a>
+                        <router-link
+                            :to="{ name: 'contact' }"
+                            class="main__nav-link"
+                            >Contact</router-link
+                        >
                     </div>
                 </div>
 
@@ -109,5 +129,5 @@
 </template>
 
 <style scoped lang="scss">
-@import '@/assets/scss/footer.scss';
+@use '@/assets/scss/footer.scss';
 </style>

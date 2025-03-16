@@ -140,112 +140,111 @@ const resetAutoPlay = () => {
     startAutoPlay();
 };
 
-const tourTipsImageLeft = ref(null);
-const tourTipsImageRight = ref(null);
-const tourTipsContentLeft = ref(null);
-const tourTipsContentRight = ref(null);
-
-const gsapAnimate = () => {
-    const ImageLeft = tourTipsImageLeft.value[0];
-    const imageRight = tourTipsImageRight.value[0];
-    const contentLeft = tourTipsContentLeft.value[0];
-    const contentRight = tourTipsContentRight.value[0];
-
-    gsap.from(ImageLeft, {
-        scrollTrigger: {
-            trigger: ImageLeft,
-            start: 'top bottom',
-            toggleActions: 'restart none none none',
-        },
-        x: -100,
-        opacity: 0,
-        duration: 2,
-    });
-
-    gsap.to(ImageLeft, {
-        scrollTrigger: {
-            trigger: ImageLeft,
-            start: 'top bottom',
-            toggleActions: 'restart none none none',
-        },
-        delay: 0.5,
-        x: 0,
-        opacity: 1,
-        duration: 2,
-    });
-
-    gsap.from(imageRight, {
-        scrollTrigger: {
-            trigger: imageRight,
-            start: 'top bottom',
-            toggleActions: 'restart none none none',
-        },
-        x: 100,
-        opacity: 0,
-        duration: 2,
-    });
-
-    gsap.to(imageRight, {
-        scrollTrigger: {
-            trigger: imageRight,
-            start: 'top bottom',
-            toggleActions: 'restart none none none',
-        },
-        delay: 0.5,
-        x: 0,
-        opacity: 1,
-        duration: 2,
-    });
-
-    gsap.from(contentLeft, {
-        scrollTrigger: {
-            trigger: contentLeft,
-            start: 'top bottom',
-            toggleActions: 'restart none none none',
-        },
-        x: -100,
-        opacity: 0,
-        duration: 2,
-    });
-
-    gsap.to(contentLeft, {
-        scrollTrigger: {
-            trigger: contentLeft,
-            start: 'top bottom',
-            toggleActions: 'restart none none none',
-        },
-        delay: 1,
-        x: 0,
-        opacity: 1,
-        duration: 2,
-    });
-
-    gsap.from(contentRight, {
-        scrollTrigger: {
-            trigger: contentRight,
-            start: 'top bottom',
-            toggleActions: 'restart none none none',
-        },
-        x: 100,
-        opacity: 0,
-        duration: 2,
-    });
-
-    gsap.to(contentRight, {
-        scrollTrigger: {
-            trigger: contentRight,
-            start: 'top bottom',
-            toggleActions: 'restart none none none',
-        },
-        delay: 1,
-        x: 0,
-        opacity: 1,
-        duration: 2,
-    });
-};
+const tourTipsImageLeft = ref([]);
+const tourTipsImageRight = ref([]);
+const tourTipsContentLeft = ref([]);
+const tourTipsContentRight = ref([]);
 
 onMounted(() => {
     startAutoPlay();
+    const gsapAnimate = () => {
+        const ImageLeft = tourTipsImageLeft.value[0];
+        const imageRight = tourTipsImageRight.value[0];
+        const contentLeft = tourTipsContentLeft.value[0];
+        const contentRight = tourTipsContentRight.value[0];
+
+        gsap.from(ImageLeft, {
+            scrollTrigger: {
+                trigger: ImageLeft,
+                start: 'top bottom',
+                toggleActions: 'restart none none none',
+            },
+            x: -100,
+            opacity: 0,
+            duration: 2,
+        });
+
+        gsap.to(ImageLeft, {
+            scrollTrigger: {
+                trigger: ImageLeft,
+                start: 'top bottom',
+                toggleActions: 'restart none none none',
+            },
+            delay: 0.5,
+            x: 0,
+            opacity: 1,
+            duration: 2,
+        });
+
+        gsap.from(imageRight, {
+            scrollTrigger: {
+                trigger: imageRight,
+                start: 'top bottom',
+                toggleActions: 'restart none none none',
+            },
+            x: 100,
+            opacity: 0,
+            duration: 2,
+        });
+
+        gsap.to(imageRight, {
+            scrollTrigger: {
+                trigger: imageRight,
+                start: 'top bottom',
+                toggleActions: 'restart none none none',
+            },
+            delay: 0.5,
+            x: 0,
+            opacity: 1,
+            duration: 2,
+        });
+
+        gsap.from(contentLeft, {
+            scrollTrigger: {
+                trigger: contentLeft,
+                start: 'top bottom',
+                toggleActions: 'restart none none none',
+            },
+            x: -100,
+            opacity: 0,
+            duration: 2,
+        });
+
+        gsap.to(contentLeft, {
+            scrollTrigger: {
+                trigger: contentLeft,
+                start: 'top bottom',
+                toggleActions: 'restart none none none',
+            },
+            delay: 1,
+            x: 0,
+            opacity: 1,
+            duration: 2,
+        });
+
+        gsap.from(contentRight, {
+            scrollTrigger: {
+                trigger: contentRight,
+                start: 'top bottom',
+                toggleActions: 'restart none none none',
+            },
+            x: 100,
+            opacity: 0,
+            duration: 2,
+        });
+
+        gsap.to(contentRight, {
+            scrollTrigger: {
+                trigger: contentRight,
+                start: 'top bottom',
+                toggleActions: 'restart none none none',
+            },
+            delay: 1,
+            x: 0,
+            opacity: 1,
+            duration: 2,
+        });
+    };
     gsapAnimate();
 });
 
@@ -256,16 +255,6 @@ onMounted(() => {
 
 <template>
     <div class="home">
-        <div class="logo">
-            <div class="logo__box">
-                <img
-                    loading="lazy"
-                    class="logo__image"
-                    src="@/assets/fonts/logo.svg"
-                    alt=""
-                />
-            </div>
-        </div>
         <div class="container-slide">
             <div class="slide-list" ref="slider" :style="sliderStyle">
                 <div
@@ -658,7 +647,7 @@ onMounted(() => {
 </template>
 
 <style lang="scss">
-@import '@/assets/scss/home.scss';
+@use '@/assets/scss/home.scss';
 
 .slide-list {
     display: flex;

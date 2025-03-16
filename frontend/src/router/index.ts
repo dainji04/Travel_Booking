@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import HomeView from '../views/HomeView.vue';
+import HomeView from '../views/Home.vue';
 import EmptyLayout from '../layouts/EmptyLayout.vue';
 import DefaultLayout from '../layouts/DefaultLayout.vue';
 
@@ -32,7 +32,12 @@ const router = createRouter({
                 {
                     path: 'trang-chu',
                     name: 'home',
-                    component: HomeView,
+                    component: () => import('../views/Home.vue'),
+                },
+                {
+                    path: 'du-lich',
+                    name: 'tour',
+                    component: () => import('../views/Tour.vue'),
                 },
                 {
                     path: 'gioi-thieu',
@@ -40,11 +45,24 @@ const router = createRouter({
                     // route level code-splitting
                     // this generates a separate chunk (About.[hash].js) for this route
                     // which is lazy-loaded when the route is visited.
-                    component: () => import('../views/AboutView.vue'),
+                    component: () => import('../views/About.vue'),
+                },
+                {
+                    path: 'bai-viet',
+                    name: 'blog',
+                    component: () => import('../views/Blog.vue'),
+                },
+                {
+                    path: 'lien-he',
+                    name: 'contact',
+                    component: () => import('../views/Contact.vue'),
                 },
             ],
         },
     ],
+    scrollBehavior() {
+        return { top: 0 };
+    },
 });
 
 export default router;

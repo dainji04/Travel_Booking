@@ -1,4 +1,4 @@
-@import 'variables';
+@use 'variables';
 
 .login {
     &__heading {
@@ -57,7 +57,7 @@
     &__submit {
         position: relative;
         margin-top: 40px;
-        background: $primary-rgb-gradient-color;
+        background: variables.$primary-rgb-gradient-color;
         border-radius: 50px;
         cursor: pointer;
         font-size: 25px;
@@ -91,7 +91,7 @@
     }
 
     &__submit:hover {
-        background: $secondary-color;
+        background: variables.$secondary-color;
     }
 
     &__options {
@@ -147,7 +147,7 @@
     }
 
     &__footer-link {
-        color: $secondary-color;
+        color: variables.$secondary-color;
     }
 }
 

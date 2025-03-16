@@ -1,27 +1,27 @@
+@use 'variables';
 @import url('https://fonts.googleapis.com/css2?family=Italiana&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Agdasima:wght@400;700&family=Italiana&display=swap');
-@import 'variables';
 
 body {
-    font-family: $font-primary;
+    font-family: variables.$font-secondary;
     transition: 1s all;
     overflow-x: hidden;
 }
 
 .error {
     color: red;
-    font-family: $font-secondary;
+    font-family: variables.$font-secondary;
 }
 
 .heading,
 .subheading {
     text-transform: uppercase;
     text-align: center;
-    font-family: $font-secondary;
+    font-family: variables.$font-secondary;
 }
 
 .heading {
-    color: $color-primary;
+    color: variables.$color-primary;
     font-size: 60px;
     font-style: normal;
     font-weight: 700;
@@ -41,9 +41,9 @@ body {
 }
 
 .button-primary {
-    font-family: $font-secondary;
+    font-family: variables.$font-secondary;
     border-radius: 999px;
-    background: $color-primary;
+    background: variables.$color-primary;
     color: #fff;
     text-align: center;
     font-size: 25px;
@@ -61,6 +61,6 @@ a {
 }
 
 button {
-    font-family: $font-secondary;
+    font-family: variables.$font-secondary;
     cursor: pointer;
 }

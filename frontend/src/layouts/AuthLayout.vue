@@ -3,7 +3,7 @@
 <template>
     <div class="auth-layout">
         <div class="auth-layout__left-side"></div>
-        <div class="auth-layout__right-side" :class="{ show: isHide }">
+        <div class="auth-layout__right-side">
             <div class="auth-layout__wave">
                 <svg
                     width="324"
@@ -33,5 +33,5 @@
 </template>
 
 <style lang="scss">
-@import '@/assets/scss/authLayout.scss';
+@use '@/assets/scss/authLayout.scss';
 </style>
