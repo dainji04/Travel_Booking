@@ -1,12 +1,12 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 import useVuelidate from '@vuelidate/core';
 import { required, email, minLength } from '@vuelidate/validators';
-import AuthLayout from '@/layouts/AuthLayout.vue';
 
+import AuthLayout from '@/layouts/AuthLayout.vue';
 import { authStore } from '@/stores/auth.ts';
 
-const isHide = ref(false);
 const formData = ref({
     email: '',
     password: '',
@@ -28,27 +28,21 @@ const rules = {
 
 const v$ = useVuelidate(rules, formData);
 
+const router = useRouter();
+
 const submit = async () => {
     const isValid = await v$.value.$validate();
     if (isValid) {
         const useAuth = authStore();
         const isLogged = await useAuth.Login(formData.value);
         if (isLogged) {
-            window.location.href = '/';
+            router.push({
+                path: '/',
+                replace: true,
+            });
         } else {
             errorCredentials.value = 'Tài khoản hoặc mật khẩu không đúng!';
-            console.log(1);
         }
-    }
-};
-
-const forgotPassword = async () => {
-    const useAuth = authStore();
-    const isForgot = await useAuth.forgotPassword(formData.value.email);
-    if (isForgot) {
-        window.location.href = '/';
-    } else {
-        errorCredentials.value = 'Tài khoản không tồn tại!';
     }
 };
 </script>
@@ -58,7 +52,9 @@ const forgotPassword = async () => {
         <div>
             <h1 class="login__heading">Login</h1>
         </div>
-        <h1 style="color: red">{{ errorCredentials }}</h1>
+        <h1 class="login__error" v-if="errorCredentials">
+            {{ errorCredentials }}
+        </h1>
         <div class="login__form">
             <form action="">
                 <div class="login__input-group">
@@ -122,10 +118,7 @@ const forgotPassword = async () => {
                         />
                         <span>Remember password</span>
                     </div>
-                    <div
-                        @click.prevent="forgotPassword()"
-                        class="login__forgot-link"
-                    >
+                    <div class="login__forgot-link">
                         <router-link
                             :to="{ name: 'forgotPassword' }"
                             class="login__forgot-password"
@@ -163,6 +156,6 @@ const forgotPassword = async () => {
     </AuthLayout>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @use '@/assets/scss/login.scss';
 </style>
