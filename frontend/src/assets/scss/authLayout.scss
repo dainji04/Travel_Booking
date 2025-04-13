@@ -1,9 +1,12 @@
+@use 'variables';
+
 .auth-layout {
     display: grid;
     height: 100vh;
     width: 100%;
     overflow: hidden;
     grid-template-columns: 1fr 1.1fr;
+    font-family: variables.$font-primary;
 
     &__logo {
         display: flex;

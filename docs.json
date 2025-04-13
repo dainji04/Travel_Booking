@@ -1,0 +1,263 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/api/v1": {
+      "get": {
+        "operationId": "AppController_getHello",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/user/signUp": {
+      "post": {
+        "operationId": "UserController_signUp",
+        "summary": "signUp a new user",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SignUpDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "User successfully registered"
+          }
+        },
+        "tags": [
+          "Authentication"
+        ]
+      }
+    },
+    "/api/v1/user/signIn": {
+      "post": {
+        "operationId": "UserController_signIn",
+        "summary": "User signIn",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SignInDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "signIn successful"
+          }
+        },
+        "tags": [
+          "Authentication"
+        ]
+      }
+    },
+    "/api/v1/user/refresh-token": {
+      "post": {
+        "operationId": "UserController_refreshToken",
+        "summary": "Refresh access token",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "New access token "
+          }
+        },
+        "tags": [
+          "Authentication"
+        ]
+      }
+    },
+    "/api/v1/user/{id}": {
+      "get": {
+        "operationId": "UserController_getOneUser",
+        "summary": "Get a user by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User retrieved successfully"
+          }
+        },
+        "tags": [
+          "Users"
+        ]
+      }
+    },
+    "/api/v1/user/forgot-password": {
+      "post": {
+        "operationId": "UserController_forgotPassword",
+        "summary": "Send forgot password email",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Password reset email sent"
+          }
+        },
+        "tags": [
+          "Password handle"
+        ]
+      }
+    },
+    "/api/v1/user/reset-password": {
+      "post": {
+        "operationId": "UserController_resetPassword",
+        "summary": "Reset user password",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Password reset successfully"
+          }
+        },
+        "tags": [
+          "Password handle"
+        ]
+      }
+    },
+    "/api/v1/user": {
+      "get": {
+        "operationId": "UserController_getUsers",
+        "summary": "Get a list of users",
+        "parameters": [
+          {
+            "name": "search",
+            "required": false,
+            "in": "query",
+            "description": "Search keyword",
+            "schema": {
+              "example": "John",
+              "type": "string"
+            }
+          },
+          {
+            "name": "roles",
+            "required": false,
+            "in": "query",
+            "description": "Filter by roles",
+            "schema": {
+              "example": [
+                "user"
+              ],
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "admin",
+                  "user"
+                ]
+              }
+            }
+          },
+          {
+            "name": "sortBy",
+            "required": false,
+            "in": "query",
+            "description": "Sort to row",
+            "schema": {
+              "example": "daiden",
+              "type": "string"
+            }
+          },
+          {
+            "name": "sortOrder",
+            "required": false,
+            "in": "query",
+            "description": "Sort order",
+            "schema": {
+              "example": "ASC",
+              "enum": [
+                "ASC",
+                "DESC"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "description": "Limit results",
+            "schema": {
+              "example": 10,
+              "type": "number"
+            }
+          },
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "description": "Page number results",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Users retrieved successfully"
+          }
+        },
+        "tags": [
+          "Users"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "API Documentation",
+    "description": "API description",
+    "version": "1.0",
+    "contact": {
+
+    }
+  },
+  "tags": [],
+  "servers": [],
+  "components": {
+    "schemas": {
+      "SignUpDto": {
+        "type": "object",
+        "properties": {
+
+        }
+      },
+      "SignInDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "daiden3101@gmail.com",
+            "description": "User email"
+          },
+          "password": {
+            "type": "string",
+            "example": "daidenPassword",
+            "description": "User password"
+          }
+        },
+        "required": [
+          "email",
+          "password"
+        ]
+      }
+    }
+  }
+}

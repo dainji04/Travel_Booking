@@ -4,12 +4,16 @@ import useVuelidate from '@vuelidate/core';
 import { required, email, minLength } from '@vuelidate/validators';
 import AuthLayout from '@/layouts/AuthLayout.vue';
 
+import { authStore } from '@/stores/auth.ts';
+
 const isHide = ref(false);
 const formData = ref({
     email: '',
     password: '',
     remember: false,
 });
+
+const errorCredentials = ref('');
 
 const rules = {
     email: {
@@ -27,7 +31,24 @@ const v$ = useVuelidate(rules, formData);
 const submit = async () => {
     const isValid = await v$.value.$validate();
     if (isValid) {
-        console.log('Form hợp lệ!', formData.value);
+        const useAuth = authStore();
+        const isLogged = await useAuth.Login(formData.value);
+        if (isLogged) {
+            window.location.href = '/';
+        } else {
+            errorCredentials.value = 'Tài khoản hoặc mật khẩu không đúng!';
+            console.log(1);
+        }
+    }
+};
+
+const forgotPassword = async () => {
+    const useAuth = authStore();
+    const isForgot = await useAuth.forgotPassword(formData.value.email);
+    if (isForgot) {
+        window.location.href = '/';
+    } else {
+        errorCredentials.value = 'Tài khoản không tồn tại!';
     }
 };
 </script>
@@ -37,6 +58,7 @@ const submit = async () => {
         <div>
             <h1 class="login__heading">Login</h1>
         </div>
+        <h1 style="color: red">{{ errorCredentials }}</h1>
         <div class="login__form">
             <form action="">
                 <div class="login__input-group">
@@ -100,10 +122,17 @@ const submit = async () => {
                         />
                         <span>Remember password</span>
                     </div>
-                    <div class="login__forgot-link">
-                        <a class="login__forgot-password" href="#"
-                            >Forgot password?</a
+                    <div
+                        @click.prevent="forgotPassword()"
+                        class="login__forgot-link"
+                    >
+                        <router-link
+                            :to="{ name: 'forgotPassword' }"
+                            class="login__forgot-password"
+                            href="#"
                         >
+                            Forgot password?
+                        </router-link>
                     </div>
                 </div>
             </form>
@@ -127,9 +156,9 @@ const submit = async () => {
         </div>
         <div class="login__footer">
             <p class="login__footer-text">Don't have an account?</p>
-            <router-link class="login__footer-link" :to="{ name: 'register' }"
-                >Sign up</router-link
-            >
+            <router-link class="login__footer-link" :to="{ name: 'register' }">
+                Sign up
+            </router-link>
         </div>
     </AuthLayout>
 </template>

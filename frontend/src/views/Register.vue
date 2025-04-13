@@ -3,14 +3,15 @@ import { ref } from 'vue';
 import useVuelidate from '@vuelidate/core';
 import { required, email, minLength, sameAs } from '@vuelidate/validators';
 import AuthLayout from '@/layouts/AuthLayout.vue';
+import { authStore } from '@/stores/auth';
+import type { UserSignUp } from '@/types/auth';
 // import useApi from '@/composables/useApi';
 
 const isHide = ref(false);
-const formData = ref({
+const formData = ref<UserSignUp>({
     name: '',
     email: '',
     password: '',
-    remember: false,
 });
 
 const rules = {
@@ -32,7 +33,10 @@ const v$ = useVuelidate(rules, formData);
 const submit = async () => {
     const isValid = await v$.value.$validate();
     if (isValid) {
-        console.log('Form hợp lệ!', formData.value);
+        console.log('Form is valid', formData.value);
+
+        const useAuth = authStore();
+        await useAuth.SignUp(formData.value);
     }
 };
 </script>

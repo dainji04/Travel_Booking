@@ -646,7 +646,7 @@ onMounted(() => {
     </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @use '@/assets/scss/home.scss';
 
 .slide-list {
