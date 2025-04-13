@@ -15,7 +15,6 @@ async function bootstrap() {
     origin:'http://localhost:5173',
     credentials:true,
     methods:'GET,HEAD,PUT,PATCH,POST,DELETE'
-
   })
   const config = new DocumentBuilder()
   .setTitle('API Documentation')

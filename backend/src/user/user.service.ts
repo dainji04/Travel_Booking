@@ -181,4 +181,7 @@ export class UserService {
       totalPages: Math.ceil(total / limit),
     };
   }
+  async findOne(id:number) {
+    return await this.userRepository.findOne({where:{id}})
+  }
 }

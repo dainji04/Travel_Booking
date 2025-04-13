@@ -64,4 +64,17 @@ export class EmailService {
       console.log(`📧 Password reset confirmation sent to ${email}`);
 
     }
+
+    async handleSendMailBookingTour(email:string) 
+    {
+      const mailOptions = {
+        from: process.env.EMAIL_USERNAME,
+        to: email,
+        subject: 'Booking Tour',
+        text: 'Booking tour has successfully.',
+      };
+      await this.transporter.sendMail(mailOptions)
+      console.log(`📧 Booking tour confirmation sent to ${email}`);
+
+    }
 }

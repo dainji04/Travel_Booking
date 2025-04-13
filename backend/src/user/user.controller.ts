@@ -1,15 +1,30 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Res, UnauthorizedException, Req, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Res, UnauthorizedException, Req, Query, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
 import { SignUpDto } from './dto/signUp.dto';
 import { SignInDto } from './dto/signIn.dto';
 import  {Request, Response} from'express'
 import { GetUsersDto } from './dto/search.dto';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { CurrentUser } from 'src/decorators/current-user.decorator';
+import { User } from './entities/user.entity';
+import { AuthenticationGuard } from 'src/guard/authentication.guard';
+import { AuthorizeGuard } from 'src/guard/authorization.guard';
+import { AuthorizeRoles } from 'src/decorators/authorize.roles.decorator';
+import { Roles } from 'src/common/role_User.common';
 
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
+  @Get('me1')
+  @UseGuards(AuthenticationGuard , AuthorizeGuard)
+  @AuthorizeRoles(Roles.USER)
+  @ApiTags('Authentication')
+  @ApiOperation({ summary: 'Get current user profile' })
+  @ApiResponse({ status: 200, description: 'User profile retrieved successfully' })
+  async getProfile(@CurrentUser() currentUser:User) {
+    return currentUser
+  }
   @Post('signUp')
   @ApiTags('Authentication') 
   @ApiOperation({ summary: 'signUp a new user' })
@@ -68,6 +83,8 @@ export class UserController {
 
   
   @Post('forgot-password')
+  @AuthorizeRoles(Roles.USER)
+  @UseGuards(AuthenticationGuard , AuthorizeGuard)
   @ApiTags('Password handle')
   @ApiOperation({ summary: 'Send forgot password email' })
   @ApiResponse({ status: 200, description: 'Password reset email sent' })
@@ -90,6 +107,8 @@ export class UserController {
   async getUsers(@Query() query: GetUsersDto) {
     return await this.userService.getUsers(query);
   }
+
+  
 
   
 
