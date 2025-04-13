@@ -4,7 +4,7 @@ import { SignUpDto } from './dto/signUp.dto';
 import { SignInDto } from './dto/signIn.dto';
 import  {Request, Response} from'express'
 import { GetUsersDto } from './dto/search.dto';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CurrentUser } from 'src/decorators/current-user.decorator';
 import { User } from './entities/user.entity';
 import { AuthenticationGuard } from 'src/guard/authentication.guard';
@@ -21,6 +21,7 @@ export class UserController {
   @AuthorizeRoles(Roles.USER)
   @ApiTags('Authentication')
   @ApiOperation({ summary: 'Get current user profile' })
+  @ApiBearerAuth('Access Token')
   @ApiResponse({ status: 200, description: 'User profile retrieved successfully' })
   async getProfile(@CurrentUser() currentUser:User) {
     return currentUser
@@ -113,6 +114,70 @@ export class UserController {
   async getUsers(@Query() query: GetUsersDto) {
     return await this.userService.getUsers(query);
   }
+
+
+  @Patch(':id')
+  @ApiTags('Users')
+  @UseGuards(AuthenticationGuard , AuthorizeGuard)
+  @AuthorizeRoles(Roles.ADMIN)
+  @ApiOperation({ summary: 'Update a user by ID' })
+  @ApiResponse({ status: 200, description: 'User updated successfully' })
+  async updateUser(@Param('id') id: number, @Body() updateUserDto: SignUpDto) {
+    const res = await this.userService.update(id, updateUserDto);
+    return res;
+  }
+  @Delete(':id')
+  @ApiTags('Users')
+  @UseGuards(AuthenticationGuard , AuthorizeGuard)
+  @AuthorizeRoles(Roles.ADMIN)
+  @ApiOperation({ summary: 'Delete a user by ID' })
+  @ApiResponse({ status: 200, description: 'User deleted successfully' })
+  async removeUser(@Param('id') id: number) {
+    const res = await this.userService.remove(id);
+    return res;
+  }
+
+  @Get('email/:email')
+  @ApiTags('Users')
+  @UseGuards(AuthenticationGuard , AuthorizeGuard)
+  @AuthorizeRoles(Roles.ADMIN)
+  @ApiOperation({ summary: 'Get a user by email' })
+  @ApiResponse({ status: 200, description: 'User retrieved successfully' })
+  async getUserByEmail(@Param('email') email: string) {
+    const res = await this.userService.getUserByEmail(email);
+    return res;
+  }
+  @Post('email-password')
+  @ApiTags('Users')
+  @UseGuards(AuthenticationGuard , AuthorizeGuard)
+  @AuthorizeRoles(Roles.ADMIN)
+  @ApiOperation({ summary: 'Get a user by email and password' })
+  @ApiResponse({ status: 200, description: 'User retrieved successfully' })
+  async getUserByEmailAndPassword(@Body('email') email: string, @Body('password') password: string) {
+    const res = await this.userService.getUserByEmailAndPassword(email, password);
+    return res;
+  }
+  @Patch('password/:id')
+  @ApiTags('Users')
+  @UseGuards(AuthenticationGuard , AuthorizeGuard)
+  @AuthorizeRoles(Roles.ADMIN)
+  @ApiOperation({ summary: 'Update user password' })
+  @ApiResponse({ status: 200, description: 'User password updated successfully' })
+  async updateUserPassword(@Param('id') id: number, @Body('password') password: string) {
+    const res = await this.userService.updateUserPassword(id, password);
+    return res;
+  }
+  @Patch('roles/:id')
+  @ApiTags('Users')
+  @UseGuards(AuthenticationGuard , AuthorizeGuard)
+  @AuthorizeRoles(Roles.ADMIN)
+  @ApiOperation({ summary: 'Update user roles' })
+  @ApiResponse({ status: 200, description: 'User roles updated successfully' }) 
+  async updateUserRoles(@Param('id') id: number, @Body('roles') roles: string[]) {
+    const res = await this.userService.updateUserRoles(id, roles);
+    return res;
+  }
+
 
   
 

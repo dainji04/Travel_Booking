@@ -46,7 +46,7 @@ export class EmailService {
         from: process.env.EMAIL_USERNAME,
         to:email,
         subject: 'Reset Password',
-        text: `Click vào link sau để đặt lại mật khẩu: http://localhost:3000/reset-password?token=${resetToken}`,
+        text: `Click vào link sau để đặt lại mật khẩu: http://localhost:5173/reset-password?token=${resetToken}`,
       };
   
       await this.transporter.sendMail(mailOptions);

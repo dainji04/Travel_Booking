@@ -12,6 +12,7 @@ import { EmailService } from 'src/email/email.service';
 import { SignInDto } from './dto/signIn.dto';
 import { decode } from 'punycode';
 import { GetUsersDto } from './dto/search.dto';
+import { Roles } from 'src/common/role_User.common';
 
 @Injectable()
 export class UserService {
@@ -183,5 +184,53 @@ export class UserService {
   }
   async findOne(id:number) {
     return await this.userRepository.findOne({where:{id}})
+  }
+  async update(id:number, updateUserDto: UpdateUserDto) {
+    const user = await this.userRepository.findOne({where:{id}})
+    if(!user) throw new NotFoundException('User not found')
+    const updatedUser = await this.userRepository.save({
+      ...user,
+      ...updateUserDto
+    })
+    return updatedUser
+  }
+  async remove(id: number) {
+    const user = await this.userRepository.findOne({where:{id}})
+    if(!user) throw new NotFoundException('User not found')
+    await this.userRepository.delete(id)
+    return user
+  }
+  async deleteUser(id: number) {
+    const user = await this.userRepository.findOne({where:{id}})
+    if(!user) throw new NotFoundException('User not found')
+    await this.userRepository.delete(id)
+    return user
+  }
+  async getUserByEmail(email: string) {
+    const user = await this.userRepository.findOne({ where: { email } });
+    if (!user) throw new NotFoundException('User not found');
+    return user;
+  }
+  
+  async getUserByEmailAndPassword(email: string, password: string) {
+    const user = await this.userRepository.findOne({ where: { email } });
+    if (!user) throw new NotFoundException('User not found');
+    const isPasswordValid = await compare(password, user.password);
+    if (!isPasswordValid) throw new UnauthorizedException('Invalid password');
+    return user;
+  }
+  async updateUserPassword(id: number, newPassword: string) {
+    const user = await this.userRepository.findOne({ where: { id } });
+    if (!user) throw new NotFoundException('User not found');
+    user.password = await hash(newPassword, 10);
+    await this.userRepository.save(user);
+    return user;
+  }
+  async updateUserRoles(id: number, roles: string[]) {
+    const user = await this.userRepository.findOne({ where: { id } });
+    if (!user) throw new NotFoundException('User not found');
+    user.roles = roles.map(role => role as Roles);
+    await this.userRepository.save(user);
+    return user;
   }
 }
