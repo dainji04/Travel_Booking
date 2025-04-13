@@ -124,7 +124,7 @@ export class UserService {
   
     const isTokenValid = await compare(resetToken, user.resetToken) 
     if (!isTokenValid) throw new BadRequestException('Invalid or expired reset token')
-  
+    
     user.password = await hash(password, 10)
     user.resetToken = null
     await this.userRepository.save(user)

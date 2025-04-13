@@ -18,7 +18,7 @@ export class UserController {
 
   @Get('me1')
   @UseGuards(AuthenticationGuard , AuthorizeGuard)
-  @AuthorizeRoles(Roles.USER)
+  @AuthorizeRoles(Roles.USER , Roles.ADMIN)
   @ApiTags('Authentication')
   @ApiOperation({ summary: 'Get current user profile' })
   @ApiBearerAuth('Access Token')
@@ -86,8 +86,8 @@ export class UserController {
 
   
   @Post('forgot-password')
-  @AuthorizeRoles(Roles.USER)
   @UseGuards(AuthenticationGuard , AuthorizeGuard)
+  // @AuthorizeRoles(Roles.USER)
   @ApiTags('Password handle')
   @ApiOperation({ summary: 'Send forgot password email' })
   @ApiResponse({ status: 200, description: 'Password reset email sent' })
@@ -97,8 +97,8 @@ export class UserController {
   }
   @Post('reset-password')
   @ApiTags('Password handle')
-  @AuthorizeRoles(Roles.USER)
   @UseGuards(AuthenticationGuard , AuthorizeGuard)
+  // @AuthorizeRoles(Roles.USER)
   @ApiOperation({ summary: 'Reset user password' })
   @ApiResponse({ status: 200, description: 'Password reset successfully' })
   async resetPassword(@Body('email')email:string,@Body('password')password:string , @Body('resetToken') resetToken:string) {
