@@ -80,7 +80,7 @@ export class UserService {
   
     delete userExist.password;
   
-    await this.emailService.handleSendmailSignIn(userExist.email);
+    // await this.emailService.handleSendmailSignIn(userExist.email);
   
     return { user: userExist, accessToken, refreshToken };
   }

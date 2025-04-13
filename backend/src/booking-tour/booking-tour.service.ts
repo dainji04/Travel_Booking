@@ -64,6 +64,66 @@ export class BookingTourService {
           id: true,
           name: true,
           email: true,
+          roles:true
+
+        },
+      },
+    })
+    if(!found) throw new NotFoundException('Booking tour not found')
+    return found
+  }
+  async getAllBookingTour() {
+    const found = await this.bookingTourRepo.find({
+      relations:['bookingTour_user'],
+      select: {
+        id: true,
+        bookingTour_Date: true,
+        bookingTour_Deposit: true,
+        bookingTour_TotalPrice: true,
+        updated_at: true,
+        bookingTour_user: {
+          id: true,
+          name: true,
+          email: true,
+          roles:true
+        },
+      },
+    })
+    if(!found) throw new NotFoundException('Booking tour not found')
+    return found
+  }
+  async updateBookingTour(id:number, updateBookingTourDto: UpdateBookingTourDto) {
+    const found = await this.bookingTourRepo.findOne({where:{id}})
+    if(!found) throw new NotFoundException('Booking tour not found')
+    if(updateBookingTourDto.bookingTour_Deposit > updateBookingTourDto.bookingTour_TotalPrice) 
+      throw new BadRequestException('Total price must better than Deposit price')
+    const currentDate = new Date();
+    if (new Date(updateBookingTourDto.bookingTour_Date) <= currentDate) {
+      throw new BadRequestException('Booking date must be in the future');
+    }
+    await this.bookingTourRepo.update(id,updateBookingTourDto)
+    return this.getBookingTour(id)
+  }
+  async removeBookingTour(id:number) {
+    const found = await this.bookingTourRepo.findOne({where:{id}})
+    if(!found) throw new NotFoundException('Booking tour not found')
+    await this.bookingTourRepo.delete(id)
+    return {message:'Delete booking tour successfully'}
+  }
+  async getBookingTourByUserId(userId:number) {
+    const found = await this.bookingTourRepo.find({
+      where:{bookingTour_user:{id:userId}},
+      relations:['bookingTour_user'],
+      select: {
+        id: true,
+        bookingTour_Date: true,
+        bookingTour_Deposit: true,
+        bookingTour_TotalPrice: true,
+        updated_at: true,
+        bookingTour_user: {
+          id: true,
+          name: true,
+          email: true,
         },
       },
     })

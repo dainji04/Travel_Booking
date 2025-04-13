@@ -28,6 +28,6 @@ SwaggerModule.setup('api', app, document);
 
 
   await app.listen(process.env.PORT ?? 4000);
-  console.log('Dai Den code FE ga =))) ')
+  console.log('running 4k ')
 }
 bootstrap();
