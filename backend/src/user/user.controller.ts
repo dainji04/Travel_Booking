@@ -73,6 +73,8 @@ export class UserController {
   }
   @Get(':id')
   @ApiTags('Users')
+  @UseGuards(AuthenticationGuard , AuthorizeGuard)
+  @AuthorizeRoles(Roles.ADMIN)
   @ApiOperation({ summary: 'Get a user by ID' })
   @ApiResponse({ status: 200, description: 'User retrieved successfully' })
   async getOneUser(@Param('id') id:number) {
@@ -94,6 +96,8 @@ export class UserController {
   }
   @Post('reset-password')
   @ApiTags('Password handle')
+  @AuthorizeRoles(Roles.USER)
+  @UseGuards(AuthenticationGuard , AuthorizeGuard)
   @ApiOperation({ summary: 'Reset user password' })
   @ApiResponse({ status: 200, description: 'Password reset successfully' })
   async resetPassword(@Body('email')email:string,@Body('password')password:string , @Body('resetToken') resetToken:string) {
@@ -102,6 +106,8 @@ export class UserController {
   }
   @Get()
   @ApiTags('Users')
+  @AuthorizeRoles(Roles.ADMIN)
+  @UseGuards(AuthenticationGuard , AuthorizeGuard)
   @ApiOperation({ summary: 'Get a list of users' })
   @ApiResponse({ status: 200, description: 'Users retrieved successfully' })
   async getUsers(@Query() query: GetUsersDto) {
