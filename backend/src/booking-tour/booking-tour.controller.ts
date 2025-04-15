@@ -13,6 +13,7 @@ import { AuthorizeRoles } from 'src/decorators/authorize.roles.decorator';
 import { get } from 'http';
 
 @Controller('booking-tour')
+@ApiTags('Booking Tour')
 export class BookingTourController {
   constructor(private readonly bookingTourService: BookingTourService) {}
 

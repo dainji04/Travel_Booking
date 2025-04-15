@@ -86,8 +86,6 @@ export class UserController {
 
   
   @Post('forgot-password')
-  // @UseGuards(AuthenticationGuard , AuthorizeGuard)
-  // @AuthorizeRoles(Roles.ADMIN , Roles.USER)
   @ApiTags('Password handle')
   @ApiOperation({ summary: 'Send forgot password email' })
   @ApiResponse({ status: 200, description: 'Password reset email sent' })
@@ -97,8 +95,6 @@ export class UserController {
   }
   @Post('reset-password')
   @ApiTags('Password handle')
-  // @UseGuards(AuthenticationGuard , AuthorizeGuard)
-  // @AuthorizeRoles(Roles.ADMIN , Roles.USER)
   @ApiOperation({ summary: 'Reset user password' })
   @ApiResponse({ status: 200, description: 'Password reset successfully' })
   async resetPassword(@Body('email')email:string,@Body('password')password:string , @Body('resetToken') resetToken:string) {
@@ -177,6 +173,23 @@ export class UserController {
     const res = await this.userService.updateUserRoles(id, roles);
     return res;
   }
+
+  @Post('logout')
+  @UseGuards(AuthenticationGuard , AuthorizeGuard)
+  @AuthorizeRoles(Roles.USER , Roles.ADMIN)
+  @ApiTags('Authentication')
+  @ApiOperation({ summary: 'User logout' })
+  @ApiResponse({ status: 200, description: 'User logged out successfully' })
+  async logOut(@CurrentUser() currentUser: User, @Res({ passthrough: true }) res: Response) {
+    const response = await this.userService.logout(currentUser.id);
+    res.clearCookie('refreshToken');
+    return response;
+  }
+
+
+  
+ 
+
 
 
   
