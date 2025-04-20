@@ -18,16 +18,18 @@
                     />
                 </svg>
             </div>
-            <div>
-                <router-link :to="{ name: 'home' }">
-                    <img
-                        class="auth-layout__logo"
-                        src="@/assets/fonts/logo.svg"
-                        alt="logo"
-                    />
-                </router-link>
+            <div class="auth-layout__content">
+                <div>
+                    <router-link :to="{ name: 'home' }">
+                        <img
+                            class="auth-layout__logo"
+                            src="@/assets/fonts/logo.svg"
+                            alt="logo"
+                        />
+                    </router-link>
+                </div>
+                <slot></slot>
             </div>
-            <slot></slot>
         </div>
     </div>
 </template>

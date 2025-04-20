@@ -1,6 +1,19 @@
-@use 'variables';
+@use 'variables' as *;
 
 .login {
+    &__error {
+        font-family: $font-secondary;
+        font-size: 14px;
+        margin-top: 20px;
+        background-color: $error-color;
+        color: #fff;
+        width: 70%;
+        position: relative;
+        z-index: 999;
+        border-radius: 10px;
+        padding: 10px 20px;
+    }
+
     &__heading {
         margin-top: 50px;
         display: flex;
@@ -58,7 +71,7 @@
     &__submit {
         position: relative;
         margin-top: 40px;
-        background: variables.$primary-rgb-gradient-color;
+        background: $primary-rgb-gradient-color;
         border-radius: 50px;
         cursor: pointer;
         font-size: 25px;
@@ -92,7 +105,7 @@
     }
 
     &__submit:hover {
-        background: variables.$secondary-color;
+        background: $secondary-color;
     }
 
     &__options {
@@ -148,7 +161,7 @@
     }
 
     &__footer-link {
-        color: variables.$secondary-color;
+        color: $secondary-color;
     }
 }
 

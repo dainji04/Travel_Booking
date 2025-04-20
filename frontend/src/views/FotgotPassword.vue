@@ -51,7 +51,7 @@ const Submit = async () => {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #6aa4d63f;
+    background-color: $bg-color;
 }
 .forgotPwd {
     &__container {

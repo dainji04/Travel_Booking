@@ -12,4 +12,4 @@ import Pagination from '@/components/Pagination.vue';
     </div>
 </template>
 
-<style lang="scss"></style>
+<style lang="scss" scoped></style>

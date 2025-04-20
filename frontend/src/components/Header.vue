@@ -1,3 +1,39 @@
+<script setup lang="ts">
+import { authStore } from '@/stores/auth';
+import { computed, onMounted, ref, useTemplateRef } from 'vue';
+
+const useAuth = authStore();
+
+const checkLogin = computed(() => useAuth.isAuthenticated);
+const user = computed(() => useAuth.user);
+
+const ScrollToTop = ref(false);
+
+const toTop = () => {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+    });
+};
+
+onMounted(() => {
+    window.addEventListener('scroll', () => {
+        let a = 0;
+        a = window.scrollY;
+
+        if (a > 50) {
+            a = 50;
+        }
+
+        if (window.scrollY > 100) {
+            ScrollToTop.value = true;
+        } else {
+            ScrollToTop.value = false;
+        }
+    });
+});
+</script>
+
 <template>
     <header class="header">
         <div class="navbar">
@@ -18,9 +54,15 @@
                     <li class="list__text">Contact</li>
                 </router-link>
             </ul>
-            <div class="options">
-                <!-- <img class="options__icon" src="@/assets/fonts/search.svg" alt="" />
-                <img class="options__icon" src="@/assets/fonts/list.svg" alt="" /> -->
+            <div class="options" v-if="checkLogin">
+                <router-link class="list__text" :to="{ name: 'profile' }">
+                    {{ user?.name }}
+                </router-link>
+                <router-link class="list__text" to="" @click="useAuth.logout()">
+                    Logout
+                </router-link>
+            </div>
+            <div class="options" v-else>
                 <router-link class="list__text" :to="{ name: 'login' }">
                     Login
                 </router-link>
@@ -37,6 +79,7 @@
             </div>
         </div>
     </header>
+    <button class="scroll-to-top" v-if="ScrollToTop" @click="toTop">top</button>
 </template>
 
 <style lang="scss">
