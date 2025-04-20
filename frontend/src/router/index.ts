@@ -52,6 +52,11 @@ const router = createRouter({
                     component: () => import('../views/Tour.vue'),
                 },
                 {
+                    path: 'du-lich/:slug',
+                    name: 'tourDetail',
+                    component: () => import('../views/TourDetail.vue'),
+                },
+                {
                     path: 'gioi-thieu',
                     name: 'about',
                     // route level code-splitting

@@ -6,31 +6,37 @@ const tourAvailable = [
         img: 'src/assets/images/tour_available/hue.png',
         title: 'Hue',
         tourNumber: 1,
+        slug: 'hue',
     },
     {
         img: 'src/assets/images/tour_available/ha_noi.png',
         title: 'Ha Noi',
         tourNumber: 1,
+        slug: 'ha-noi',
     },
     {
         img: 'src/assets/images/tour_available/buon_me_thuot.png',
         title: 'Buon Me Thuot',
         tourNumber: 1,
+        slug: 'buon-me-thuot',
     },
     {
         img: 'src/assets/images/tour_available/mang_den.png',
         title: 'Mang Den',
         tourNumber: 1,
+        slug: 'mang-den',
     },
     {
         img: 'src/assets/images/tour_available/phu_yen.png',
         title: 'Phu Yen',
         tourNumber: 1,
+        slug: 'phu-yen',
     },
     {
         img: 'src/assets/images/tour_available/ninh_thuan.png',
         title: 'Ninh Thuan',
         tourNumber: 1,
+        slug: 'ninh-thuan',
     },
 ];
 </script>
@@ -53,13 +59,17 @@ const tourAvailable = [
                 v-for="(tour, index) in tourAvailable.slice(0, 6)"
                 :key="index"
             >
-                <div class="available__item">
-                    <img :src="tour.img" alt="" />
-                    <div>
-                        <h1 class="available__title">{{ tour.title }}</h1>
-                        <img src="@/assets/fonts/right-arrow2.svg" alt="" />
+                <RouterLink
+                    :to="{ name: 'tourDetail', params: { slug: tour.slug } }"
+                >
+                    <div class="available__item">
+                        <img :src="tour.img" alt="" />
+                        <div>
+                            <h1 class="available__title">{{ tour.title }}</h1>
+                            <img src="@/assets/fonts/right-arrow2.svg" alt="" />
+                        </div>
                     </div>
-                </div>
+                </RouterLink>
             </template>
         </div>
     </div>
