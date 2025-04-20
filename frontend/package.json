@@ -4,7 +4,6 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "start": "json-server --watch data/db.json --port 3000",
         "dev": "vite",
         "build": "run-p type-check \"build-only {@}\" --",
         "preview": "vite preview",
@@ -17,7 +16,6 @@
         "@vueuse/core": "^13.1.0",
         "axios": "^1.8.4",
         "gsap": "^3.12.7",
-        "json-server": "^1.0.0-beta.3",
         "pinia": "^3.0.1",
         "vue": "^3.5.13",
         "vue-router": "^4.5.0"

@@ -4,6 +4,7 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 import BlogsList from '@/components/BlogsList.vue';
+import TicketList from '@/components/TicketList.vue';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -24,35 +25,6 @@ const tours = [
         calendar: 'July 31, 2025',
         description:
             'The earliest sunrise in Vietnam can be seen at Cape Dai Lanh in Phu Yen, where the first rays of sunlight light up the ocean. This picturesque spot offers a serene and breathtaking start to the day.',
-    },
-];
-const tourTicket = [
-    {
-        img: 'src/assets/images/hueTicket.png',
-        title: 'Hue tour',
-        locate: 'Hue city',
-        guide: 'Mr.Tuan',
-        times: '7 days 6 nights',
-        dollarsPrice: '600$',
-        VietNamDongPrice: '14,400,000VND',
-    },
-    {
-        img: 'src/assets/images/phuyenTicket.png',
-        title: 'Phu Yen tour',
-        locate: 'Tuy Hoa city',
-        guide: 'Mr.Minh Quy',
-        times: '3 days 2 nights',
-        dollarsPrice: '400$',
-        VietNamDongPrice: '9,600,000VND',
-    },
-    {
-        img: 'src/assets/images/hanoiTicket.png',
-        title: 'Hue tour',
-        locate: 'Hue city',
-        guide: 'Mr.Thanh Nhan',
-        times: '7 days 6 nights',
-        dollarsPrice: '500$',
-        VietNamDongPrice: '12,000,000VND',
     },
 ];
 const imagesSlide = [
@@ -302,12 +274,6 @@ onMounted(() => {
                     class="tour-tips__icon-bg tour-tips__icon-bg--shape"
                     alt=""
                 />
-                <img
-                    loading="lazy"
-                    src="@/assets/images/icon-bg-plane.gif"
-                    class="tour-tips__icon-bg tour-tips__icon-bg--plane"
-                    alt=""
-                />
             </div>
             <div class="tour-tips__header">
                 <h1 class="heading">tips</h1>
@@ -385,101 +351,9 @@ onMounted(() => {
                     </div>
                 </template>
             </div>
-            <div class="tour-tips-footer">
-                <h3 class="heading">Great tours</h3>
-                <h2 class="subheading">Discover the most exciting tours</h2>
-            </div>
         </div>
         <!-- ticket -->
-        <div class="ticket">
-            <div class="ticket__navigation">
-                <button class="ticket__btn-prev ticket__btn-primary">
-                    <img
-                        loading="lazy"
-                        class="ticket__icon-prev ticket__icon-navigation"
-                        src="@/assets/fonts/left-arrow.svg"
-                        alt=""
-                    />
-                </button>
-                <button class="ticket__btn-next ticket__btn-primary">
-                    <img
-                        loading="lazy"
-                        class="ticket__icon-next ticket__icon-navigation"
-                        src="@/assets/fonts/right-arrow.svg"
-                        alt=""
-                    />
-                </button>
-            </div>
-            <template v-for="ticket in tourTicket">
-                <div class="ticket__item">
-                    <div
-                        class="ticket__image"
-                        :style="{
-                            background: `url(${ticket.img}) lightgray 50% / cover no-repeat`,
-                        }"
-                    ></div>
-                    <div class="ticket__content">
-                        <h1 class="ticket__title">{{ ticket.title }}</h1>
-                        <div class="ticket__box">
-                            <div class="ticket__information">
-                                <div class="ticket__info-item ticket__location">
-                                    <img
-                                        loading="lazy"
-                                        src="@/assets/fonts/location.svg"
-                                        alt=""
-                                    />
-                                    <p class="ticket__text">
-                                        {{ ticket.locate }}
-                                    </p>
-                                </div>
-                                <div class="ticket__info-item ticket__user">
-                                    <img
-                                        loading="lazy"
-                                        src="@/assets/fonts/user.svg"
-                                        alt=""
-                                    />
-                                    <p class="ticket__text">
-                                        {{ ticket.guide }}
-                                    </p>
-                                </div>
-                                <div class="ticket__info-item ticket__times">
-                                    <img
-                                        loading="lazy"
-                                        src="@/assets/fonts/clock.svg"
-                                        alt=""
-                                    />
-                                    <p class="ticket__text">
-                                        {{ ticket.times }}
-                                    </p>
-                                </div>
-                            </div>
-                            <span class="ticket__line"></span>
-                            <div class="ticket__price">
-                                <p class="ticket__price-text">
-                                    {{ ticket.dollarsPrice }}
-                                </p>
-                                <p class="ticket__price-text">OR</p>
-                                <p class="ticket__price-text">
-                                    {{ ticket.VietNamDongPrice }}
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="ticket__button-box">
-                        <button class="ticket__button button-primary">
-                            Booking now
-                        </button>
-                    </div>
-                </div>
-            </template>
-            <div class="ticket__background">
-                <img
-                    loading="lazy"
-                    src="@/assets/fonts/footer-background-ticket.svg"
-                    alt=""
-                />
-            </div>
-        </div>
+        <TicketList />
         <!-- cities -->
         <div class="cities">
             <div class="cities__header">
