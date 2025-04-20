@@ -5,6 +5,7 @@ import Pagination from '@/components/Pagination.vue';
 <template>
     <div class="contact">
         <Pagination
+            video="src/assets/videos/somethingelse.mp4"
             title="Blog"
             :link="['home', 'blog']"
             :pagination="['Homepage', 'Blog']"

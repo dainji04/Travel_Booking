@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
-
 import { gsap } from 'gsap';
-
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+import BlogsList from '@/components/BlogsList.vue';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -26,7 +26,6 @@ const tours = [
             'The earliest sunrise in Vietnam can be seen at Cape Dai Lanh in Phu Yen, where the first rays of sunlight light up the ocean. This picturesque spot offers a serene and breathtaking start to the day.',
     },
 ];
-
 const tourTicket = [
     {
         img: 'src/assets/images/hueTicket.png',
@@ -56,28 +55,6 @@ const tourTicket = [
         VietNamDongPrice: '12,000,000VND',
     },
 ];
-
-const newPosts = [
-    {
-        img: 'src/assets/images/hoianBlog.png',
-        title: 'Top 10 things to do when coming to Hoi An',
-        description:
-            "Hoi An's Ancient Town is a well-preserved historical site, known for its blend of traditional Vietnamese, Chinese, and Japanese architecture. The charming streets, lantern-lit evenings, and vibrant markets make it a UNESCO World Heritage gem.",
-    },
-    {
-        img: 'src/assets/images/daklakBlog.png',
-        title: 'Top 10 things to do when coming to Hoi An',
-        description:
-            "Hoi An's Ancient Town is a well-preserved historical site, known for its blend of traditional Vietnamese, Chinese, and Japanese architecture. The charming streets, lantern-lit evenings, and vibrant markets make it a UNESCO World Heritage gem.",
-    },
-    {
-        img: 'src/assets/images/phuyenBlog.png',
-        title: 'Top 10 things to do when coming to Hoi An',
-        description:
-            "Hoi An's Ancient Town is a well-preserved historical site, known for its blend of traditional Vietnamese, Chinese, and Japanese architecture. The charming streets, lantern-lit evenings, and vibrant markets make it a UNESCO World Heritage gem.",
-    },
-];
-
 const imagesSlide = [
     {
         id: 1,
@@ -255,6 +232,7 @@ onMounted(() => {
 
 <template>
     <div class="home">
+        <!-- slide -->
         <div class="container-slide">
             <div class="slide-list" ref="slider" :style="sliderStyle">
                 <div
@@ -302,6 +280,7 @@ onMounted(() => {
                 </div>
             </div>
         </div>
+        <!-- tour-tips -->
         <div class="tour-tips">
             <div class="list-icon-bg">
                 <img
@@ -411,6 +390,7 @@ onMounted(() => {
                 <h2 class="subheading">Discover the most exciting tours</h2>
             </div>
         </div>
+        <!-- ticket -->
         <div class="ticket">
             <div class="ticket__navigation">
                 <button class="ticket__btn-prev ticket__btn-primary">
@@ -500,6 +480,7 @@ onMounted(() => {
                 />
             </div>
         </div>
+        <!-- cities -->
         <div class="cities">
             <div class="cities__header">
                 <h1 class="heading">beautiful cities with rich culture</h1>
@@ -589,6 +570,7 @@ onMounted(() => {
                 </div>
             </div>
         </div>
+        <!-- advertisement -->
         <div class="advertisement">
             <div class="advertisement__left">
                 <h3 class="advertisement__title heading">Go & discover</h3>
@@ -616,33 +598,7 @@ onMounted(() => {
                 />
             </div>
         </div>
-        <div class="blogs">
-            <div class="blogs__header">
-                <h1 class="heading">blogs</h1>
-                <h3 class="subheading">new post</h3>
-            </div>
-            <div class="blogs__container">
-                <template v-for="post in newPosts" :key="post">
-                    <div class="blogs__post">
-                        <div
-                            class="blogs__image"
-                            :style="{
-                                background: ` url(${post.img}) lightgray 50% / cover no-repeat`,
-                            }"
-                        ></div>
-                        <div class="blogs__content">
-                            <h1 class="blogs__title">{{ post.title }}</h1>
-                            <p class="blogs__description">
-                                {{ post.description }}
-                            </p>
-                        </div>
-                        <button class="blogs__button button-primary">
-                            see details
-                        </button>
-                    </div>
-                </template>
-            </div>
-        </div>
+        <BlogsList />
     </div>
 </template>
 
