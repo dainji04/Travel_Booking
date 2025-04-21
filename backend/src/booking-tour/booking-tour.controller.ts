@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body,  Param, Delete, UseGuards, Patch } from '@nestjs/common';
+import { Controller, Get, Post, Body,  Param, Delete, UseGuards, Patch, Query } from '@nestjs/common';
 import { BookingTourService } from './booking-tour.service';
 import { CreateBookingTourDto } from './dto/create-booking-tour.dto';
 import { UpdateBookingTourDto } from './dto/update-booking-tour.dto';
@@ -11,6 +11,8 @@ import { AuthorizeGuard } from 'src/guard/authorization.guard';
 import { Roles } from 'src/common/role_User.common';
 import { AuthorizeRoles } from 'src/decorators/authorize.roles.decorator';
 import { get } from 'http';
+import { query } from 'express';
+import { BookingTourQueryDto } from './dto/search-booking-tour.dto';
 
 @Controller('booking-tour')
 @ApiTags('Booking Tour')
@@ -63,11 +65,12 @@ export class BookingTourController {
     return res;
   } 
   @Get()
-  @AuthorizeRoles(Roles.ADMIN)
+  @AuthorizeRoles(Roles.ADMIN , Roles.USER) 
   @UseGuards(AuthenticationGuard , AuthorizeGuard)
-  async getAllBookingTour() {
-    const res = await this.bookingTourService.getAllBookingTour();
+  async getAllBookingTour(@Query() query: BookingTourQueryDto) {
+    const res = await this.bookingTourService.getAllBookingTour(query);
     return res;
   }
+  
 }
  

@@ -7,11 +7,12 @@ import { dataSourceOptions } from 'db/data-source';
 import { EmailModule } from './email/email.module';
 import { BookingTourModule } from './booking-tour/booking-tour.module';
 import { CurrentUserMiddleware } from './middleware/current-user.middleware';
+import { TourModule } from './tour/tour.module';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot(dataSourceOptions)
-    ,UserModule, EmailModule, BookingTourModule],
+    ,UserModule, EmailModule, BookingTourModule, TourModule],
   controllers: [AppController],
   providers: [AppService],
 })

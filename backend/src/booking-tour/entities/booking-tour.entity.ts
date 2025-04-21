@@ -1,4 +1,5 @@
 import { StatusBookingTour } from "src/common/status_BookingTour.enum";
+import { Tour } from "src/tour/entities/tour.entity";
 import { User } from "src/user/entities/user.entity";
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
@@ -26,6 +27,9 @@ export class BookingTour {
 
     @ManyToOne(() => User , user => user.bookingTour)
     bookingTour_user:User
+
+    @ManyToOne(() => Tour , tour => tour.bookingTours)
+    tour:Tour
 
     
 
