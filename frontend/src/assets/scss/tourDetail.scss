@@ -1,0 +1,396 @@
+@use '@/assets/scss/variables' as *;
+
+.detail-tour {
+    max-width: 1440px;
+    margin: 0 auto;
+    .capital {
+        .subheading {
+            margin-bottom: 120px;
+        }
+        &__container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 50px;
+        }
+        &-left {
+            width: 665px;
+            height: 687px;
+            position: relative;
+            z-index: 1;
+        }
+        &-left > img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 20px;
+        }
+        &__day-container {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 2;
+            box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.25);
+        }
+        &__day-top {
+            padding: 5px 30px;
+            background: #f37916;
+            color: $color--white;
+            font-size: 60px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: normal;
+        }
+        &__day-bottom {
+            padding: 10px 30px;
+            background: $color--white;
+            color: $color--black;
+            font-size: 20px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: normal;
+        }
+
+        &-right .heading {
+            margin-bottom: 20px;
+        }
+        &-right > p {
+            color: $color--black;
+            text-align: justify;
+            font-size: 40px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 60px; /* 150% */
+        }
+    }
+}
+
+.main {
+    margin: 120px 0;
+    width: 100%;
+    &__pagination {
+        width: 57%;
+        margin-bottom: 100px;
+    }
+    &__container {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1.5fr 1fr;
+        gap: 100px;
+    }
+    // left
+    &__left {
+        // width: 60%;
+        display: grid;
+        gap: 25px;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.5);
+        padding-left: 80px;
+        padding-bottom: 50px;
+    }
+    &__itinerary,
+    &__overview,
+    &__cost,
+    &__special-offer {
+        padding-right: 60px;
+    }
+    &__heading {
+        text-align: start;
+        font-size: 40px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 40px; /* 100% */
+        margin-bottom: 10px;
+    }
+    &__overview > p {
+        text-align: justify;
+        color: $color--black;
+        color: $color--black;
+        font-size: 25px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 40px;
+    }
+    // itinerary
+    &__itinerary-list-item {
+        padding-left: 60px;
+        padding-top: 20px;
+    }
+    &__itinerary-item {
+        color: $color--black;
+        font-size: 25px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 40px;
+        position: relative;
+    }
+    &__itinerary-item > p::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -66px;
+        width: 32px;
+        height: 32px;
+        background: url('../fonts/dot.svg') no-repeat;
+        background-size: cover;
+    }
+    &__itinerary-item:first-child > p::before {
+        left: -64px;
+        background: url('../fonts/location--orange.svg') no-repeat;
+    }
+    &__itinerary-item:last-child > p::before {
+        background: url('../fonts/address-orange.svg') no-repeat;
+    }
+    &__itinerary-item::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -50px;
+        width: 1px;
+        height: calc(100% + 100px);
+        background-color: $color-primary;
+    }
+    &__itinerary-item:first-child::before {
+        top: 20px;
+    }
+    &__itinerary-item:nth-last-child(2)::before {
+        height: calc(100% + 60px);
+    }
+    &__itinerary-item:last-child::before {
+        height: 0;
+    }
+    &__activity-list {
+        list-style-type: square;
+    }
+    &__itinerary-divider {
+        width: 100%;
+        border: 1px solid $color--gray;
+        opacity: 0.8;
+        margin: 50px 0;
+    }
+
+    // cost
+    &__subheading {
+        text-align: start;
+        color: $color--black;
+        font-size: 25px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 40px;
+        text-transform: uppercase;
+    }
+    &__includes-list,
+    &__excludes-list {
+        list-style: none;
+    }
+    &__list-item {
+        color: $color--black;
+        font-size: 25px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 40px;
+        position: relative;
+        padding-left: 30px;
+        position: relative;
+        margin-bottom: 10px;
+    }
+    &__includes-list &__list-item::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 20px;
+        height: 20px;
+        background: url('../fonts/check-circle-orange.svg') no-repeat;
+        background-size: contain;
+        background-repeat: no-repeat;
+    }
+    &__excludes-list &__list-item::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 20px;
+        height: 20px;
+        background: url('../fonts/cancel-circle-orange.svg') no-repeat;
+        background-size: contain;
+        background-repeat: no-repeat;
+    }
+    &__special-offer > p {
+        color: $color--black;
+        font-size: 25px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 40px;
+    }
+    //right
+    &__price-outside {
+        width: 100%;
+        background-color: $color--gray;
+        padding: 55px 50px;
+    }
+    &__price-inside {
+        width: 100%;
+        background-color: $color--white;
+    }
+    &__price-top {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        gap: 20px;
+        padding-top: 40px;
+    }
+    &__price-top > h3 {
+        color: $color--black;
+        text-align: center;
+        font-size: 30px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 30px;
+        text-transform: capitalize;
+    }
+    &__price-top > h3:first-child {
+        color: $color-primary;
+    }
+    &__price-top > p {
+        color: $color--black;
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 30px;
+        text-transform: capitalize;
+        margin-bottom: 20px;
+    }
+    &__price-bottom {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 41px 51px 62px;
+    }
+    &__button {
+        padding: 25px 50px;
+        border-radius: 10px;
+    }
+    &__detail {
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.5);
+        margin-top: 100px;
+        padding: 50px 0;
+    }
+    &__detail-item {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        padding: 20px 40px;
+    }
+    &__detail-item div h3 {
+        color: $color--gray;
+        font-size: 30px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+        text-transform: capitalize;
+    }
+    &__detail-item div p {
+        color: $color--black;
+        font-size: 25px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+        text-transform: capitalize;
+    }
+}
+
+.pagination {
+    display: flex;
+    margin-top: 50px;
+    display: grid;
+    gap: 10px;
+    &__list {
+        width: 100%;
+        display: flex;
+        gap: 100px;
+        padding: 0;
+    }
+    &__item {
+        list-style-type: none;
+        color: $color--black;
+        font-size: 30px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+        text-transform: capitalize;
+    }
+    &__item > a {
+        color: $color--black;
+        transition: 0.1s all;
+    }
+    &__item:hover > a {
+        color: $color-primary;
+        text-decoration: underline;
+    }
+    &__divider {
+        width: 100%;
+        border: 1px solid $color--black;
+    }
+}
+
+// swiper css
+.slide {
+    margin-top: 120px;
+    .subheading {
+        margin-bottom: 80px;
+    }
+}
+.swiper {
+    width: 100%;
+    height: 558px;
+}
+
+.swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    background: $color--white;
+
+    /* Center slide text vertically */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.swiper-slide img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.autoplay-progress {
+    position: absolute;
+    right: 16px;
+    bottom: 16px;
+    z-index: 10;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: $color-primary;
+}
+
+.autoplay-progress svg {
+    --progress: 0;
+    position: absolute;
+    left: 0;
+    top: 0px;
+    z-index: 10;
+    width: 100%;
+    height: 100%;
+    stroke-width: 4px;
+    stroke: $color-primary;
+    fill: none;
+    stroke-dashoffset: calc(125.6px * (1 - var(--progress)));
+    stroke-dasharray: 125.6;
+    transform: rotate(-90deg);
+}

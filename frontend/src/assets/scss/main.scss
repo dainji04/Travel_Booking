@@ -2,10 +2,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Italiana&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Agdasima:wght@400;700&family=Italiana&display=swap');
 
+/** 
+* BEM:
+* Block
+* Element
+* Modifier
+*/
+
 body {
     font-family: $font-secondary;
     transition: 1s all;
     overflow-x: hidden;
+    scroll-behavior: smooth;
 }
 
 .error {
@@ -15,6 +23,7 @@ body {
 
 .heading,
 .subheading {
+    // the name should be sub-heading
     text-transform: uppercase;
     text-align: center;
     font-family: $font-secondary;
@@ -40,6 +49,7 @@ body {
     -webkit-text-fill-color: transparent;
 }
 
+// the name should be button--primary
 .button-primary {
     font-family: $font-secondary;
     border-radius: 999px;
