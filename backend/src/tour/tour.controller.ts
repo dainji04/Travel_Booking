@@ -7,13 +7,15 @@ import { Roles } from 'src/common/role_User.common';
 import { AuthenticationGuard } from 'src/guard/authentication.guard';
 import { AuthorizeGuard } from 'src/guard/authorization.guard';
 import { SearchTourDto } from './dto/search-tour.dto';
+import { ApiProperty, ApiTags } from '@nestjs/swagger';
 
 @Controller('tour')
+@ApiTags('Tour')
 export class TourController {
   constructor(private readonly tourService: TourService) {}
 
   @Post()
-  @AuthorizeRoles(Roles.ADMIN )
+  @AuthorizeRoles(Roles.ADMIN  , Roles.USER)
   @UseGuards(AuthenticationGuard , AuthorizeGuard)
   async create(@Body() createTourDto: CreateTourDto) {
     return  await this.tourService.create(createTourDto);
@@ -25,8 +27,13 @@ export class TourController {
 async getOne(@Param('id', ParseIntPipe) id: number) {
   return this.tourService.getOne(id);
 }
+@ApiProperty({
+  description: 'Search for tours',
+  type: SearchTourDto,  
+  required: false,
+})
 @Get()
-@AuthorizeRoles(Roles.ADMIN)
+@AuthorizeRoles(Roles.ADMIN , Roles.USER)
 @UseGuards(AuthenticationGuard , AuthorizeGuard)
 async findAll(@Query() searchTourDto: SearchTourDto) {
   return this.tourService.findAll(searchTourDto);
