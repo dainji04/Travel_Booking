@@ -23,7 +23,11 @@ const tour = ref({
     detailImg: [
         'https://cdn.pixabay.com/photo/2021/08/11/03/19/incense-sticks-6537298_1280.jpg',
         'https://cdn.pixabay.com/photo/2020/04/28/13/21/landscape-5104510_1280.jpg',
-        'https://media.istockphoto.com/id/1053497302/photo/turtle-tower-in-hanoi-hoan-kiem-lake-in-vietnam.jpg?s=2048x2048&w=is&k=20&c=kvEEb8ksQEtsaa909wXGJXdXyHjM6d-ZZHHOSzBiojM=',
+        'https://images.unsplash.com/photo-1528127269322-539801943592?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        'https://plus.unsplash.com/premium_photo-1719955783083-6a0bd66c5f75?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        'https://images.unsplash.com/photo-1583417319070-4a69db38a482?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        'https://images.unsplash.com/photo-1596401057633-54a8fe8ef647?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        'https://images.unsplash.com/photo-1521993117367-b7f70ccd029d?q=80&w=2040&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     ],
     duration: 7,
     overview:
