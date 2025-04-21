@@ -50,7 +50,7 @@ const props = withDefaults(defineProps<Props>(), {
     </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .HeroHeader_video__EIQOL {
     position: absolute;
     z-index: -2;
