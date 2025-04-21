@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import Pagination from '@/components/Pagination.vue';
-import BlogItem from '@/components/BlogItem.vue';
+import StoryItem from '@/components/StoryItem.vue';
+import BlogsList from '@/components/BlogsList.vue';
 
-const blogs = [
+const listStory = [
     {
         title: 'Technological innovation',
         description:
@@ -37,6 +38,7 @@ const blogs = [
 </script>
 
 <template>
+    <!-- contact -->
     <div class="contact">
         <Pagination
             title="about us"
@@ -44,6 +46,7 @@ const blogs = [
             :pagination="['Homepage', 'About']"
         />
     </div>
+    <!-- introduce -->
     <div class="introduce">
         <div class="introduce__left">
             <div class="introduce__left-item center">
@@ -91,21 +94,22 @@ const blogs = [
             <button class="introduce__button button-primary">READ MORE</button>
         </div>
     </div>
-    <div class="blogs">
-        <h1 class="blogs__title heading">Blogs</h1>
-        <p class="blogs__subtitle subheading">new post</p>
-        <div class="blogs__container">
-            <div class="blogs__column-left">
-                <template v-for="(blog, index) in blogs" :key="blog">
+    <!-- story -->
+    <div class="story">
+        <h1 class="story__title heading">story</h1>
+        <p class="story__subtitle subheading">story about us</p>
+        <div class="story__container">
+            <div class="story__column-left">
+                <template v-for="(story, index) in listStory" :key="story">
                     <template v-if="index % 2 === 0">
-                        <BlogItem
-                            :title="blog.title"
-                            :description="blog.description"
+                        <StoryItem
+                            :title="story.title"
+                            :description="story.description"
                         />
                     </template>
                 </template>
             </div>
-            <div class="blogs__column-middle">
+            <div class="story__column-middle">
                 <template v-for="i in 3" :key="i">
                     <div>
                         <template v-for="j in 3" :key="j">
@@ -114,18 +118,123 @@ const blogs = [
                     </div>
                 </template>
             </div>
-            <div class="blogs__column-right">
-                <template v-for="(blog, index) in blogs" :key="blog">
+            <div class="story__column-right">
+                <template v-for="(story, index) in listStory" :key="story">
                     <template v-if="index % 2 !== 0">
-                        <BlogItem
-                            :title="blog.title"
-                            :description="blog.description"
+                        <storyItem
+                            :title="story.title"
+                            :description="story.description"
                         />
                     </template>
                 </template>
             </div>
         </div>
     </div>
+    <!-- offer -->
+    <div class="offer">
+        <div class="offer__overlay"></div>
+        <div class="offer__left">
+            <h3 class="offer__heading">go & discover</h3>
+            <h1 class="offer__subheading">special offer</h1>
+            <p class="offer__desc">
+                Discover unique special offers and exciting savings just for
+                you.
+            </p>
+            <button class="offer__btn">CREATE AN ACCOUNT</button>
+        </div>
+        <div class="offer__right">
+            <div class="offer__percent">
+                <img src="@/assets/images/offer_percent.png" alt="" />
+            </div>
+            <img
+                class="offer__bg-rotate"
+                src="@/assets/images/offer.gif"
+                alt=""
+            />
+        </div>
+    </div>
+    <!-- review -->
+    <div class="review">
+        <h3 class="review__heading">Good reviews</h3>
+        <h1 class="review__subheading">
+            Over 50,000 satisfied customers worldwide
+        </h1>
+        <div class="review__list-rv">
+            <div class="review__list-item">
+                <div class="review__list-content">
+                    <p>
+                        Great service, friendly staff, well organized trip. Will
+                        continue to use Travel Booking's services.
+                    </p>
+                    <div class="stars">
+                        <img src="@/assets/images/Star_blue.png" alt="" />
+                        <img src="@/assets/images/Star_blue.png" alt="" />
+                        <img src="@/assets/images/Star_blue.png" alt="" />
+                        <img src="@/assets/images/Star_blue.png" alt="" />
+                        <img src="@/assets/images/Star_blue.png" alt="" />
+                    </div>
+                </div>
+                <div class="review__list-user">
+                    <h1 class="review__username">TUAN PHAT</h1>
+                    <p class="review__user-locate">New York</p>
+                    <img
+                        class="review__user-avatar"
+                        src="@/assets/images/user_avatar/bing_chilling.png"
+                        alt=""
+                    />
+                </div>
+            </div>
+            <div class="review__list-item">
+                <div class="review__list-content">
+                    <p>
+                        Great service, friendly staff, well organized trip. Will
+                        continue to use Travel Booking's services.
+                    </p>
+                    <div class="stars">
+                        <img src="@/assets/images/Star_blue.png" alt="" />
+                        <img src="@/assets/images/Star_blue.png" alt="" />
+                        <img src="@/assets/images/Star_blue.png" alt="" />
+                        <img src="@/assets/images/Star_blue.png" alt="" />
+                        <img src="@/assets/images/Star_blue.png" alt="" />
+                    </div>
+                </div>
+                <div class="review__list-user">
+                    <h1 class="review__username">TUAN PHAT</h1>
+                    <p class="review__user-locate">New York</p>
+                    <img
+                        class="review__user-avatar"
+                        src="@/assets/images/user_avatar/bing_chilling.png"
+                        alt=""
+                    />
+                </div>
+            </div>
+            <div class="review__list-item">
+                <div class="review__list-content">
+                    <p>
+                        Great service, friendly staff, well organized trip. Will
+                        continue to use Travel Booking's services.
+                    </p>
+                    <div class="stars">
+                        <img src="@/assets/images/Star_blue.png" alt="" />
+                        <img src="@/assets/images/Star_blue.png" alt="" />
+                        <img src="@/assets/images/Star_blue.png" alt="" />
+                        <img src="@/assets/images/Star_blue.png" alt="" />
+                        <img src="@/assets/images/Star_blue.png" alt="" />
+                    </div>
+                </div>
+                <div class="review__list-user">
+                    <h1 class="review__username">TUAN PHAT</h1>
+                    <p class="review__user-locate">New York</p>
+                    <img
+                        class="review__user-avatar"
+                        src="@/assets/images/user_avatar/bing_chilling.png"
+                        alt=""
+                    />
+                </div>
+            </div>
+        </div>
+    </div>
+    <BlogsList />
 </template>
 
 <style lang="scss" scoped>

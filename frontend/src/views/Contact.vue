@@ -19,6 +19,7 @@ const formSubmit = () => {
 <template>
     <div class="contact">
         <Pagination
+            video="src/assets/videos/contact.mp4"
             title="contact"
             :link="['home', 'contact']"
             :pagination="['Homepage', 'Contact']"

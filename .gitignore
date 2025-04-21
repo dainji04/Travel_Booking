@@ -1,4 +1,6 @@
+#frontend
 frontend/node_modules/
+frontend/package-lock.json
 frontend/dist/
 frontend/.env.local
 frontend/.env.*.local
@@ -14,5 +16,9 @@ frontend/*.ntvs*
 frontend/*.njsproj
 frontend/*.sln
 frontend/*.sw?
+
+#backend
 backend/node_modules
+backend/package-lock.json
+backend/.env.local
 .DS_Store
