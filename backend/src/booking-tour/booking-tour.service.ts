@@ -54,7 +54,7 @@ export class BookingTourService {
   async getBookingTour(id:number) {
     const found = await this.bookingTourRepo.findOne({
       where:{id},
-      relations:['bookingTour_user'],
+      relations:['bookingTour_user' , 'tour'],
       select: {
         id: true,
         bookingTour_Date: true,
