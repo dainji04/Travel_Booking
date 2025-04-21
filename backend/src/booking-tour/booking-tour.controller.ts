@@ -5,7 +5,7 @@ import { UpdateBookingTourDto } from './dto/update-booking-tour.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { BookingTour } from './entities/booking-tour.entity';
 import { Repository } from 'typeorm';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { AuthenticationGuard } from 'src/guard/authentication.guard';
 import { AuthorizeGuard } from 'src/guard/authorization.guard';
 import { Roles } from 'src/common/role_User.common';
@@ -19,7 +19,6 @@ import { BookingTourQueryDto } from './dto/search-booking-tour.dto';
 export class BookingTourController {
   constructor(private readonly bookingTourService: BookingTourService) {}
 
-  @ApiTags('Booking Tour')
   @AuthorizeRoles(Roles.ADMIN)
   @UseGuards(AuthenticationGuard , AuthorizeGuard)
   @Post(':userId')
@@ -59,12 +58,15 @@ export class BookingTourController {
 
   @Get('user/:userId')
   @AuthorizeRoles(Roles.ADMIN)
+  @ApiBearerAuth('token')
+
   @UseGuards(AuthenticationGuard , AuthorizeGuard)
   async getBookingTourByUserId(@Param('userId') userId: number) {
     const res = await this.bookingTourService.getBookingTourByUserId(userId);
     return res;
   } 
   @Get()
+  @ApiBearerAuth('token')
   @AuthorizeRoles(Roles.ADMIN , Roles.USER) 
   @UseGuards(AuthenticationGuard , AuthorizeGuard)
   async getAllBookingTour(@Query() query: BookingTourQueryDto) {

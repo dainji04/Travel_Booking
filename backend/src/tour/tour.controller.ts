@@ -22,7 +22,7 @@ export class TourController {
   }
 
 @Get(':id')
-@AuthorizeRoles(Roles.ADMIN)
+@AuthorizeRoles(Roles.USER)
 @UseGuards(AuthenticationGuard , AuthorizeGuard)
 async getOne(@Param('id', ParseIntPipe) id: number) {
   return this.tourService.getOne(id);
@@ -38,6 +38,25 @@ async getOne(@Param('id', ParseIntPipe) id: number) {
 async findAll(@Query() searchTourDto: SearchTourDto) {
   return this.tourService.findAll(searchTourDto);
 }
+
+@Patch(':id')
+@AuthorizeRoles(Roles.ADMIN , Roles.USER)
+@UseGuards(AuthenticationGuard , AuthorizeGuard)
+async update(
+  @Param('id', ParseIntPipe) id: number,
+  @Body() updateTourDto: UpdateTourDto,
+) {
+  const res = await this.tourService.update(+id, updateTourDto)
+  console.log( 'res from service', res)
+  return res
+}
+@Delete(':id')
+@AuthorizeRoles(Roles.ADMIN , Roles.USER)
+@UseGuards(AuthenticationGuard , AuthorizeGuard)
+async remove(@Param('id', ParseIntPipe) id: number) {
+  return this.tourService.remove(id);
+}
+
 
 
 

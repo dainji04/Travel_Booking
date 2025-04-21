@@ -100,5 +100,51 @@ export class TourService {
     
   }
 
+  async update(id: number, updateTourDto: UpdateTourDto) {
+    const tour = await this.tourRepository.findOne({ where: { id } });
+    if (!tour) {
+      throw new NotFoundException('Không tìm thấy tour');
+    }
+  
+    const now = new Date();
+    const tourStart = new Date(tour.tour_start);
+
+    //check tour da bat dau
+    if (tourStart <= now) {
+      throw new BadRequestException('Không thể chỉnh sửa tour đã bắt đầu');
+    }
+  
+    //check tour thoi gian 
+    if (updateTourDto.tour_start && new Date(updateTourDto.tour_start) <= now) {
+      throw new BadRequestException('Ngày bắt đầu tour không được ở quá khứ');
+    }
+  
+    if (
+      updateTourDto.tour_start &&
+      updateTourDto.tour_end &&
+      new Date(updateTourDto.tour_end) <= new Date(updateTourDto.tour_start)
+    ) {
+      throw new BadRequestException('Ngày kết thúc phải sau ngày bắt đầu');
+    }
+  
+    const updatedTour = this.tourRepository.merge(tour, updateTourDto);
+    return this.tourRepository.save(updatedTour);
+  }
+  
+  async remove(id: number) {
+    const tour = await this.tourRepository.findOne({ where: { id } });
+    if (!tour) {
+      throw new NotFoundException('Không tìm thấy tour');
+    }
+
+    if (tour.bookingTours && tour.bookingTours.length > 0) {
+      throw new BadRequestException('Tour đã có người đặt không thể xóa');
+    }
+
+    return this.tourRepository.remove(tour);
+  }
+
+  
+
 
 }
