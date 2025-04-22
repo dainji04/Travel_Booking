@@ -24,8 +24,8 @@ export class TourService {
     if (new Date(createTourDto.tour_start) < new Date()) {
       throw new BadRequestException('tour phải là ngày trong tương lai');
     }
-    if (new Date(createTourDto.tour_start) <= new Date(createTourDto.tour_end)) {
-      throw new BadRequestException('bắt đầu tour phải trước kết thúc tour');
+    if (new Date(createTourDto.tour_start) >= new Date(createTourDto.tour_end)) {
+      throw new BadRequestException('Ngày bắt đầu phải trước ngày kết thúc');
     }
 
     const overlappingTour = await this.tourRepository.createQueryBuilder('tour')
@@ -96,7 +96,14 @@ export class TourService {
       qb.orderBy('tour.tour_start', sort === 'asc' ? 'ASC' : 'DESC');
     }
 
-    return qb.getManyAndCount();
+    const [data, total] = await qb.getManyAndCount();
+    return {
+      data,
+      total,
+      page: Number(page),
+      limit: Number(limit),
+      totalPage: Math.ceil(total / limit),
+    }
     
   }
 
@@ -108,6 +115,19 @@ export class TourService {
   
     const now = new Date();
     const tourStart = new Date(tour.tour_start);
+
+
+    //check trungff
+    const overlappingTour = await this.tourRepository.createQueryBuilder('tour')
+      .where('tour.id != :id', { id })
+      .andWhere('tour.tour_start < :end AND tour.tour_end > :start', {
+        start: updateTourDto.tour_start,
+        end: updateTourDto.tour_end,
+      })
+      .getMany();
+    if (overlappingTour.length > 0) {
+      throw new BadRequestException('Tour không thể trùng với tour khác');
+    }
 
     //check tour da bat dau
     if (tourStart <= now) {
@@ -132,7 +152,7 @@ export class TourService {
   }
   
   async remove(id: number) {
-    const tour = await this.tourRepository.findOne({ where: { id } });
+    const tour = await this.tourRepository.findOne({ where: { id }  ,relations:['bookingTours'] } );
     if (!tour) {
       throw new NotFoundException('Không tìm thấy tour');
     }
