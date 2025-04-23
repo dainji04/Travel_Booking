@@ -8,11 +8,13 @@ import { EmailModule } from './email/email.module';
 import { BookingTourModule } from './booking-tour/booking-tour.module';
 import { CurrentUserMiddleware } from './middleware/current-user.middleware';
 import { TourModule } from './tour/tour.module';
+import { RatingModule } from './rating/rating.module';
+import { LocationModule } from './location/location.module';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot(dataSourceOptions)
-    ,UserModule, EmailModule, BookingTourModule, TourModule],
+    ,UserModule, EmailModule, BookingTourModule, TourModule, RatingModule, LocationModule],
   controllers: [AppController],
   providers: [AppService],
 })

@@ -1,5 +1,7 @@
 import { BookingTour } from "src/booking-tour/entities/booking-tour.entity";
-import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Location } from "src/location/entities/location.entity";
+import { Rating } from "src/rating/entities/rating.entity";
+import { Column, CreateDateColumn, Entity, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Tour {
@@ -20,6 +22,13 @@ export class Tour {
 
     @OneToMany(() => BookingTour , (bookingTour) => bookingTour.tour)
     bookingTours: BookingTour[];
+
+
+    @ManyToOne(() => Location , location => location.tours)
+    location: Location;
+
+    @OneToMany(() => Rating, (rating) => rating.tour)
+    ratings: Rating[];
 
     @CreateDateColumn()
     createdAt: Date;

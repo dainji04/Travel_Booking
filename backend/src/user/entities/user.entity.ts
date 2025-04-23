@@ -1,6 +1,7 @@
 import { BookingTourService } from "src/booking-tour/booking-tour.service";
 import { BookingTour } from "src/booking-tour/entities/booking-tour.entity";
 import { Roles } from "src/common/role_User.common";
+import { Rating } from "src/rating/entities/rating.entity";
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
@@ -27,4 +28,8 @@ export class User {
 
     @OneToMany(() => BookingTour , bt => bt.bookingTour_user)
     bookingTour:BookingTour[]
+
+
+    @OneToMany(() => Rating , rating => rating.user)
+    ratings:Rating[]
 }

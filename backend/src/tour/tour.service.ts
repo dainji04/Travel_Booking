@@ -5,13 +5,21 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Tour } from './entities/tour.entity';
 import { Repository } from 'typeorm';
 import { SearchTourDto } from './dto/search-tour.dto';
+import { LocationService } from 'src/location/location.service';
 
 @Injectable()
 export class TourService {
   constructor(
     @InjectRepository(Tour) private readonly tourRepository: Repository<Tour>,
+    private readonly locationService: LocationService,
   ) {}
   async create(createTourDto: CreateTourDto) {
+    const { locationId } = createTourDto;
+    const location = await this.locationService.findOne(locationId);
+    if (!location) {
+      throw new NotFoundException('Không tìm thấy địa điểm');
+    }
+    
     const now = new Date();
     const maxDurationDays = 30;
     const start = new Date(createTourDto.tour_start);
@@ -33,13 +41,17 @@ export class TourService {
         start: createTourDto.tour_start,
         end: createTourDto.tour_end,
       })
+      .andWhere('tour.locationId = :locationId', { locationId })
       .getMany();
 
     if (overlappingTour.length > 0) {
       throw new BadRequestException('Tour không thể trùng với tour khác');
     }
 
-    const tour = this.tourRepository.create(createTourDto);
+    const tour = this.tourRepository.create({
+      ...createTourDto,
+      location
+    });
 
     if (tour.bookingTours && tour.bookingTours.length > 0) {
       throw new BadRequestException('Tour đã có người đặt không thể xóa');
@@ -55,7 +67,7 @@ export class TourService {
   async getOne(id: number) {
     const foundTour = await this.tourRepository.findOne({
       where: { id },
-      relations: ['bookingTours'],
+      relations: ['bookingTours' , 'location' , 'ratings'],
     });
     if (!foundTour) {
       throw new NotFoundException('Không tìm thấy tour');
