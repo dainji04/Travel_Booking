@@ -97,10 +97,10 @@ const tourTipsContentRight = ref([]);
 onMounted(() => {
     startAutoPlay();
     const gsapAnimate = () => {
-        const ImageLeft = tourTipsImageLeft.value[0];
-        const imageRight = tourTipsImageRight.value[0];
-        const contentLeft = tourTipsContentLeft.value[0];
-        const contentRight = tourTipsContentRight.value[0];
+        const ImageLeft = tourTipsImageLeft.value;
+        const imageRight = tourTipsImageRight.value;
+        const contentLeft = tourTipsContentLeft.value;
+        const contentRight = tourTipsContentRight.value;
 
         gsap.from(ImageLeft, {
             scrollTrigger: {
@@ -282,74 +282,97 @@ onMounted(() => {
                 </h2>
             </div>
             <div class="tour-tips__list">
-                <template v-for="(tour, index) in tours">
-                    <div class="tour-tips__box">
-                        <div
-                            class="tour-tips__image"
-                            :class="[
-                                index % 2 == 0
-                                    ? 'tour-tips__image--left'
-                                    : 'tour-tips__image--right',
-                            ]"
-                            :style="{
-                                background: `url(${tour.img}) center/cover no-repeat`,
-                            }"
-                            :ref="
-                                index % 2 === 0
-                                    ? 'tourTipsImageLeft'
-                                    : 'tourTipsImageRight'
-                            "
+                <div class="tour-tips__box">
+                    <div
+                        class="tour-tips__image tour-tips__image--left"
+                        style="
+                            background: url(src/assets/images/tour-tips1.png)
+                                center/cover no-repeat;
+                        "
+                        ref="tourTipsImageLeft"
+                    >
+                        <button
+                            class="tour-tips__camera-btn tour-tips__camera-btn--left"
                         >
-                            <button
-                                class="tour-tips__camera-btn"
-                                :class="
-                                    index % 2 === 0
-                                        ? 'tour-tips__camera-btn--left'
-                                        : 'tour-tips__camera-btn--right'
-                                "
-                            >
-                                <img
-                                    loading="lazy"
-                                    src="@/assets/fonts/camera.svg"
-                                    alt=""
-                                />Camera
-                            </button>
-                        </div>
-                        <div
-                            class="tour-tips__content"
-                            :class="[
-                                index % 2 == 0
-                                    ? 'tour-tips__content--right'
-                                    : 'tour-tips__content--left',
-                            ]"
-                            :ref="
-                                index % 2 == 0
-                                    ? 'tourTipsContentRight'
-                                    : 'tourTipsContentLeft'
-                            "
-                        >
-                            <div class="tour-tips__title-box">
-                                <img
-                                    loading="lazy"
-                                    src="@/assets/fonts/calendar.svg"
-                                    alt=""
-                                />
-                                <h3 class="tour-tips__title">
-                                    {{ tour.calendar }}
-                                </h3>
-                            </div>
-                            <h3 class="tour-tips__subtitle">
-                                {{ tour.title }}
-                            </h3>
-                            <p class="tour-tips__description">
-                                {{ tour.description }}
-                            </p>
-                            <button class="tour-tips__button button-primary">
-                                read more
-                            </button>
-                        </div>
+                            <img
+                                loading="lazy"
+                                src="@/assets/fonts/camera.svg"
+                                alt=""
+                            />Camera
+                        </button>
                     </div>
-                </template>
+                    <div
+                        class="tour-tips__content tour-tips__content--right"
+                        ref="tourTipsContentRight"
+                    >
+                        <div class="tour-tips__title-box">
+                            <img
+                                loading="lazy"
+                                src="@/assets/fonts/calendar.svg"
+                                alt=""
+                            />
+                            <h3 class="tour-tips__title">April 22, 2025</h3>
+                        </div>
+                        <h3 class="tour-tips__subtitle">
+                            Top 10 things to do when coming to Hoi An
+                        </h3>
+                        <p class="tour-tips__description">
+                            Hoi An's Ancient Town is a well preserved historical
+                            site, known for its blend of traditional Vietnamese,
+                            Chinese, and Japanese architecture. The charming
+                            streets, lantern-lit evenings, and vibrant markets
+                            make it a UNESCO World Heritage gem.
+                        </p>
+                        <button class="tour-tips__button button-primary">
+                            read more
+                        </button>
+                    </div>
+                </div>
+                <div class="tour-tips__box">
+                    <div
+                        class="tour-tips__image tour-tips__image--right"
+                        style="
+                            background: url(src/assets/images/tour-tips2.png)
+                                center/cover no-repeat;
+                        "
+                        ref="tourTipsImageRight"
+                    >
+                        <button
+                            class="tour-tips__camera-btn tour-tips__camera-btn--right"
+                        >
+                            <img
+                                loading="lazy"
+                                src="@/assets/fonts/camera.svg"
+                                alt=""
+                            />Camera
+                        </button>
+                    </div>
+                    <div
+                        class="tour-tips__content tour-tips__content--left"
+                        ref="tourTipsContentLeft"
+                    >
+                        <div class="tour-tips__title-box">
+                            <img
+                                loading="lazy"
+                                src="@/assets/fonts/calendar.svg"
+                                alt=""
+                            />
+                            <h3 class="tour-tips__title">July 31, 2025</h3>
+                        </div>
+                        <h3 class="tour-tips__subtitle">
+                            See the earliest sunrise in Vietnam at Phu Yen
+                        </h3>
+                        <p class="tour-tips__description">
+                            The earliest sunrise in Vietnam can be seen at Cape
+                            Dai Lanh in Phu Yen, where the first rays of
+                            sunlight light up the ocean. This picturesque spot
+                            offers a serene and breathtaking start to the day.
+                        </p>
+                        <button class="tour-tips__button button-primary">
+                            read more
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
         <!-- ticket -->
