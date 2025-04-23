@@ -1,10 +1,11 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateLocationDto } from './dto/create-location.dto';
 import { UpdateLocationDto } from './dto/update-location.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Location } from './entities/location.entity';
 import { Repository } from 'typeorm';
 import { Tour } from 'src/tour/entities/tour.entity';
+import { SearchLocationDto } from './dto/search-location.dto';
 
 @Injectable()
 export class LocationService {
@@ -14,9 +15,13 @@ export class LocationService {
     @InjectRepository(Tour) private readonly tourRepository: Repository<Tour>,
   ) {}
   async create(createLocationDto: CreateLocationDto): Promise<Location> {
-    const location = this.locationRepository.create({
-      ...createLocationDto,
+    const existingLocation = await this.locationRepository.findOne({
+      where: { location_Name: createLocationDto.location_Name },
     });
+    if (existingLocation) {
+      throw new BadRequestException('Location already exists');
+    }
+    const location = this.locationRepository.create(createLocationDto);
     return await this.locationRepository.save(location);
   }
 
@@ -71,5 +76,41 @@ export class LocationService {
       }))
     };
   }
+
+  async findAll(query: SearchLocationDto) {
+    const { search, sort = 'id', order = 'ASC', page = 1, limit = 10 } = query;
+    const skip = (page - 1) * limit;
+  
+    const qb = this.locationRepository.createQueryBuilder('location');
+  
+    if (search) {
+      qb.where('LOWER(location.location_Name) LIKE :search', {
+        search: `%${search.toLowerCase()}%`,
+      });
+    }
+  
+    const allowedSortFields = ['id', 'location_Name', 'createdAt', 'updatedAt'];
+    if (allowedSortFields.includes(sort)) {
+      qb.orderBy(`location.${sort}`, order.toUpperCase() === 'DESC' ? 'DESC' : 'ASC');
+    } else {
+      qb.orderBy('location.id', 'ASC'); 
+    }
+  
+    qb.skip(skip).take(limit);
+  
+    const [locations, total] = await qb.getManyAndCount();
+  
+    return {
+      data: locations,
+      meta: {
+        total,
+        page,
+        limit,
+        lastPage: Math.ceil(total / limit),
+      },
+    };
+  }
+  
+
   
 }
