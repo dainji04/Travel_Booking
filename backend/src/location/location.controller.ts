@@ -29,7 +29,7 @@ export class LocationController {
     return await this.locationService.findOneWithTours(id);
   }
 
-
+ 
   @Get()
   @AuthorizeRoles(Roles.ADMIN , Roles.USER)
   @UseGuards(AuthenticationGuard , AuthorizeGuard)

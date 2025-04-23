@@ -12,6 +12,9 @@ export class CreateRatingDto {
     @IsNotEmpty()
     tourId: number;
 
+    @IsOptional()
+    userId: number;
+
  
     
 }

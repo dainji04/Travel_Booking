@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateRatingDto } from './dto/create-rating.dto';
 import { UpdateRatingDto } from './dto/update-rating.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -16,6 +16,22 @@ export class RatingService {
   ){}
 
   async create(createRatingDto: CreateRatingDto) {
+    const user = await this.userUservice.findOne(createRatingDto.userId);
+
+    const existingRating = await this.ratingRepository.findOne({
+      where:{
+        user:{id:createRatingDto.userId} ,
+        tour:{id:createRatingDto.tourId}
+      }
+    })
+    if(existingRating) {
+      throw new BadRequestException('You have already rated this tour');
+    }
+
+    if(createRatingDto.rating < 1 || createRatingDto.rating > 5) {
+      throw new NotFoundException('Rating must be between 1 and 5');
+    }
+
 
     const tour = await this.tourService.getOne(createRatingDto.tourId);
     if(!tour) {
@@ -24,9 +40,9 @@ export class RatingService {
     const rating = await this.ratingRepository.create({
       ...createRatingDto,
       tour,
+      user
     });
     return await this.ratingRepository.save(rating);
-   
   }
   
 }
