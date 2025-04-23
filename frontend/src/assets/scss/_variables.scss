@@ -1,9 +1,12 @@
-$font-primary: 'Italiana';
+$font-primary: 'Italiana'; // should be --primary
 $font-secondary: 'Agdasima';
 $font-tertiary: 'Italiana';
 
-$color-primary: #f37916;
-$color-blue: #18e8eb;
+$color-primary: #f37916; // --primary
+$color-blue: #18e8eb; // --blue
+$color--white: #fff;
+$color--black: #000;
+$color--gray: #ccc;
 $error-color: #ff0000b9;
 
 $bg-color: #6aa4d63f;
