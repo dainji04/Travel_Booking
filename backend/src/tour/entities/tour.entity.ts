@@ -1,4 +1,5 @@
 import { BookingTour } from "src/booking-tour/entities/booking-tour.entity";
+import { Hotel } from "src/hotel/entities/hotel.entity";
 import { Location } from "src/location/entities/location.entity";
 import { Rating } from "src/rating/entities/rating.entity";
 import { Column, CreateDateColumn, Entity, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
@@ -32,4 +33,7 @@ export class Tour {
 
     @CreateDateColumn()
     createdAt: Date;
+
+    @ManyToOne(() => Hotel , hotel => hotel.tours)
+    hotel: Hotel;
 }

@@ -10,11 +10,12 @@ import { CurrentUserMiddleware } from './middleware/current-user.middleware';
 import { TourModule } from './tour/tour.module';
 import { RatingModule } from './rating/rating.module';
 import { LocationModule } from './location/location.module';
+import { HotelModule } from './hotel/hotel.module';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot(dataSourceOptions)
-    ,UserModule, EmailModule, BookingTourModule, TourModule, RatingModule, LocationModule],
+    ,UserModule, EmailModule, BookingTourModule, TourModule, RatingModule, LocationModule, HotelModule],
   controllers: [AppController],
   providers: [AppService],
 })
