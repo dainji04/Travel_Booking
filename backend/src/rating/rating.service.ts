@@ -44,5 +44,46 @@ export class RatingService {
     });
     return await this.ratingRepository.save(rating);
   }
+
+
+  async update(id:number,updateRatingDto:UpdateRatingDto) {
+    
+    const rating = await this.ratingRepository.findOne({where:{id} , relations:['tour' , 'user']});
+    if(!rating) {
+      throw new NotFoundException('Rating not found');
+    }
+    if(updateRatingDto.rating && (updateRatingDto.rating < 1 || updateRatingDto.rating > 5)) {
+      throw new BadRequestException('Rating must be between 1 and 5');
+    }
+    return await this.ratingRepository.save({
+      ...rating,
+      ...updateRatingDto
+    });
+  }
+
+
+  async getOne(id:number) {
+    const rating = await this.ratingRepository.findOne({where:{id} , relations:['tour' , 'user']});
+    if(!rating) {
+      throw new NotFoundException('Rating not found');
+    }
+    return rating;
+  }
+
+  async remove(id: number) {
+    const rating = await this.ratingRepository.findOne({where:{id} , relations:['tour' , 'user']});
+    if(!rating) {
+      throw new NotFoundException('Rating not found');
+    }
+    return await this.ratingRepository.remove(rating);
+  }
+    
+  async getAvgRatingForTour(tourId: number) {
+    const rs = await this.ratingRepository.createQueryBuilder('rating')
+    .select('AVG(rating.rating)', 'avg')
+    .where('rating.tourId = :tourId', { tourId })
+    .getRawOne();
+    return parseFloat(rs.avg) || 0;
+   }
   
 }
