@@ -10,8 +10,6 @@ import { AuthenticationGuard } from 'src/guard/authentication.guard';
 import { AuthorizeGuard } from 'src/guard/authorization.guard';
 import { Roles } from 'src/common/role_User.common';
 import { AuthorizeRoles } from 'src/decorators/authorize.roles.decorator';
-import { get } from 'http';
-import { query } from 'express';
 import { BookingTourQueryDto } from './dto/search-booking-tour.dto';
 
 @Controller('booking-tour')
