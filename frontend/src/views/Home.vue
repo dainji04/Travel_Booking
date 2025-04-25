@@ -6,39 +6,28 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import BlogsList from '@/components/BlogsList.vue';
 import TicketList from '@/components/TicketList.vue';
 
+import slide1 from '@/assets/images/image1.jpg';
+import slide2 from '@/assets/images/image2.jpg';
+import slide3 from '@/assets/images/image3.jpg';
+import slide4 from '@/assets/images/image4.jpg';
+import slide5 from '@/assets/images/image5.jpg';
+
 gsap.registerPlugin(ScrollTrigger);
 
 // import Loading from '@/components/loadingPages.vue';
 // const loading = ref(true);
-
-const tours = [
-    {
-        img: 'src/assets/images/tour-tips1.png',
-        title: 'Top 10 things to do when coming to Hoi An',
-        calendar: 'April 22, 2025',
-        description:
-            "Hoi An's Ancient Town is a well preserved historical site, known for its blend of traditional Vietnamese, Chinese, and Japanese architecture. The charming streets, lantern-lit evenings, and vibrant markets make it a UNESCO World Heritage gem.",
-    },
-    {
-        img: 'src/assets/images/tour-tips2.png',
-        title: 'See the earliest sunrise in Vietnam at Phu Yen',
-        calendar: 'July 31, 2025',
-        description:
-            'The earliest sunrise in Vietnam can be seen at Cape Dai Lanh in Phu Yen, where the first rays of sunlight light up the ocean. This picturesque spot offers a serene and breathtaking start to the day.',
-    },
-];
 const imagesSlide = [
     {
         id: 1,
-        image1: 'src/assets/images/image1.jpg',
-        image2: 'src/assets/images/image2.jpg',
+        image1: slide1,
+        image2: slide2,
         description:
             'Vietnam has a rich history, shaped by centuries of dynasties, wars, and foreign influences. Its culture is a blend of indigenous traditions and external elements, creating a unique identity in art, music, and cuisine. The country’s festivals, literature, and ancient architecture reflect its deep cultural heritage.',
     },
     {
         id: 2,
-        image1: 'src/assets/images/image3.jpg',
-        image2: 'src/assets/images/image4.jpg',
+        image1: slide3,
+        image2: slide4,
         description:
             'Vietnam has a rich history, shaped by centuries of dynasties, wars, and foreign influences. Its culture is a blend of indigenous traditions and external elements, creating a unique identity in art, music, and cuisine. The country’s festivals, literature, and ancient architecture reflect its deep cultural heritage.',
     },
@@ -51,7 +40,7 @@ const imagesSlide = [
     },
     {
         id: 4,
-        image1: 'src/assets/images/image5.jpg',
+        image1: slide5,
         image2: 'https://epicureandculture.com/wp-content/uploads/2015/11/rsz_machu_picchu.jpg',
         description:
             'Vietnam is a land of stunning landscapes, from misty mountains to beautiful beaches. Its rich culture and vibrant cities offer a perfect blend of nature and history.',
@@ -285,10 +274,6 @@ onMounted(() => {
                 <div class="tour-tips__box">
                     <div
                         class="tour-tips__image tour-tips__image--left"
-                        style="
-                            background: url(src/assets/images/tour-tips1.png)
-                                center/cover no-repeat;
-                        "
                         ref="tourTipsImageLeft"
                     >
                         <button
@@ -331,10 +316,6 @@ onMounted(() => {
                 <div class="tour-tips__box">
                     <div
                         class="tour-tips__image tour-tips__image--right"
-                        style="
-                            background: url(src/assets/images/tour-tips2.png)
-                                center/cover no-repeat;
-                        "
                         ref="tourTipsImageRight"
                     >
                         <button
@@ -375,7 +356,7 @@ onMounted(() => {
                 </div>
             </div>
         </div>
-        <!-- ticket -->
+        <!-- ticket, great tour -->
         <TicketList />
         <!-- cities -->
         <div class="cities">

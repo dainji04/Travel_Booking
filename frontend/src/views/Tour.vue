@@ -1,39 +1,47 @@
 <script setup lang="ts">
 import Pagination from '@/components/Pagination.vue';
 import TicketList from '@/components/TicketList.vue';
+
+import hueImg from '@/assets/images/tour_available/hue.png';
+import BuonMeThuotImg from '@/assets/images/tour_available/buon_me_thuot.png';
+import HaNoiImg from '@/assets/images/tour_available/ha_noi.png';
+import MangDenImg from '@/assets/images/tour_available/mang_den.png';
+import PhuYenImg from '@/assets/images/tour_available/phu_yen.png';
+import NinhThuanImg from '@/assets/images/tour_available/ninh_thuan.png';
+
 const tourAvailable = [
     {
-        img: 'src/assets/images/tour_available/hue.png',
+        img: hueImg,
         title: 'Hue',
         tourNumber: 1,
         slug: 'hue',
     },
     {
-        img: 'src/assets/images/tour_available/ha_noi.png',
+        img: HaNoiImg,
         title: 'Ha Noi',
         tourNumber: 1,
         slug: 'ha-noi',
     },
     {
-        img: 'src/assets/images/tour_available/buon_me_thuot.png',
+        img: BuonMeThuotImg,
         title: 'Buon Me Thuot',
         tourNumber: 1,
         slug: 'buon-me-thuot',
     },
     {
-        img: 'src/assets/images/tour_available/mang_den.png',
+        img: MangDenImg,
         title: 'Mang Den',
         tourNumber: 1,
         slug: 'mang-den',
     },
     {
-        img: 'src/assets/images/tour_available/phu_yen.png',
+        img: PhuYenImg,
         title: 'Phu Yen',
         tourNumber: 1,
         slug: 'phu-yen',
     },
     {
-        img: 'src/assets/images/tour_available/ninh_thuan.png',
+        img: NinhThuanImg,
         title: 'Ninh Thuan',
         tourNumber: 1,
         slug: 'ninh-thuan',

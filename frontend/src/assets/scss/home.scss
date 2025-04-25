@@ -185,10 +185,12 @@
         opacity: 0;
 
         &--right {
+            background: url(../images/tour-tips2.png) center/cover no-repeat;
             right: 0;
         }
 
         &--left {
+            background: url(../images/tour-tips1.png) center/cover no-repeat;
             left: 0;
         }
     }
@@ -481,5 +483,12 @@
 
     &__right {
         height: 100%;
+    }
+}
+
+.active {
+    background-color: #fff;
+    p {
+        color: $color-primary;
     }
 }
