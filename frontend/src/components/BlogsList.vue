@@ -1,19 +1,25 @@
 <script setup lang="ts">
+
+
+import hoianBlog from '@/assets/images/hoianBlog.png';
+import daklakBlog from '@/assets/images/daklakBlog.png';
+import phuyenBlog from '@/assets/images/phuyenBlog.png';
+
 const blogs = [
     {
-        img: 'src/assets/images/hoianBlog.png',
+        img: hoianBlog,
         title: 'Top 10 things to do when coming to Hoi An',
         description:
             "Hoi An's Ancient Town is a well-preserved historical site, known for its blend of traditional Vietnamese, Chinese, and Japanese architecture. The charming streets, lantern-lit evenings, and vibrant markets make it a UNESCO World Heritage gem.",
     },
     {
-        img: 'src/assets/images/daklakBlog.png',
+        img: daklakBlog,
         title: 'Top 10 things to do when coming to Hoi An',
         description:
             "Hoi An's Ancient Town is a well-preserved historical site, known for its blend of traditional Vietnamese, Chinese, and Japanese architecture. The charming streets, lantern-lit evenings, and vibrant markets make it a UNESCO World Heritage gem.",
     },
     {
-        img: 'src/assets/images/phuyenBlog.png',
+        img: phuyenBlog,
         title: 'Top 10 things to do when coming to Hoi An',
         description:
             "Hoi An's Ancient Town is a well-preserved historical site, known for its blend of traditional Vietnamese, Chinese, and Japanese architecture. The charming streets, lantern-lit evenings, and vibrant markets make it a UNESCO World Heritage gem.",
@@ -54,10 +60,8 @@ const blogs = [
 <style lang="scss">
 @use '@/assets/scss/variables' as *;
 .blogs {
-    margin: 200px 0;
+    margin: 200px 150px 0;
     font-family: $font-secondary;
-    margin-left: 150px;
-    margin-right: 150px;
 
     &__header {
         display: grid;

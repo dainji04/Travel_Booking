@@ -33,6 +33,7 @@ const props = withDefaults(defineProps<Props>(), {
             loop
             muted
             playsinline
+            poster="https://cms.junglebosstours.com/assets/d8e58d9e-4d8b-40bc-8601-afe4f7df62ca?format=webp"
         >
             <source :src="props.video" type="video/mp4" />
         </video>
