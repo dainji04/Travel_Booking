@@ -11,6 +11,7 @@ export class RatingController {
 
   @Post()
   @ApiOperation({ summary: 'Create a rating' })
+
   @ApiResponse({ status: HttpStatus.CREATED, description: 'Rating created successfully' })
   async create(@Body() createRatingDto: CreateRatingDto) {
     const result = await this.ratingService.create(createRatingDto);

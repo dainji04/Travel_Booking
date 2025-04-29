@@ -3,6 +3,7 @@ import { AppModule } from './app.module';
 import * as dotenv from 'dotenv';
 import * as cookieParser from 'cookie-parser'
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { ValidationPipe } from '@nestjs/common';
 
 dotenv.config();
 
@@ -16,6 +17,7 @@ async function bootstrap() {
     credentials:true,
     methods:'GET,HEAD,PUT,PATCH,POST,DELETE'
   })
+  app.useGlobalPipes(new ValidationPipe({whitelist:true,forbidNonWhitelisted:true}))
   const config = new DocumentBuilder()
   .setTitle('API Documentation')
   .setDescription('API description')

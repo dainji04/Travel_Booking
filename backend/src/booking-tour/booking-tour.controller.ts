@@ -1,16 +1,24 @@
-import { Controller, Get, Post, Body,  Param, Delete, UseGuards, Patch, Query } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Delete,
+  UseGuards,
+  Patch,
+  Query,
+} from '@nestjs/common';
 import { BookingTourService } from './booking-tour.service';
 import { CreateBookingTourDto } from './dto/create-booking-tour.dto';
 import { UpdateBookingTourDto } from './dto/update-booking-tour.dto';
-import { InjectRepository } from '@nestjs/typeorm';
-import { BookingTour } from './entities/booking-tour.entity';
-import { Repository } from 'typeorm';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags, ApiOkResponse, ApiCreatedResponse, ApiNotFoundResponse, ApiBadRequestResponse, ApiQuery } from '@nestjs/swagger';
 import { AuthenticationGuard } from 'src/guard/authentication.guard';
 import { AuthorizeGuard } from 'src/guard/authorization.guard';
 import { Roles } from 'src/common/role_User.common';
 import { AuthorizeRoles } from 'src/decorators/authorize.roles.decorator';
 import { BookingTourQueryDto } from './dto/search-booking-tour.dto';
+import { BookingTour } from './entities/booking-tour.entity';
 
 @Controller('booking-tour')
 @ApiTags('Booking Tour')
@@ -18,59 +26,63 @@ export class BookingTourController {
   constructor(private readonly bookingTourService: BookingTourService) {}
 
   @AuthorizeRoles(Roles.ADMIN)
-  @UseGuards(AuthenticationGuard , AuthorizeGuard)
+  @UseGuards(AuthenticationGuard, AuthorizeGuard)
   @Post(':userId')
+  @ApiCreatedResponse({ description: 'Đặt tour thành công', type: BookingTour })
+  @ApiBadRequestResponse({ description: 'Dữ liệu không hợp lệ' })
   async createBookingTour(
-    @Param('userId') userId:number,
-    @Body() createBookingTour:CreateBookingTourDto
+    @Param('userId') userId: number,
+    @Body() createBookingTour: CreateBookingTourDto,
   ) {
-    const res = await this.bookingTourService.createBookingTour(userId,createBookingTour)
-    return res
+    return this.bookingTourService.createBookingTour(userId, createBookingTour);
   }
 
   @Get(':id')
   @AuthorizeRoles(Roles.ADMIN)
-  @UseGuards(AuthenticationGuard , AuthorizeGuard)
+  @UseGuards(AuthenticationGuard, AuthorizeGuard)
+  @ApiOkResponse({ description: 'Lấy thông tin booking tour theo ID thành công', type: BookingTour })
+  @ApiNotFoundResponse({ description: 'Không tìm thấy booking tour' })
   async getBookingTour(@Param('id') id: number) {
-    const res = await this.bookingTourService.getBookingTour(id)
-    return res
+    return this.bookingTourService.getBookingTour(id);
   }
+
   @Patch(':id')
   @AuthorizeRoles(Roles.ADMIN)
-  @UseGuards(AuthenticationGuard , AuthorizeGuard)
+  @UseGuards(AuthenticationGuard, AuthorizeGuard)
+  @ApiOkResponse({ description: 'Cập nhật booking tour thành công', type: BookingTour })
+  @ApiNotFoundResponse({ description: 'Không tìm thấy booking tour để cập nhật' })
   async updateBookingTour(
     @Param('id') id: number,
-    @Body() updateBookingTour: UpdateBookingTourDto
+    @Body() updateBookingTour: UpdateBookingTourDto,
   ) {
-    const res = await this.bookingTourService.updateBookingTour(id, updateBookingTour);
-    return res;
+    return this.bookingTourService.updateBookingTour(id, updateBookingTour);
   }
 
   @Delete(':id')
   @AuthorizeRoles(Roles.ADMIN)
-  @UseGuards(AuthenticationGuard , AuthorizeGuard)
+  @UseGuards(AuthenticationGuard, AuthorizeGuard)
+  @ApiOkResponse({ description: 'Xoá booking tour thành công' })
+  @ApiNotFoundResponse({ description: 'Không tìm thấy booking tour để xoá' })
   async removeBookingTour(@Param('id') id: number) {
-    const res = await this.bookingTourService.removeBookingTour(id);
-    return res;
+    return this.bookingTourService.removeBookingTour(id);
   }
 
   @Get('user/:userId')
-  @AuthorizeRoles(Roles.ADMIN)
+  @AuthorizeRoles(Roles.ADMIN, Roles.USER)
   @ApiBearerAuth('token')
-
-  @UseGuards(AuthenticationGuard , AuthorizeGuard)
+  @UseGuards(AuthenticationGuard, AuthorizeGuard)
+  @ApiOkResponse({ description: 'Lấy danh sách booking tour theo user', type: [BookingTour] })
   async getBookingTourByUserId(@Param('userId') userId: number) {
-    const res = await this.bookingTourService.getBookingTourByUserId(userId);
-    return res;
-  } 
-  @Get()
-  @ApiBearerAuth('token')
-  @AuthorizeRoles(Roles.ADMIN , Roles.USER) 
-  @UseGuards(AuthenticationGuard , AuthorizeGuard)
-  async getAllBookingTour(@Query() query: BookingTourQueryDto) {
-    const res = await this.bookingTourService.getAllBookingTour(query);
-    return res;
+    return this.bookingTourService.getBookingTourByUserId(userId);
   }
-  
+
+  @Get()
+  @AuthorizeRoles(Roles.ADMIN, Roles.USER)
+  @ApiBearerAuth('token')
+  @UseGuards(AuthenticationGuard, AuthorizeGuard)
+  @ApiQuery({ name: 'status', required: false, description: 'Lọc theo trạng thái booking' })
+  @ApiOkResponse({ description: 'Lấy danh sách tất cả booking tour', type: [BookingTour] })
+  async getAllBookingTour(@Query() query: BookingTourQueryDto) {
+    return this.bookingTourService.getAllBookingTour(query);
+  }
 }
- 

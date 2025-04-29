@@ -1,5 +1,5 @@
 import { Tour } from "src/tour/entities/tour.entity";
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity()
 export class Hotel {
@@ -9,11 +9,11 @@ export class Hotel {
     @Column({type:'varchar',length:50})
     name: string;
 
-    @Column({type:'bytea',nullable:true})
-    avatar: Buffer;
+    @Column({type:'varchar',nullable:true})
+    avatar: string;
 
-    @Column({type:'bytea',nullable:true})
-    detail_avatar: Buffer;
+    @Column({type:'varchar',nullable:true})
+    detail_avatar: string;
 
     @Column({type:'decimal',transformer:{
         to:(value:number) => value,
@@ -35,5 +35,9 @@ export class Hotel {
     
     @OneToMany(() => Tour , tour => tour.hotel)
     tours: Tour[];
-    
+
+    @CreateDateColumn() 
+    createdAt: Date;
+    @UpdateDateColumn()
+    updatedAt: Date;
 }

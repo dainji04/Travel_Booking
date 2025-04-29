@@ -11,11 +11,12 @@ import { TourModule } from './tour/tour.module';
 import { RatingModule } from './rating/rating.module';
 import { LocationModule } from './location/location.module';
 import { HotelModule } from './hotel/hotel.module';
+import { PaymentModule } from './payment/payment.module';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot(dataSourceOptions)
-    ,UserModule, EmailModule, BookingTourModule, TourModule, RatingModule, LocationModule, HotelModule],
+    ,UserModule, EmailModule, BookingTourModule, TourModule, RatingModule, LocationModule, HotelModule, PaymentModule],
   controllers: [AppController],
   providers: [AppService],
 })

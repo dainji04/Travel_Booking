@@ -176,6 +176,16 @@ export class TourService {
     return this.tourRepository.remove(tour);
   }
 
+
+  async getHotlWithTour(id: number) {
+    const tour = await this.tourRepository.findOne({
+      where: { id },
+      relations: ['hotel'],
+    })
+    if(!tour) throw new NotFoundException('Không tìm thấy tour');
+    return tour.hotel
+  }
+
   
 
 

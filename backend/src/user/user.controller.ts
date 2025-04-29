@@ -11,6 +11,7 @@ import { AuthenticationGuard } from 'src/guard/authentication.guard';
 import { AuthorizeGuard } from 'src/guard/authorization.guard';
 import { AuthorizeRoles } from 'src/decorators/authorize.roles.decorator';
 import { Roles } from 'src/common/role_User.common';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Controller('user')
 export class UserController {
@@ -118,7 +119,7 @@ export class UserController {
   @AuthorizeRoles(Roles.ADMIN)
   @ApiOperation({ summary: 'Update a user by ID' })
   @ApiResponse({ status: 200, description: 'User updated successfully' })
-  async updateUser(@Param('id') id: number, @Body() updateUserDto: SignUpDto) {
+  async updateUser(@Param('id') id: number, @Body() updateUserDto: UpdateUserDto) {
     const res = await this.userService.update(id, updateUserDto);
     return res;
   }
