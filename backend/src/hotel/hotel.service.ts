@@ -145,6 +145,14 @@ export class HotelService {
         
 
     }
+    async removeHotel(id:number ) {
+        const hotel = await this.hotelRepository.findOne({
+            where:{id}
+        })
+        if(!hotel) throw new NotFoundException('Hotel not found')
+        await this.hotelRepository.remove(hotel)
+        return hotel
+    }
 
 
 }

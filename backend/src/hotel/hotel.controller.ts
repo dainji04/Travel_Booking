@@ -65,15 +65,10 @@ export class HotelController {
   @ApiOkResponse({ description: ' Tìm khách sạn thành công' })
   @ApiBadRequestResponse({ description: 'Tìm khách sạn thất bại' })
   @ApiForbiddenResponse({ description: 'Tìmkhách sạn thất bại vì chưa đăng nhập ' })
-  // @AuthorizeRoles(Roles.ADMIN ,Roles.USER) // cho nay tao chua co chinh permisson => lười sửa role quá =)) 
-  // @UseGuards(AuthenticationGuard, AuthorizeGuard)
+  @AuthorizeRoles(Roles.ADMIN ,Roles.USER) // cho nay tao chua co chinh permisson => lười sửa role quá =)) 
+  @UseGuards(AuthenticationGuard, AuthorizeGuard)
   async getAll(@Query() searchHotelDto: SearchHotelDto) {
-    const {city , star, price, name, page, limit, sort,address } = searchHotelDto;
-
-  
-   
     const res = await this.hotelService.findAll(searchHotelDto);
-
     return res
   }
 

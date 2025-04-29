@@ -12,8 +12,6 @@ export class PaymentController {
 
   @Post()
   async create(@Req() request:Request , @Res() response:Response) {
-    //https://developers.momo.vn/#/docs/en/aiov2/?id=payment-method
-//parameters
 var accessKey = 'F8BBA842ECF85';
 var secretKey = 'K951B6PE1waDMi640xX08PD3vg6EkVlz';
 var orderInfo = 'pay with MoMo';
@@ -81,6 +79,11 @@ const requestBody = JSON.stringify({
     throw new InternalServerErrorException('Error while processing payment');
   }
 
+  }
+
+  @Post('transaction-status')
+  async transactionStatus(@Body() createPaymentDto: CreatePaymentDto) {
+    return this.paymentService.transactionStatus(createPaymentDto);
   }
   
 }
