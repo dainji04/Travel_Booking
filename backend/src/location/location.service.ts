@@ -6,6 +6,7 @@ import { Location } from './entities/location.entity';
 import { Repository } from 'typeorm';
 import { Tour } from 'src/tour/entities/tour.entity';
 import { SearchLocationDto } from './dto/search-location.dto';
+import { Hotel } from 'src/hotel/entities/hotel.entity';
 
 @Injectable()
 export class LocationService {
@@ -13,6 +14,7 @@ export class LocationService {
   constructor(
     @InjectRepository(Location) private readonly locationRepository: Repository<Location>,
     @InjectRepository(Tour) private readonly tourRepository: Repository<Tour>,
+    @InjectRepository(Hotel) private readonly hotelRepository: Repository<Hotel>,
   ) {}
   async create(createLocationDto: CreateLocationDto): Promise<Location> {
     const existingLocation = await this.locationRepository.findOne({
@@ -29,6 +31,7 @@ export class LocationService {
   async findOne(id:number ) {
     const foundLocation = await this.locationRepository.findOne({
       where: { id },
+      relations:['hotel']
     });
     if (!foundLocation) {
       throw new Error('Location not found');
@@ -77,6 +80,42 @@ export class LocationService {
     };
   }
 
+  async findOneWithHotels(id: number , page:number , limit:number , filter: {
+    minPrice?: number;
+    maxPrice?: number;
+    minStar?: number;
+    maxStar?: number;
+  }) {
+
+    const queryBuilder = this.hotelRepository
+      .createQueryBuilder('hotel')
+      .leftJoinAndSelect('hotel.location', 'location')
+      .where('location.id = :id', { id })
+      if(filter.maxPrice) {
+        queryBuilder.andWhere('hotel.price <= :maxPrice', { maxPrice: filter.maxPrice });
+      }
+      if(filter.minPrice) {
+        queryBuilder.andWhere('hotel.price >= :minPrice', { minPrice: filter.minPrice });
+      }
+      if(filter.maxStar) {
+        queryBuilder.andWhere('hotel.star <= :maxStar', { maxStar: filter.maxStar });
+
+        
+      }
+      if(filter.minStar) {
+        queryBuilder.andWhere('hotel.star >= :minStar', { minStar: filter.minStar });
+      }
+      queryBuilder.skip((page - 1) * limit).take(limit);
+      const [hotels, total] = await queryBuilder.getManyAndCount();
+      return {
+        data: hotels,
+        total,
+        page,
+        limit,
+        totalPages: Math.ceil(total / limit),
+      };
+
+  }
   async findAll(query: SearchLocationDto) {
     const { search, sort = 'id', order = 'ASC', page = 1, limit = 10 } = query;
     const skip = (page - 1) * limit;

@@ -1,5 +1,5 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
-import { IsString, IsOptional, IsNumber, IsArray, IsUrl, Min, Max } from "class-validator";
+import { IsString, IsOptional, IsNumber, IsArray, IsUrl, Min, Max, IsNotEmpty } from "class-validator";
 
 export class CreateHotelDto {
   @ApiPropertyOptional({ example: "BLTAT Hotel", description: "Tên của khách sạn" })
@@ -39,4 +39,8 @@ export class CreateHotelDto {
   @IsOptional()
   @IsNumber()
   price?: number;
+
+  @IsNotEmpty()
+  @ApiPropertyOptional({ example: 1, description: "ID của địa điểm" })
+  locationId: number;
 }

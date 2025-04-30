@@ -1,5 +1,6 @@
+import { Hotel } from "src/hotel/entities/hotel.entity";
 import { Tour } from "src/tour/entities/tour.entity";
-import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, ManyToMany, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity()
 export class Location {
@@ -19,6 +20,8 @@ export class Location {
     @OneToMany(() => Tour , tour => tour.location , {cascade: true})
     tours: Tour[];
 
+   @OneToMany(() => Hotel , hotel => hotel.location)
+   hotel: Hotel[];
 
     @CreateDateColumn()
     createdAt: Date;

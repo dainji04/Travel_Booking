@@ -7,6 +7,7 @@ import { Repository } from 'typeorm';
 import { Tour } from 'src/tour/entities/tour.entity';
 import { isArray } from 'class-validator';
 import { SearchHotelDto } from './dto/search-hotel.dto';
+import { LocationService } from 'src/location/location.service';
 
 @Injectable()
 export class HotelService {
@@ -14,6 +15,7 @@ export class HotelService {
     constructor(
         @InjectRepository(Tour) private readonly tourRepository: Repository<Tour>,
         @InjectRepository(Hotel) private readonly hotelRepository: Repository<Hotel>,
+        private readonly locationService:LocationService
     ) {}
     async findOne(id: number): Promise<Hotel> {
         const hotel = await this.hotelRepository.findOne({
@@ -25,8 +27,11 @@ export class HotelService {
     }
 
     async create(createHotelDto:CreateHotelDto) {
-        
-        
+
+        const location = await this.locationService.findOne(createHotelDto.locationId);
+        if (!location) {
+            throw new NotFoundException('Location not found');
+        }
         if(createHotelDto.star < 0 || createHotelDto.star > 5) {
             throw new BadRequestException('Star rating must be between 0 and 5');
         }
@@ -36,8 +41,18 @@ export class HotelService {
         createHotelDto.name = createHotelDto.name.trim();
         createHotelDto.city = createHotelDto.city.trim();
         createHotelDto.address = createHotelDto.address.trim();
-        const hotel  =this.hotelRepository.create(createHotelDto)
-        return await this.hotelRepository.save(hotel)
+       
+        const hotel = this.hotelRepository.create({
+            name: createHotelDto.name,
+            price: createHotelDto.price,
+            star: createHotelDto.star,
+            city: createHotelDto.city,
+            address: createHotelDto.address,
+            location,
+            avatar: createHotelDto.avatar,
+            detail_avatar: createHotelDto.detail_avatar,
+          });
+          return await this.hotelRepository.save(hotel);
     }
 
     async findOneWithTours(id: number) {
