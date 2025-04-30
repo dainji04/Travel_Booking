@@ -168,6 +168,7 @@ export class HotelService {
         await this.hotelRepository.remove(hotel)
         return hotel
     }
+    
 
 
 }

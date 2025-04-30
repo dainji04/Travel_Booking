@@ -54,7 +54,7 @@ export class HotelController {
   @ApiOkResponse({ description: 'Cập nhật khách sạn thành công' })
   @ApiBadRequestResponse({ description: 'Cập nhật khách sạn thất bại' })
   @ApiForbiddenResponse({ description: 'Cập nhật khách sạn thất bại vì chưa đăng nhập ' })
-  @AuthorizeRoles(Roles.ADMIN ,Roles.USER) // cho nay tao chua co chinh permisson => lười sửa role quá =)) 
+  @AuthorizeRoles(Roles.ADMIN ,Roles.USER) 
   @UseGuards(AuthenticationGuard, AuthorizeGuard)
   async update(@Param('id') id:number,@Body() createHotelDto: UpdateHotelDto) {
     const res = await this.hotelService.update(id,createHotelDto);
@@ -65,10 +65,16 @@ export class HotelController {
   @ApiOkResponse({ description: ' Tìm khách sạn thành công' })
   @ApiBadRequestResponse({ description: 'Tìm khách sạn thất bại' })
   @ApiForbiddenResponse({ description: 'Tìmkhách sạn thất bại vì chưa đăng nhập ' })
-  @AuthorizeRoles(Roles.ADMIN ,Roles.USER) // cho nay tao chua co chinh permisson => lười sửa role quá =)) 
+  @AuthorizeRoles(Roles.ADMIN ,Roles.USER) 
   @UseGuards(AuthenticationGuard, AuthorizeGuard)
   async getAll(@Query() searchHotelDto: SearchHotelDto) {
     const res = await this.hotelService.findAll(searchHotelDto);
+    return res
+  }
+  
+  @Delete(':id')
+  async remove(@Param('id') id: number) {
+    const res = await this.hotelService.removeHotel(id);
     return res
   }
 
