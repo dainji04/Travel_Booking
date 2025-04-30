@@ -1,10 +1,11 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, Req, Res, InternalServerErrorException } from '@nestjs/common';
 import { PaymentService } from './payment.service';
-import { CreatePaymentDto } from './dto/create-payment.dto';
 import { UpdatePaymentDto } from './dto/update-payment.dto';
 import { Request, Response } from 'express';
 import axios from 'axios';
 import { ApiTags } from '@nestjs/swagger';
+import { CheckStatusPaymentDto } from './dto/create-payment.dto';
+import { ConfirmPaymentDto } from './dto/confirm-payment.dto';
 
 @Controller('payment')
 @ApiTags('Payment')
@@ -13,7 +14,7 @@ export class PaymentController {
 
 
   @Post()
-  async create(@Body() createPaymentDto: CreatePaymentDto) {
+  async create(@Body() createPaymentDto: CheckStatusPaymentDto) {
     const accessKey = 'F8BBA842ECF85';
     const secretKey = 'K951B6PE1waDMi640xX08PD3vg6EkVlz';
     const partnerCode = 'MOMO';
@@ -78,8 +79,13 @@ export class PaymentController {
   }
 
   @Post('transaction-status')
-  async transactionStatus(@Body() createPaymentDto: CreatePaymentDto) {
-    return this.paymentService.transactionStatus(createPaymentDto);
+  async transactionStatus(@Body() createPaymentDto: CheckStatusPaymentDto) {
+    return await this.paymentService.transactionStatus(createPaymentDto);
+  }
+  
+  @Post('confirm-payment')
+  async confirmPayment(@Body() confirmPaymentDto: ConfirmPaymentDto) {
+    return await this.paymentService.confirmPayment(confirmPaymentDto);
   }
   
 }
