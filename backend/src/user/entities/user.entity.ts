@@ -22,6 +22,8 @@ export class User {
     roles: Roles[];
     @Column({nullable:true})
     resetToken:string
+    @Column({default:false})
+    isVerified:boolean
 
 
     //relation

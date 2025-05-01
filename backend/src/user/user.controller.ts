@@ -12,6 +12,7 @@ import { AuthorizeGuard } from 'src/guard/authorization.guard';
 import { AuthorizeRoles } from 'src/decorators/authorize.roles.decorator';
 import { Roles } from 'src/common/role_User.common';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { OtpUserDto } from './dto/otp-user.dto';
 
 @Controller('user')
 export class UserController {
@@ -56,6 +57,10 @@ export class UserController {
   
     return { user: response.user, accessToken: response.accessToken };
   }
+  @Post('verify-otp')
+  async verifyOtp(@Body() dto: OtpUserDto) {
+    return this.userService.verifyOtp(dto);
+}
   @Post('refresh-token')
   @ApiTags('Authentication') 
   @ApiOperation({ summary: 'Refresh access token' })

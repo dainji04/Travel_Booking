@@ -10,9 +10,6 @@ dotenv.config();
 
 @Injectable()
 export class PaymentService {
-
-
-
     async transactionStatus(body:CheckStatusPaymentDto) 
     {
         const {orderId} = body

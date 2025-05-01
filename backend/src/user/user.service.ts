@@ -13,30 +13,64 @@ import { SignInDto } from './dto/signIn.dto';
 import { decode } from 'punycode';
 import { GetUsersDto } from './dto/search.dto';
 import { Roles } from 'src/common/role_User.common';
-
+import * as crypto from 'crypto';
+import { Otp } from './entities/otpUser.entity';
+import { OtpUserDto } from './dto/otp-user.dto';
 @Injectable()
 export class UserService {
 
   constructor(
     @InjectRepository(User) private readonly userRepository:Repository<User>,
-    private readonly emailService:EmailService
+    private readonly emailService:EmailService ,
+    @InjectRepository(Otp) private readonly otpRepository: Repository<Otp>,
   ) {}
 
-  async signUp(signUpDto:SignUpDto) {
-    const {email,password,name} =signUpDto
-    if(!email || !password) throw new BadRequestException('Missing input')
-    const hashPassword = await hash(password,10)
-    const newUser = this.userRepository.create({
+  async signUp(signUpDto: SignUpDto) {
+    const { email, password, name } = signUpDto;
+  
+    const existingUser = await this.userRepository.findOneBy({ email });
+    if (existingUser) throw new BadRequestException('Email đã tồn tại');
+  
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+    const otpHash = crypto.createHash('sha256').update(otp).digest('hex');
+    const expiresAt = new Date(Date.now() + 5 * 60 * 1000);
+  
+    const hashedPassword = await hash(password, 10);
+  
+    const otpRecord = this.otpRepository.create({
       email,
-      password:hashPassword,
-      name
-    })
-    await this.emailService.handleSendmailSignUp(email)
-    await this.userRepository.save(newUser)
+      otpHash,
+      expiresAt,
+      tempPassword: hashedPassword,
+      tempName: name,
+    });
+    await this.otpRepository.save(otpRecord);
+  
+   
+    await this.emailService.handleSendmailSignUp(email, otp);
+  
+    return { message: 'Mã OTP đã được gửi đến email của bạn. Vui lòng xác thực.' };
+  }
 
-    return newUser
+  async verifyOtp(dto:OtpUserDto) {
+    const { email, otp } = dto;
+    const record = await this.otpRepository.findOneBy({ email });
+    if (!record) throw new NotFoundException('OTP không tồn tại');
+    if(new Date() > record.expiresAt) throw new BadRequestException('OTP đã hết hạn')
+    const hashOtp = crypto.createHash('sha256').update(otp).digest('hex');
+    if (record.otpHash !== hashOtp) throw new BadRequestException('OTP không hợp lệ');
+    const newUser = await this.userRepository.create({
+      email:record.email,
+      password:record.tempPassword,
+      name:record.tempName,
+      isVerified:true
+    })
+    await this.userRepository.save(newUser)
+    await this.otpRepository.delete({email})
+    return { message: 'Xác minh thành công, tài khoản đã được tạo!' };
 
   }
+  
   async createUserByAdmin(createUserDto:CreateUserDto) {
     if(createUserDto.email) throw new BadRequestException('EMAIL VALID')
     const hashPassword = await hash(createUserDto.password, 10)

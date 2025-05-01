@@ -15,13 +15,13 @@ export class EmailService {
         },
       });
     }
-    async handleSendmailSignUp(email:string)
+    async handleSendmailSignUp(email:string , otp:string)
     {
         const mailOptions = {
             from: process.env.EMAIL_USERNAME,
             to: email,
             subject: 'Thông báo đăng kí',
-            text: `Bạn vừa đăng kí tài khoản của mình.`,
+            text: `Bạn vừa đăng kí tài khoản của mình.vui lòng xác thực tài khoản của bạn bằng mã OTP: ${otp}`,
           };
       
           await this.transporter.sendMail(mailOptions); 
