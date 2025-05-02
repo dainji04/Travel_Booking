@@ -33,7 +33,7 @@ export class UserService {
   
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
     const otpHash = crypto.createHash('sha256').update(otp).digest('hex');
-    const expiresAt = new Date(Date.now() + 5 * 60 * 1000);
+    const expiresAt = new Date(Date.now() + 30 * 60 * 1000);
   
     const hashedPassword = await hash(password, 10);
   
@@ -56,7 +56,7 @@ export class UserService {
     const { email, otp } = dto;
     const record = await this.otpRepository.findOneBy({ email });
     if (!record) throw new NotFoundException('OTP không tồn tại');
-    if(new Date() > record.expiresAt) throw new BadRequestException('OTP đã hết hạn')
+    // if(new Date() > record.expiresAt) throw new BadRequestException('OTP đã hết hạn')
     const hashOtp = crypto.createHash('sha256').update(otp).digest('hex');
     if (record.otpHash !== hashOtp) throw new BadRequestException('OTP không hợp lệ');
     const newUser = this.userRepository.create({
@@ -68,7 +68,6 @@ export class UserService {
     await this.userRepository.save(newUser)
     await this.otpRepository.delete({email})
     return { message: 'Xác minh thành công, tài khoản đã được tạo!' };
-
   }
   
   async createUserByAdmin(createUserDto:CreateUserDto) {
