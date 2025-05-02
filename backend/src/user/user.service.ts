@@ -59,7 +59,7 @@ export class UserService {
     if(new Date() > record.expiresAt) throw new BadRequestException('OTP đã hết hạn')
     const hashOtp = crypto.createHash('sha256').update(otp).digest('hex');
     if (record.otpHash !== hashOtp) throw new BadRequestException('OTP không hợp lệ');
-    const newUser = await this.userRepository.create({
+    const newUser = this.userRepository.create({
       email:record.email,
       password:record.tempPassword,
       name:record.tempName,

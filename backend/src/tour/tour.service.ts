@@ -16,22 +16,18 @@ export class TourService {
   ) {}
   async create(createTourDto: CreateTourDto) {
     const { locationId, hotelId, tour_start, tour_end, tour_typeCars } = createTourDto;
-  
     const location = await this.locationService.findOne(locationId);
     if (!location) {
       throw new NotFoundException('Không tìm thấy địa điểm');
     }
-  
     const hotel = await this.hotelService.findOne(hotelId);
     if (!hotel) {
       throw new NotFoundException('Không tìm thấy khách sạn');
     }
-  
     const now = new Date();
     const start = new Date(tour_start);
     const end = new Date(tour_end);
     const diffDays = (end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24);
-  
     if (diffDays > 30) {
       throw new BadRequestException('Tour không thể dài hơn 30 ngày');
     }
@@ -41,27 +37,21 @@ export class TourService {
     if (start >= end) {
       throw new BadRequestException('Ngày bắt đầu phải trước ngày kết thúc');
     }
-  
     const overlappingTour = await this.tourRepository.createQueryBuilder('tour')
       .where('tour.tour_start < :end AND tour.tour_end > :start', { start, end })
       .andWhere('tour.locationId = :locationId', { locationId })
       .getMany();
-  
     if (overlappingTour.length > 0) {
       throw new BadRequestException('Tour không thể trùng với tour khác');
     }
-  
     const tour = this.tourRepository.create({
       ...createTourDto,
       location,
       hotel,
-      tour_typeCars,
+      tour_typeCars
     });
-  
     return this.tourRepository.save(tour);
   }
-  
-
   async getOne(id: number) {
     const foundTour = await this.tourRepository.findOne({
       where: { id },
