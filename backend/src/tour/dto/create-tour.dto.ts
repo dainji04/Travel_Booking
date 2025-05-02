@@ -1,4 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { IsArray, IsEnum, IsInt } from 'class-validator';
+import { TypeCar } from 'src/common/type_Car.common';
 
 export class CreateTourDto {
   @ApiProperty({
@@ -37,4 +39,17 @@ export class CreateTourDto {
     type: Number,
   })
   locationId: number;
+
+  @IsArray()
+  @IsEnum(TypeCar, { each: true })
+  @ApiProperty({
+    example: [TypeCar.MOTOBIKE, TypeCar.FOURSEAT],
+    enum: TypeCar,
+    isArray: true,
+    description: 'Danh sách loại xe được hỗ trợ cho tour',
+  })
+  tour_typeCars: TypeCar[];
+  @IsInt()
+  @ApiProperty({ example: 1, description: 'ID của khách sạn (hotel)' })
+  hotelId: number;
 }

@@ -4,7 +4,7 @@ import { SignUpDto } from './dto/signUp.dto';
 import { SignInDto } from './dto/signIn.dto';
 import  {Request, Response} from'express'
 import { GetUsersDto } from './dto/search.dto';
-import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBadRequestResponse, ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CurrentUser } from 'src/decorators/current-user.decorator';
 import { User } from './entities/user.entity';
 import { AuthenticationGuard } from 'src/guard/authentication.guard';
@@ -58,6 +58,10 @@ export class UserController {
     return { user: response.user, accessToken: response.accessToken };
   }
   @Post('verify-otp')
+  @ApiTags('Authentication')
+  @ApiResponse({ status: 200, description: 'OTP verification successful' })
+  @ApiBadRequestResponse({status:400, description: 'Invalid OTP or expired OTP' })
+  @ApiOperation({ summary: 'Verify OTP' })
   async verifyOtp(@Body() dto: OtpUserDto) {
     return this.userService.verifyOtp(dto);
 }

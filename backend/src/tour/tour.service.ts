@@ -12,57 +12,55 @@ export class TourService {
   constructor(
     @InjectRepository(Tour) private readonly tourRepository: Repository<Tour>,
     private readonly locationService: LocationService,
+    private readonly hotelService: LocationService,
   ) {}
   async create(createTourDto: CreateTourDto) {
-    const { locationId } = createTourDto;
+    const { locationId, hotelId, tour_start, tour_end, tour_typeCars } = createTourDto;
+  
     const location = await this.locationService.findOne(locationId);
     if (!location) {
       throw new NotFoundException('Không tìm thấy địa điểm');
     }
-    
+  
+    const hotel = await this.hotelService.findOne(hotelId);
+    if (!hotel) {
+      throw new NotFoundException('Không tìm thấy khách sạn');
+    }
+  
     const now = new Date();
-    const maxDurationDays = 30;
-    const start = new Date(createTourDto.tour_start);
-    const end = new Date(createTourDto.tour_end);
+    const start = new Date(tour_start);
+    const end = new Date(tour_end);
     const diffDays = (end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24);
-
-    if (diffDays > maxDurationDays) {
-      throw new BadRequestException(`Tour không thể dài hơn ${maxDurationDays} ngày`);
+  
+    if (diffDays > 30) {
+      throw new BadRequestException('Tour không thể dài hơn 30 ngày');
     }
-    if (new Date(createTourDto.tour_start) < new Date()) {
-      throw new BadRequestException('tour phải là ngày trong tương lai');
+    if (start < now) {
+      throw new BadRequestException('Ngày bắt đầu tour phải là ngày trong tương lai');
     }
-    if (new Date(createTourDto.tour_start) >= new Date(createTourDto.tour_end)) {
+    if (start >= end) {
       throw new BadRequestException('Ngày bắt đầu phải trước ngày kết thúc');
     }
-
+  
     const overlappingTour = await this.tourRepository.createQueryBuilder('tour')
-      .where('tour.tour_start < :end AND tour.tour_end > :start', {
-        start: createTourDto.tour_start,
-        end: createTourDto.tour_end,
-      })
+      .where('tour.tour_start < :end AND tour.tour_end > :start', { start, end })
       .andWhere('tour.locationId = :locationId', { locationId })
       .getMany();
-
+  
     if (overlappingTour.length > 0) {
       throw new BadRequestException('Tour không thể trùng với tour khác');
     }
-
+  
     const tour = this.tourRepository.create({
       ...createTourDto,
-      location
+      location,
+      hotel,
+      tour_typeCars,
     });
-
-    if (tour.bookingTours && tour.bookingTours.length > 0) {
-      throw new BadRequestException('Tour đã có người đặt không thể xóa');
-    }
-
-    if (new Date(tour.tour_start) <= now) {
-      throw new BadRequestException('Không thể chỉnh sửa tour đã bắt đầu');
-    }
-
+  
     return this.tourRepository.save(tour);
   }
+  
 
   async getOne(id: number) {
     const foundTour = await this.tourRepository.findOne({

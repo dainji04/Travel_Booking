@@ -1,4 +1,5 @@
 import { BookingTour } from "src/booking-tour/entities/booking-tour.entity";
+import { TypeCar } from "src/common/type_Car.common";
 import { Hotel } from "src/hotel/entities/hotel.entity";
 import { Location } from "src/location/entities/location.entity";
 import { Rating } from "src/rating/entities/rating.entity";
@@ -36,4 +37,8 @@ export class Tour {
 
     @ManyToOne(() => Hotel , hotel => hotel.tours)
     hotel: Hotel;
+    
+    @Column({ type: 'enum', enum: TypeCar, array: true, default: [] })
+    tour_typeCars: TypeCar[]; 
+
 }
