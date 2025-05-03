@@ -4,6 +4,8 @@ import * as dotenv from 'dotenv';
 import * as cookieParser from 'cookie-parser'
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ValidationPipe } from '@nestjs/common';
+import * as express from 'express';
+import { join } from 'path';
 
 dotenv.config();
 
@@ -23,10 +25,11 @@ async function bootstrap() {
   .setDescription('API description')
   .setVersion('1.0')
   .build();
+  
 
 const document = SwaggerModule.createDocument(app, config);
 SwaggerModule.setup('api', app, document);
-
+app.use('/pdfs', express.static(join(__dirname, '..', 'pdfs')));
 
 
   await app.listen(process.env.PORT ?? 4000);

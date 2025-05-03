@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsArray, IsEnum, IsInt } from 'class-validator';
+import { IsArray, IsEnum, IsInt, IsNumber, IsString } from 'class-validator';
 import { TypeCar } from 'src/common/type_Car.common';
 
 export class CreateTourDto {
@@ -9,6 +9,7 @@ export class CreateTourDto {
     type: String,
     format: 'date-time',
   })
+  @IsString()
   tour_start: Date;
 
   @ApiProperty({
@@ -17,6 +18,7 @@ export class CreateTourDto {
     type: String,
     format: 'date-time',
   })
+  @IsString()
   tour_end: Date;
 
   @ApiProperty({
@@ -24,6 +26,7 @@ export class CreateTourDto {
     description: 'Tổng giá tiền của tour',
     type: Number,
   })
+  @IsNumber()
   tour_totalPrice: number;
 
   @ApiProperty({
@@ -31,6 +34,7 @@ export class CreateTourDto {
     description: 'Tên tour du lịch',
     type: String,
   })
+  @IsString()
   tour_name: string;
 
   @ApiProperty({
@@ -38,6 +42,7 @@ export class CreateTourDto {
     description: 'ID của địa điểm (location) mà tour thuộc về',
     type: Number,
   })
+  @IsNumber()
   locationId: number;
 
   @IsArray()
@@ -51,5 +56,6 @@ export class CreateTourDto {
   tour_typeCars: TypeCar[];
   @IsInt()
   @ApiProperty({ example: 1, description: 'ID của khách sạn (hotel)' })
+  @IsNumber()
   hotelId: number;
 }

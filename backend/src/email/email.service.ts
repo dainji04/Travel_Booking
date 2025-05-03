@@ -65,16 +65,32 @@ export class EmailService {
 
     }
 
-    async handleSendMailBookingTour(email:string) 
-    {
-      const mailOptions = {
-        from: process.env.EMAIL_USERNAME,
-        to: email,
-        subject: 'Booking Tour',
-        text: 'Booking tour has successfully.',
+    async handleSendMailBookingTour(
+      to: string,
+      name: string,
+      totalPrice: number,
+      deposit: number,
+      mustPay: number,
+      bookingDate: string,
+      attachmentPath?: string,
+    ) {
+      const mailOptions: any = {
+        from: 'your-email@gmail.com',
+        to,
+        subject: 'Xác nhận đặt tour thành công',
+        html: `<p>Xin chào ${name}, bạn đã đặt tour thành công!</p>`,
       };
-      await this.transporter.sendMail(mailOptions)
-      console.log(`📧 Booking tour confirmation sent to ${email}`);
-
+    
+      if (attachmentPath) {
+        mailOptions.attachments = [
+          {
+            filename: 'booking.pdf',
+            path: attachmentPath,
+          },
+        ];
+      }
+    
+      await this.transporter.sendMail(mailOptions);
     }
+    
 }

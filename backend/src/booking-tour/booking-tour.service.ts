@@ -8,47 +8,94 @@ import { User } from 'src/user/entities/user.entity';
 import { UserService } from 'src/user/user.service';
 import { EmailService } from 'src/email/email.service';
 import { BookingTourQueryDto } from './dto/search-booking-tour.dto';
+import { Bill } from 'src/bill/entities/bill.entity';
+import { TourService } from 'src/tour/tour.service';
+import { PdfService } from './pdf-booking.service';
+import * as fs from 'fs';
+import * as path from 'path';
 
 @Injectable()
 export class BookingTourService {
   constructor(
     @InjectRepository(BookingTour) private readonly bookingTourRepo:Repository<BookingTour>,
+    @InjectRepository(Bill) private readonly billRepo:Repository<Bill>,
     private readonly userService:UserService,
-    private readonly emailService:EmailService
+    private readonly emailService:EmailService,
+    private readonly tourService:TourService,
+    private readonly pdfService:PdfService
+
 
   ){}
-  async createBookingTour(userId:number ,createBookingTourDto: CreateBookingTourDto) {
-
-    const user = await this.userService.getOneUser(userId)
-    if(!user) throw new NotFoundException('User not found')
-    if(createBookingTourDto.bookingTour_Deposit > createBookingTourDto.bookingTour_TotalPrice) 
-      throw new BadRequestException('Total price must better than Deposit price')
-    const duplicate = await this.bookingTourRepo.findOne({
-      where:{bookingTour_user:user,bookingTour_Date:createBookingTourDto.bookingTour_Date}
-    })
-    const currentDate = new Date();
-    if (new Date(createBookingTourDto.bookingTour_Date) <= currentDate) {
-      throw new BadRequestException('Booking date must be in the future');
-    }
-    const deposit = Math.floor(createBookingTourDto.bookingTour_TotalPrice * 0.3 )
-    if(duplicate) throw new BadRequestException('Duplicate date ')
-    const newBookingTour = await this.bookingTourRepo.create({
-    bookingTour_Date:createBookingTourDto.bookingTour_Date,
-    bookingTour_TotalPrice:createBookingTourDto.bookingTour_TotalPrice,
-    bookingTour_Deposit:deposit,
-    bookingTour_user:user
-  })
-  await this.bookingTourRepo.save(newBookingTour)
-  try {
-    await this.emailService.handleSendMailBookingTour(user.email)
-  } catch (error) {
-    console.error('Failed', error);
-  }
- 
-  return newBookingTour
-
+  async createBookingTour(user: User, dto: CreateBookingTourDto) {
+    const { bookingTour_TotalPrice, bookingTour_Date, tourId } = dto;
   
+    const tour = await this.tourService.getOne(tourId);
+    if (!tour) throw new NotFoundException('Tour not found');
+    const existingBooking = await this.bookingTourRepo.findOne({
+      where: {
+        bookingTour_user: user,
+        bookingTour_Date: new Date(bookingTour_Date),
+      },
+    });
+    if (existingBooking) throw new BadRequestException('Duplicate booking on this date');
+  
+    const bookingDate = new Date(bookingTour_Date);
+    const now = new Date();
+    bookingDate.setHours(0, 0, 0, 0);
+    now.setHours(0, 0, 0, 0);
+    if (bookingDate <= now) throw new BadRequestException('Booking date must be in the future');
+  
+    const deposit = Math.floor(bookingTour_TotalPrice * 0.3);
+    const mustPaid = bookingTour_TotalPrice - deposit;
+  
+    const newBookingTour = this.bookingTourRepo.create({
+      bookingTour_Date: bookingTour_Date,
+      bookingTour_TotalPrice: bookingTour_TotalPrice,
+      bookingTour_Deposit: deposit,
+      bookingTour_user: user,
+      tour: tour,
+    });
+    await this.bookingTourRepo.save(newBookingTour);
+    
+    const pdfPath = await this.pdfService.generateBookingTourPdf({
+      id: newBookingTour.id,
+      userName: user.name,
+      email: user.email,
+      bookingDate: new Date().toLocaleDateString('vi-VN'),
+      totalPrice: bookingTour_TotalPrice,
+      deposit,
+      mustPay: mustPaid,
+    })
+  
+    const bill = this.billRepo.create({
+      totalPrice: bookingTour_TotalPrice,
+      paid: deposit,
+      mustPaid,
+      user,
+    });
+    await this.billRepo.save(bill);
+  
+    try {
+      await this.emailService.handleSendMailBookingTour(
+        user.email,
+        user.name,
+        bookingTour_TotalPrice,
+        deposit,
+        mustPaid,
+        new Date().toLocaleDateString('vi-VN'),
+        pdfPath
+        
+      );
+    } catch (error) {
+      console.error('Failed to send booking email:', error);
+    }
+  
+    return {
+      booking:newBookingTour , 
+      pdfPath:`/pdfs/booking-${newBookingTour.id}.pdf`
+    };
   }
+  
 
 
   async getBookingTour(id:number) {

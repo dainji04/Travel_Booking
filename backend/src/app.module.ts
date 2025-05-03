@@ -12,11 +12,12 @@ import { RatingModule } from './rating/rating.module';
 import { LocationModule } from './location/location.module';
 import { HotelModule } from './hotel/hotel.module';
 import { PaymentModule } from './payment/payment.module';
+import { BillModule } from './bill/bill.module';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot(dataSourceOptions)
-    ,UserModule, EmailModule, BookingTourModule, TourModule, RatingModule, LocationModule, HotelModule, PaymentModule],
+    ,UserModule, EmailModule, BookingTourModule, TourModule, RatingModule, LocationModule, HotelModule, PaymentModule, BillModule],
   controllers: [AppController],
   providers: [AppService],
 })
