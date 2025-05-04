@@ -13,6 +13,7 @@ import { AuthorizeRoles } from 'src/decorators/authorize.roles.decorator';
 import { Roles } from 'src/common/role_User.common';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { OtpUserDto } from './dto/otp-user.dto';
+import { GoogleAuthGuard } from 'src/guard/google.auth.guard';
 
 @Controller('user')
 export class UserController {
@@ -194,6 +195,23 @@ export class UserController {
     const response = await this.userService.logout(currentUser.id);
     res.clearCookie('refreshToken');
     return response;
+  }
+
+
+  @Get('google/login')
+  @UseGuards(GoogleAuthGuard)
+  googleLogin() {
+
+  }
+
+  @Get('google/callback')
+  @UseGuards(GoogleAuthGuard)
+  async googleCallback(@Req() req, @Res() res) {
+    const user = req.user
+    const token = await this.userService.generateToken(user)
+    return res.json({accessToken:token})
+
+
   }
 
 

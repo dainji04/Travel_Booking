@@ -271,4 +271,24 @@ export class UserService {
   async logout(id: number) {
     return {msg:'Logout successfully'} 
   }
+
+  async validateGoogleUser(googleUser: { email: string, name: string, password: string, roles: Roles[], provider: string }) {
+    let user = await this.userRepository.findOne({ where: { email: googleUser.email } });
+    
+    if (!user) {
+      user = await this.userRepository.save({
+        ...googleUser,
+        password: await hash(googleUser.password, 10), 
+        provider: 'google',
+      });
+    }
+  
+    return user;
+  }
+  
+
+  async generateToken(user:User) {
+    const payload = { id: user.id, email: user.email, roles: user.roles };
+    return sign(payload)
+  }
 }
