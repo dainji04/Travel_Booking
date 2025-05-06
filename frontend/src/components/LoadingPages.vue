@@ -39,7 +39,7 @@ const loading = onMounted(() => {
     </div>
 </template>
 
-<style>
+<style scoped>
 .loading-screen {
     opacity: 1;
 }

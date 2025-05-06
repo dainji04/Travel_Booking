@@ -11,10 +11,11 @@
 
 body {
     font-family: $font-secondary;
-    transition: 1s all;
     overflow-x: hidden;
     scroll-behavior: smooth;
 }
+
+
 
 .error {
     color: red;
@@ -43,7 +44,7 @@ body {
     font-style: normal;
     font-weight: 700;
     line-height: normal;
-    background: linear-gradient(90deg, #000 0%, #666 100%);
+    background: linear-gradient(90deg, $color--black 0%, #666 100%);
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;

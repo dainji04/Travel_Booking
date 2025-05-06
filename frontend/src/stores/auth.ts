@@ -20,24 +20,31 @@ export const authStore = defineStore('auth', {
         };
     },
     getters: {
+        isAdmin:(state) => {
+            console.log(state.user?.role)
+            return false;
+        },
         isAuthenticated: (state: any) => {
-            return state.accessToken ? true : false;
+            return !!state.accessToken;
         },
         getUser: (state) => {
             return state.user;
-        },
+        }
     },
     actions: {
         async Login(data: UserLogin) {
             try {
                 // Fetch users from json-server
-                const response = await axios.post('/user/signIn', data);
+                const response = await axios.post('/user/signIn', {
+                    email: data.email,
+                    password: data.password,
+                });
                 if (response.status === 201) {
                     localStorage.setItem(
                         'accessToken',
                         response.data.accessToken
                     );
-                    this.setUser();
+                    await this.setUser();
                     return true;
                 }
                 return false;
@@ -48,15 +55,27 @@ export const authStore = defineStore('auth', {
         async SignUp(data: UserSignUp) {
             await axios.post('/user/signUp', data);
         },
+        async verifyEmailOTP(otp: string, email: string) {
+            try {
+                const response = await axios.post('/user/verify-otp', {
+                    email,
+                    otp,
+                });
+                console.log(response);
+                return response.status === 200;
+
+            } catch (error: any) {
+                console.log(error);
+                return false;
+            }
+        },
         async forgotPassword(email: string) {
             try {
                 const response = await axios.post('/user/forgot-password', {
                     email,
                 });
-                if (response.status === 201) {
-                    return true;
-                }
-                return false;
+                return response.status === 201;
+
             } catch (error: any) {
                 return false;
             }
@@ -72,12 +91,8 @@ export const authStore = defineStore('auth', {
                     password,
                     resetToken,
                 });
-                console.log(response);
+                return response.status === 201;
 
-                if (response.status === 201) {
-                    return true;
-                }
-                return false;
             } catch (error: any) {
                 return false;
             }
@@ -98,11 +113,11 @@ export const authStore = defineStore('auth', {
             }
         },
         async logout() {
-            await localStorage.removeItem('accessToken');
-            await localStorage.removeItem('user');
+            localStorage.removeItem('accessToken');
+            localStorage.removeItem('user');
 
             this.user = null;
-            this.accessToken = await null;
+            this.accessToken = null;
             console.log('Logout successful');
         },
     },

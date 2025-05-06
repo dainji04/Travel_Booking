@@ -191,12 +191,16 @@ const prevSlide = () => {
     margin: 50px 0 500px 0;
     position: relative;
     &__background {
+        width: 100%;
         position: absolute;
         left: 50%;
         top: 50%;
         transform: translateX(-49%);
         scale: 1.1;
         z-index: -1;
+    }
+    &__background > img {
+        width: 100%;
     }
     &__navigation {
         width: 100%;

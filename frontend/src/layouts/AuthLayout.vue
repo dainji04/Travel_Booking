@@ -7,7 +7,7 @@
             <div class="auth-layout__wave">
                 <svg
                     width="324"
-                    height="854"
+                    height="100%"
                     viewBox="0 0 324 854"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
