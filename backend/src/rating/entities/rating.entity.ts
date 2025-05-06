@@ -8,7 +8,7 @@ export class Rating {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column({type:'int' , width: 1})
+    @Column({type:'int'})
     rating: number;
 
     @Column({ type: 'text', nullable: true })

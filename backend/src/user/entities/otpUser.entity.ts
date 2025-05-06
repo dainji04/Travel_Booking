@@ -14,9 +14,7 @@ export class Otp {
 
     @Column()
     tempName: string;
-
-
-    @Column()
+    @Column({ type: 'timestamptz' , nullable:true }) 
     expiresAt: Date;
 
     @CreateDateColumn()

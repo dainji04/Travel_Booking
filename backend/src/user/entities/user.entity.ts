@@ -1,3 +1,4 @@
+import { Bill } from "src/bill/entities/bill.entity";
 import { BookingTourService } from "src/booking-tour/booking-tour.service";
 import { BookingTour } from "src/booking-tour/entities/booking-tour.entity";
 import { Roles } from "src/common/role_User.common";
@@ -34,4 +35,9 @@ export class User {
 
     @OneToMany(() => Rating , rating => rating.user)
     ratings:Rating[]
+
+    @OneToMany(() => Bill , bill =>bill.user)
+    bills:Bill[]
+
+  
 }

@@ -9,7 +9,7 @@ export const dataSourceOptions: DataSourceOptions = {
   database: 'Travel_Booking',
   entities: ['dist/**/*.entity{.ts,.js}'],
   migrations: [],
-  synchronize: true,
+  synchronize: true
 };
 const dataSource = new DataSource(dataSourceOptions);
 export default dataSource;

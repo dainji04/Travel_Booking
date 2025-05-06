@@ -19,22 +19,27 @@ import { Roles } from 'src/common/role_User.common';
 import { AuthorizeRoles } from 'src/decorators/authorize.roles.decorator';
 import { BookingTourQueryDto } from './dto/search-booking-tour.dto';
 import { BookingTour } from './entities/booking-tour.entity';
+import { CurrentUser } from 'src/decorators/current-user.decorator';
+import { User } from 'src/user/entities/user.entity';
 
 @Controller('booking-tour')
 @ApiTags('Booking Tour')
 export class BookingTourController {
   constructor(private readonly bookingTourService: BookingTourService) {}
 
-  @AuthorizeRoles(Roles.ADMIN)
+ 
+ 
+  
+  @Post()
   @UseGuards(AuthenticationGuard, AuthorizeGuard)
-  @Post(':userId')
+  @AuthorizeRoles(Roles.USER)
   @ApiCreatedResponse({ description: 'Đặt tour thành công', type: BookingTour })
   @ApiBadRequestResponse({ description: 'Dữ liệu không hợp lệ' })
   async createBookingTour(
-    @Param('userId') userId: number,
+    @CurrentUser() currentUser:User,
     @Body() createBookingTour: CreateBookingTourDto,
   ) {
-    return this.bookingTourService.createBookingTour(userId, createBookingTour);
+    return this.bookingTourService.createBookingTour(currentUser,createBookingTour);
   }
 
   @Get(':id')
