@@ -50,6 +50,7 @@ export class UserService {
     });
     await this.otpRepository.save(otpRecord);
 
+
     await this.emailService.handleSendmailSignUp(email, otp);
 
     return {

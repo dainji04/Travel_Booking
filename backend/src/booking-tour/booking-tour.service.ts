@@ -11,8 +11,7 @@ import { BookingTourQueryDto } from './dto/search-booking-tour.dto';
 import { Bill } from 'src/bill/entities/bill.entity';
 import { TourService } from 'src/tour/tour.service';
 import { PdfService } from './pdf-booking.service';
-import * as fs from 'fs';
-import * as path from 'path';
+import { typeBooking } from 'src/common/type_Booking.common';
 
 @Injectable()
 export class BookingTourService {
@@ -27,36 +26,56 @@ export class BookingTourService {
 
   ){}
   async createBookingTour(user: User, dto: CreateBookingTourDto) {
-    const { bookingTour_TotalPrice, bookingTour_Date, tourId } = dto;
-  
-    const tour = await this.tourService.getOne(tourId);
-    if (!tour) throw new NotFoundException('Tour not found');
-    const existingBooking = await this.bookingTourRepo.findOne({
-      where: {
-        bookingTour_user: user,
-        bookingTour_Date: new Date(bookingTour_Date),
-      },
-    });
-    if (existingBooking) throw new BadRequestException('Duplicate booking on this date');
+    const {
+      bookingTour_TotalPrice,
+      bookingTour_Date,
+      tourId,
+      bookingTour_Type,
+      bookingTour_CustomDetails,
+    } = dto;
   
     const bookingDate = new Date(bookingTour_Date);
     const now = new Date();
     bookingDate.setHours(0, 0, 0, 0);
     now.setHours(0, 0, 0, 0);
-    if (bookingDate <= now) throw new BadRequestException('Booking date must be in the future');
+    if (bookingDate <= now)
+      throw new BadRequestException('Booking date must be in the future');
+  
+    // Kiểm tra trùng booking theo ngày
+    const existingBooking = await this.bookingTourRepo.findOne({
+      where: {
+        bookingTour_user: user,
+        bookingTour_Date: bookingDate,
+      },
+    });
+    if (existingBooking)
+      throw new BadRequestException('Duplicate booking on this date');
+  
+    let tour = null;
+    if (bookingTour_Type === typeBooking.PRESET) {
+      if (!tourId) throw new BadRequestException('tourId is required for PRESET booking');
+      tour = await this.tourService.getOne(tourId);
+      if (!tour) throw new NotFoundException('Tour not found');
+    }
+  
+    if (bookingTour_Type === typeBooking.CUSTOM && !bookingTour_CustomDetails) {
+      throw new BadRequestException('Custom details are required for CUSTOM booking');
+    }
   
     const deposit = Math.floor(bookingTour_TotalPrice * 0.3);
     const mustPaid = bookingTour_TotalPrice - deposit;
   
     const newBookingTour = this.bookingTourRepo.create({
-      bookingTour_Date: bookingTour_Date,
-      bookingTour_TotalPrice: bookingTour_TotalPrice,
+      bookingTour_Date,
+      bookingTour_TotalPrice,
       bookingTour_Deposit: deposit,
       bookingTour_user: user,
-      tour: tour,
+      bookingTour_Type,
+      tour,
+      // bookingTour_CustomDetails: bookingTour_CustomDetails || null,
     });
     await this.bookingTourRepo.save(newBookingTour);
-    
+  
     const pdfPath = await this.pdfService.generateBookingTourPdf({
       id: newBookingTour.id,
       userName: user.name,
@@ -65,7 +84,7 @@ export class BookingTourService {
       totalPrice: bookingTour_TotalPrice,
       deposit,
       mustPay: mustPaid,
-    })
+    });
   
     const bill = this.billRepo.create({
       totalPrice: bookingTour_TotalPrice,
@@ -84,17 +103,17 @@ export class BookingTourService {
         mustPaid,
         new Date().toLocaleDateString('vi-VN'),
         pdfPath
-        
       );
     } catch (error) {
       console.error('Failed to send booking email:', error);
     }
   
     return {
-      booking:newBookingTour , 
-      pdfPath:`/pdfs/booking-${newBookingTour.id}.pdf`
+      booking: newBookingTour,
+      pdfPath: `/pdfs/booking-${newBookingTour.id}.pdf`,
     };
   }
+  
   
 
 
@@ -183,7 +202,14 @@ export class BookingTourService {
     if (new Date(updateBookingTourDto.bookingTour_Date) <= currentDate) {
       throw new BadRequestException('Booking date must be in the future');
     }
-    await this.bookingTourRepo.update(id,updateBookingTourDto)
+    const updateData = {
+      ...updateBookingTourDto,
+      bookingTour_Type: updateBookingTourDto.bookingTour_Type as any,
+      bookingTour_CustomDetails: updateBookingTourDto.bookingTour_CustomDetails
+        ? JSON.stringify(updateBookingTourDto.bookingTour_CustomDetails)
+        : undefined,
+    };
+    await this.bookingTourRepo.update(id, updateData);
     return this.getBookingTour(id)
   }
   async removeBookingTour(id:number) {

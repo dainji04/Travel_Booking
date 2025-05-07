@@ -17,6 +17,7 @@ export class EmailService {
     }
     async handleSendmailSignUp(email:string , otp:string)
     {
+      console.log("email service" , email)
         const mailOptions = {
             from: process.env.EMAIL_USERNAME,
             to: email,
@@ -24,6 +25,7 @@ export class EmailService {
             text: `Bạn vừa đăng kí tài khoản của mình.vui lòng xác thực tài khoản của bạn bằng mã OTP: ${otp}`,
           };
       
+          
           await this.transporter.sendMail(mailOptions); 
           console.log(`📨 Email đã được gửi tới: ${email}`);
     } 

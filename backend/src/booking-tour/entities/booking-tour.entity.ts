@@ -1,4 +1,5 @@
 import { StatusBookingTour } from "src/common/status_BookingTour.enum";
+import { typeBooking } from "src/common/type_Booking.common";
 import { Tour } from "src/tour/entities/tour.entity";
 import { User } from "src/user/entities/user.entity";
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
@@ -21,6 +22,13 @@ export class BookingTour {
 
     @UpdateDateColumn()
     updated_at:Date
+
+    @Column({ type: 'enum', enum: typeBooking , default:typeBooking.CUSTOM })
+    bookingTour_Type: typeBooking;  
+
+    @Column({ type: 'text', nullable: true })
+    bookingTour_CustomDetails?: string;
+
 
 
     //relation
