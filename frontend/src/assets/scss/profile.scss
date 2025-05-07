@@ -1,0 +1,200 @@
+@use '@/assets/scss/variables' as *;
+
+.profile {
+  margin-top: 70px;
+
+  &_header {
+    max-width: 1140px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    &--left {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+  }
+
+  &_avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-right: 20px;
+    background: url("../images/user_avatar/bing_chilling.png") no-repeat center center;
+    background-size: cover;
+  }
+
+  &_name {
+    color: $color--black;
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    text-transform: capitalize;
+  }
+
+  &_sign-out {
+    height: 50px;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 15px;
+
+    img {
+      width: 30px;
+      height: 30px;
+    }
+  }
+}
+
+.container {
+  max-width: 1300px;
+  margin: 150px auto 0;
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  gap: 50px;
+
+  &--left, &--right {
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+    padding: 30px;
+  }
+
+  &--left {
+    max-height: 200px;
+  }
+
+  &_nav {
+    display: grid;
+    gap: 20px;
+  }
+
+  &_nav-btn {
+    text-align: center;
+    font-size: 35px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    text-transform: uppercase;
+    display: flex;
+    justify-items: center;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .btn {
+    border: none;
+    outline: none;
+    background: none;
+    cursor: pointer;
+  }
+
+  .btn.active {
+    color: $color-primary;
+  }
+
+  .icon {
+    width: 40px;
+    height: 40px;
+  }
+
+}
+
+/* right */
+.tour-booked {
+  &_title {
+    color: $color-primary;
+    font-size: 35px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  &_desc {
+    color: $color--black;
+    font-size: 35px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin-bottom: 30px;
+  }
+
+  .nav {
+    display: flex;
+    align-items: center;
+    margin-bottom: 40px;
+    gap: 10px;
+  }
+
+  .nav-btn {
+    font-size: 30px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    text-transform: capitalize;
+  }
+
+  .nav-btn.active {
+    text-decoration: underline;
+  }
+
+}
+
+.list {
+  &_item {
+    display: flex;
+    gap: 30px;
+    border: 1px solid $color--gray;
+    padding: 30px 20px;
+
+    &-thumbnail {
+      background: url("@/assets/images/hanoiTicket.png") no-repeat center center;
+      background-size: cover;
+      width: 200px;
+      height: 200px;
+      border-radius: 20px;
+    }
+
+    &-content {
+      color: $color--black;
+    }
+
+    &-title {
+      font-size: 30px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+      text-transform: uppercase;
+    }
+
+    .info {
+      font-size: 25px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+      text-transform: capitalize;
+      margin-top: 10px;
+    }
+
+    .detail-btn {
+      margin-top: 30px;
+      border-radius: 10px;
+      padding: 10px 20px;
+      font-weight: 400;
+    }
+  }
+}
+
+.account {
+  .avatar {
+    background: url("@/assets/images/user_avatar/bing_chilling.png") no-repeat center center;
+    background-size: cover;
+    width: 100px;
+    height: 100px;
+  }
+}

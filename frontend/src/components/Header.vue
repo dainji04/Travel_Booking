@@ -39,34 +39,29 @@ onMounted(() => {
         <div class="navbar">
             <ul class="list">
                 <router-link :to="{ name: 'home' }">
-                    <li class="list__text">Home</li>
+                    <li class="list__link">Home</li>
                 </router-link>
                 <router-link :to="{ name: 'tour' }">
-                    <li class="list__text">Tour</li>
+                    <li class="list__link">Tour</li>
                 </router-link>
                 <router-link :to="{ name: 'about' }">
-                    <li class="list__text">About Us</li>
+                    <li class="list__link">About Us</li>
                 </router-link>
                 <router-link :to="{ name: 'blog' }">
-                    <li class="list__text">Blog</li>
+                    <li class="list__link">Blog</li>
                 </router-link>
                 <router-link :to="{ name: 'contact' }">
-                    <li class="list__text">Contact</li>
+                    <li class="list__link">Contact</li>
                 </router-link>
             </ul>
-            <div class="options" v-if="checkLogin">
-                <router-link class="list__text" :to="{ name: 'profile' }">
-                    {{ user?.name }}
-                </router-link>
-                <router-link class="list__text" to="" @click="useAuth.logout()">
-                    Logout
-                </router-link>
-            </div>
-            <div class="options" v-else>
-                <router-link class="list__text" :to="{ name: 'login' }">
-                    Login
-                </router-link>
-            </div>
+           <div class="options">
+             <router-link v-if="checkLogin" class="options__avatar" :to="{ name: 'profile' }">
+               <div class="avatar_user"></div>
+             </router-link>
+             <router-link v-else class="list__link" :to="{ name: 'login' }">
+               Login
+             </router-link>
+           </div>
         </div>
         <div class="logo">
             <div class="logo__box">
@@ -82,6 +77,6 @@ onMounted(() => {
     <button class="scroll-to-top" v-if="ScrollToTop" @click="toTop">top</button>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @use '@/assets/scss/header.scss';
 </style>

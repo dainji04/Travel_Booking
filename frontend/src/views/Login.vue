@@ -36,9 +36,9 @@ const submit = async () => {
         const useAuth = authStore();
         const isLogged = await useAuth.Login(formData.value);
         if (isLogged) {
-            router.push({
-                path: '/',
-                replace: true,
+            await router.push({
+              path: '/',
+              replace: true,
             });
         } else {
             errorCredentials.value = 'Tài khoản hoặc mật khẩu không đúng!';

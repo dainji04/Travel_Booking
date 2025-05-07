@@ -17,7 +17,7 @@
     }
 
     &__left-side {
-        // background-image: url('https://wallpapers.com/images/hd/travel-background-we1aqvt6zacj99uk.jpg');
+         //background-image: url('https://wallpapers.com/images/hd/travel-background-we1aqvt6zacj99uk.jpg');
         background-image: url(../images/bg-panigation.jpg);
         background-size: cover;
         background-position: center;
@@ -34,6 +34,7 @@
     }
 
     &__wave {
+        height: 100%;
         position: absolute;
         left: -24%;
         z-index: 1;
