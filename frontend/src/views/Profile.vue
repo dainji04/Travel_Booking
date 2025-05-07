@@ -1,16 +1,26 @@
 <script setup lang="ts">
 import {authStore} from '@/stores/auth';
 import Pagination from "@/components/Pagination.vue";
-import {onMounted, useTemplateRef} from "vue";
+import {ref, useTemplateRef} from "vue";
 
 const useAuth = authStore();
 const user = useAuth.getUser;
 const inputImage = useTemplateRef("input-image");
+const activeSection = ref("tour-booked");
+
 
 const clickInputImage = () => {
   inputImage.value?.click();
 };
 
+const setActiveSection = (section: string) => {
+  activeSection.value = section;
+};
+
+const signOut = () => {
+  useAuth.logout();
+  window.location.href = '/';
+};
 </script>
 
 <template>
@@ -21,7 +31,7 @@ const clickInputImage = () => {
         <div class="profile_avatar"></div>
         <h1 class="profile_name">Hello, {{ user?.name }}</h1>
       </div>
-      <button class="profile_sign-out button-primary">
+      <button @click="signOut" class="profile_sign-out button-primary">
         <img src="@/assets/fonts/profile/logout.svg" alt="icon-sign-out">
         Sign Out
       </button>
@@ -30,22 +40,28 @@ const clickInputImage = () => {
       <div class="container--left">
         <div class="container_nav">
           <div class="container_nav--item">
-            <button class="container_nav-btn btn active">
-              <img class="icon" src="@/assets/fonts/profile/ticket.svg" alt="ticket-icon">
+            <button @click="setActiveSection('tour-booked')" :class="{active: activeSection == 'tour-booked'}"
+                    class="container_nav-btn btn">
+              <img v-if="activeSection == 'tour-booked'" class="icon" src="@/assets/fonts/profile/ticket-active.svg"
+                   alt="ticket-icon">
+              <img v-else class="icon" src="@/assets/fonts/profile/ticket.svg" alt="ticket-icon">
               Tour booked
             </button>
           </div>
           <div class="container_nav--item">
-            <button class="container_nav-btn btn">
-              <img class="icon" src="@/assets/fonts/user.svg" alt="user-icon">
+            <button @click="setActiveSection('account')" :class="{active: activeSection == 'account'}"
+                    class="container_nav-btn btn">
+              <img v-if="activeSection == 'account'" class="icon" src="@/assets/fonts/profile/user-active.svg"
+                   alt="user-icon">
+              <img v-else class="icon" src="@/assets/fonts/user.svg" alt="user-icon">
               account
             </button>
           </div>
         </div>
       </div>
       <div class="container--right">
-        <!--tour booked-->
-        <div v-if="false" class="tour-booked">
+        <!--show when click tour booked-->
+        <div v-if="activeSection == 'tour-booked'" class="tour-booked">
           <h1 class="tour-booked_title">tour booked</h1>
           <p class="tour-booked_desc">Below is a list of tour bookings that have been successfully made.</p>
           <div class="tour-booked_options">
@@ -70,30 +86,28 @@ const clickInputImage = () => {
             </div>
           </div>
         </div>
-        <div class="account">
+        <!--show when click account-->
+        <div class="account" v-if="activeSection == 'account'">
           <h1 class="account_title">Account</h1>
-          <p class="account-desc">Edit your account details and password using the form below.</p>
-          <div class="account_form">
-            <form action="" method="post">
-              <div class="form-group">
-                <div class="avatar" @click="clickInputImage">
-                  <input ref="input-image" type="file" id="avatar" accept="image/*" hidden/>
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="name">Name</label>
-                <input type="text" id="name" placeholder="Enter your name"/>
-              </div>
-              <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" placeholder="Enter your email"/>
-              </div>
-              <div class="form-group">
-                <label for="phone">Number</label>
-                <input type="number" id="phone" placeholder="Enter your phone"/>
-              </div>
-            </form>
-          </div>
+          <p class="account_desc">Edit your account details and password using the form below.</p>
+          <form class="account_form" action="" method="post">
+            <div class="avatar" @click="clickInputImage">
+              <input ref="input-image" type="file" id="avatar" accept="image/*" hidden/>
+            </div>
+            <div class="form-group">
+              <input type="text" id="name"/>
+              <label for="name">Name</label>
+            </div>
+            <div class="form-group">
+              <input type="email" id="email"/>
+              <label for="email">Email</label>
+            </div>
+            <div class="form-group">
+              <input type="number" id="phone"/>
+              <label for="phone">Number</label>
+            </div>
+            <button class="btn-submit button-primary">Save the changes</button>
+          </form>
         </div>
       </div>
     </div>
