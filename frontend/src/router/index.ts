@@ -64,6 +64,11 @@ const routes = [
                 component: () => import('../views/TourDetail.vue'),
             },
             {
+                path: 'checkout',
+                name: 'checkout',
+                component: () => import('../views/Checkout.vue'),
+            },
+            {
                 path: 'about',
                 name: 'about',
                 // route level code-splitting
@@ -99,18 +104,18 @@ const router = createRouter({
     },
 });
 
-// router.beforeEach(async (to, from, next) => {
-//     const useAuth = authStore();
-//     const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
-//     if (requiresAuth) {
-//         if (useAuth.getUser) {
-//             next();
-//         } else {
-//             next("/login");
-//         }
-//     } else {
-//         next();
-//     }
-// })
+router.beforeEach(async (to, from, next) => {
+    const useAuth = authStore();
+    const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
+    if (requiresAuth) {
+        if (useAuth.getUser) {
+            next();
+        } else {
+            next("/login");
+        }
+    } else {
+        next();
+    }
+})
 
 export default router;

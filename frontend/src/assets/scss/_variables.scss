@@ -7,20 +7,22 @@ $color-blue: #18e8eb; // --blue
 $color--white: #fff;
 $color--black: #000;
 $color--gray: #ccc;
+$color-line: #BFEAFA;
+
 $error-color: #ff0000b9;
 
 $bg-color: #6aa4d63f;
 $bg-white: #f5f5f5;
 
 $primary-rgb-gradient-color: linear-gradient(
-    90deg,
-    rgba(238, 204, 81, 1),
-    rgba(32, 60, 88, 1)
+                90deg,
+                rgba(238, 204, 81, 1),
+                rgba(32, 60, 88, 1)
 );
 
 $secondary-rgb-gradient-color: linear-gradient(
-    180deg,
-    #d06814 0%,
-    #ffcdb2 100%
+                180deg,
+                #d06814 0%,
+                #ffcdb2 100%
 );
 $secondary-color: linear-gradient(to right, #d06814, #ffcdb2);
