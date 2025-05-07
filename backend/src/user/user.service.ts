@@ -45,6 +45,7 @@ export class UserService {
       tempName: name,
     });
     await this.otpRepository.save(otpRecord);
+    console.log(email)
   
    
     await this.emailService.handleSendmailSignUp(email, otp);
