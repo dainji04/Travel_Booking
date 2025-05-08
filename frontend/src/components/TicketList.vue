@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, useTemplateRef } from 'vue';
 
 import hueTicketImg from '@/assets/images/hueTicket.png';
 import phuyenTicketImg from '@/assets/images/phuyenTicket.png';
@@ -53,15 +53,18 @@ const tourTicket = [
     },
 ];
 
-const currentIndex = ref(0);
+const tourList = useTemplateRef('tour-list');
 
 const nextSlide = () => {
-    currentIndex.value = (currentIndex.value + 1) % tourTicket.length;
+    if (tourList.value) {
+        tourList.value.style.transform = `translateX(-60%)`;
+    }
 };
 
 const prevSlide = () => {
-    currentIndex.value =
-        (currentIndex.value - 1 + tourTicket.length) % tourTicket.length;
+    if (tourList.value) {
+        tourList.value.style.transform = `translateX(0)`;
+    }
 };
 </script>
 
@@ -101,11 +104,16 @@ const prevSlide = () => {
                 />
             </button>
         </div>
-        <div class="ticket__list-item">
+        <div ref="tour-list" class="ticket__list-item">
             <template v-for="ticket in tourTicket">
                 <div class="ticket__item">
-                    <div class="ticket__image">
-                        <img :src="ticket.img" alt="" />
+                    <div
+                        class="ticket__image"
+                        :style="{
+                            backgroundImage: `url(${ticket.img})`,
+                        }"
+                    >
+                        <!-- <img :src="ticket.img" alt="" /> -->
                     </div>
                     <div class="ticket__content">
                         <h1 class="ticket__title">{{ ticket.title }}</h1>
@@ -212,6 +220,7 @@ const prevSlide = () => {
         transform: translate(-50%, -50%);
         display: flex;
         justify-content: space-between;
+        z-index: 10;
     }
 
     &__btn-primary {
@@ -239,12 +248,11 @@ const prevSlide = () => {
         align-items: center;
         gap: 50px;
         margin-top: 50px;
-        overflow: hidden;
         transition: all 0.5s ease-in-out;
     }
 
     &__item {
-        min-width: 29%;
+        min-width: 31%;
         background-color: #fff;
         border-radius: 40px;
         padding: 10px;
@@ -254,12 +262,8 @@ const prevSlide = () => {
         width: 100%;
         height: 292px;
         border-radius: 30px;
-    }
-
-    &__image img {
-        width: 100%;
-        height: 100%;
-        border-radius: 40px;
+        background-size: cover;
+        background-position: center;
     }
 
     &__content {
