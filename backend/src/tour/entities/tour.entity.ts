@@ -25,6 +25,17 @@ export class Tour {
     @OneToMany(() => BookingTour , (bookingTour) => bookingTour.tour)
     bookingTours: BookingTour[];
 
+    @Column({ type:'int',default:0})
+    tour_Price:number
+
+    @Column({type:'varchar',length:200 , nullable:true})
+    tour_special:string
+
+    @Column({type:'text' , array:true , nullable:true})
+    tour_Imgs:string[]
+
+
+
 
     @ManyToOne(() => Location , location => location.tours)
     location: Location;

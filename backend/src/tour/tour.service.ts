@@ -15,7 +15,7 @@ export class TourService {
     private readonly hotelService: LocationService,
   ) {}
   async create(createTourDto: CreateTourDto) {
-    const { locationId, hotelId, tour_start, tour_end, tour_typeCars } = createTourDto;
+    const { locationId, hotelId, tour_start, tour_end, tour_typeCars , tour_Imgs , tour_special  } = createTourDto;
     const location = await this.locationService.findOne(locationId);
     if (!location) {
       throw new NotFoundException('Không tìm thấy địa điểm');
@@ -48,7 +48,9 @@ export class TourService {
       ...createTourDto,
       location,
       hotel,
-      tour_typeCars
+      tour_typeCars,
+      tour_special,
+      tour_Imgs:tour_Imgs || []
     });
     return this.tourRepository.save(tour);
   }

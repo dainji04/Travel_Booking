@@ -1,5 +1,5 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { IsArray, IsEnum, IsInt, IsNumber, IsString } from 'class-validator';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { IsArray, IsEnum, IsInt, IsNumber, IsOptional, IsString, MaxLength } from 'class-validator';
 import { TypeCar } from 'src/common/type_Car.common';
 
 export class CreateTourDto {
@@ -58,4 +58,22 @@ export class CreateTourDto {
   @ApiProperty({ example: 1, description: 'ID của khách sạn (hotel)' })
   @IsNumber()
   hotelId: number;
+
+  @IsOptional()
+  @IsArray()
+  @IsString({ each: true })
+  @ApiPropertyOptional({
+    example:'***.jdg' , description:' Ảnh của tour'
+  })
+  tour_Imgs?: string[];
+
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(200)
+  @ApiPropertyOptional({
+    example:'Đà lạt đẹp vc , tôi chỉ muốn sau này đi đà lạt với chiếc Z900 =))) ' , 
+    description:'Điểm đặc biệt trong tour'})
+  tour_special?: string;
+
 }

@@ -72,7 +72,7 @@ export class BookingTourService {
       bookingTour_user: user,
       bookingTour_Type,
       tour,
-      // bookingTour_CustomDetails: bookingTour_CustomDetails || null,
+      bookingTour_CustomDetails: bookingTour_CustomDetails ? JSON.stringify(bookingTour_CustomDetails) : null,
     });
     await this.bookingTourRepo.save(newBookingTour);
   
