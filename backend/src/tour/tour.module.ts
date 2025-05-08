@@ -5,6 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Tour } from './entities/tour.entity';
 import { LocationModule } from 'src/location/location.module';
 import { HotelModule } from 'src/hotel/hotel.module';
+import { OrderHistory } from 'src/order-history/entities/order-history.entity';
 
 @Module({
   imports:[TypeOrmModule.forFeature([Tour]) , LocationModule ,HotelModule],

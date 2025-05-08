@@ -12,16 +12,19 @@ import { Bill } from 'src/bill/entities/bill.entity';
 import { TourService } from 'src/tour/tour.service';
 import { PdfService } from './pdf-booking.service';
 import { typeBooking } from 'src/common/type_Booking.common';
+import { OrderHistory } from 'src/order-history/entities/order-history.entity';
 
 @Injectable()
 export class BookingTourService {
   constructor(
     @InjectRepository(BookingTour) private readonly bookingTourRepo:Repository<BookingTour>,
+    @InjectRepository(OrderHistory) private readonly orderHistoryRepo:Repository<OrderHistory>,
     @InjectRepository(Bill) private readonly billRepo:Repository<Bill>,
     private readonly userService:UserService,
     private readonly emailService:EmailService,
     private readonly tourService:TourService,
-    private readonly pdfService:PdfService
+    private readonly pdfService:PdfService,
+
 
 
   ){}
@@ -94,6 +97,13 @@ export class BookingTourService {
     });
     await this.billRepo.save(bill);
   
+    const orderHistory = await this.orderHistoryRepo.save({
+      orderHistory_Day:new Date(),
+      user,
+      tour,
+      bill
+      
+    })
     try {
       await this.emailService.handleSendMailBookingTour(
         user.email,
@@ -111,6 +121,7 @@ export class BookingTourService {
     return {
       booking: newBookingTour,
       pdfPath: `/pdfs/booking-${newBookingTour.id}.pdf`,
+      orderHistory
     };
   }
   

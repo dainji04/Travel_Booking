@@ -1,5 +1,6 @@
+import { OrderHistory } from "src/order-history/entities/order-history.entity";
 import { User } from "src/user/entities/user.entity";
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Bill {
@@ -18,6 +19,9 @@ export class Bill {
 
     @ManyToOne(() => User , user => user.bills)
     user:User
+
+    @OneToMany(() => OrderHistory , orderHistory => orderHistory.bill) 
+    orderHistories:OrderHistory[]
 
 
 }

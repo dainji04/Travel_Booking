@@ -13,11 +13,12 @@ import { LocationModule } from './location/location.module';
 import { HotelModule } from './hotel/hotel.module';
 import { PaymentModule } from './payment/payment.module';
 import { BillModule } from './bill/bill.module';
+import { OrderHistoryModule } from './order-history/order-history.module';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot(dataSourceOptions)
-    ,UserModule, EmailModule, BookingTourModule, TourModule, RatingModule, LocationModule, HotelModule, PaymentModule, BillModule],
+    ,UserModule, EmailModule, BookingTourModule, TourModule, RatingModule, LocationModule, HotelModule, PaymentModule, BillModule, OrderHistoryModule],
   controllers: [AppController],
   providers: [AppService],
 })
