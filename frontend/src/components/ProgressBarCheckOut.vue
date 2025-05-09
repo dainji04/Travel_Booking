@@ -19,7 +19,7 @@ const isActive = (stepNumber: number) => {
     <div class="progress">
         <div class="step1 progress_step">
             <img
-                v-if="!isActive(0)"
+                v-if="step > 0"
                 src="@/assets/fonts/check-circle.svg"
                 alt="check-circle"
             />
@@ -29,7 +29,7 @@ const isActive = (stepNumber: number) => {
         <hr class="line" :class="{ active: isActive(1) }" />
         <div class="step2 progress_step">
             <img
-                v-if="!isActive(1)"
+                v-if="step > 1"
                 src="@/assets/fonts/check-circle.svg"
                 alt="check-circle"
             />
@@ -39,7 +39,7 @@ const isActive = (stepNumber: number) => {
         <hr class="line" :class="{ active: isActive(2) }" />
         <div class="step3 progress_step">
             <img
-                v-if="!isActive(2)"
+                v-if="step > 2"
                 src="@/assets/fonts/check-circle.svg"
                 alt="check-circle"
             />
@@ -49,7 +49,7 @@ const isActive = (stepNumber: number) => {
         <hr class="line" :class="{ active: isActive(3) }" />
         <div class="step4 progress_step">
             <img
-                v-if="!isActive(3)"
+                v-if="step > 3"
                 src="@/assets/fonts/check-circle.svg"
                 alt="check-circle"
             />

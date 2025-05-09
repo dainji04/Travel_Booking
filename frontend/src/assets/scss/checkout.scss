@@ -1,11 +1,249 @@
 @use '../scss/variables' as *;
 
-
 .checkout {
-  margin-top: 100px;
+    margin-top: 100px;
 }
 
 .container {
-  max-width: 1140px;
-  margin: 100px auto 0;
+    max-width: 1300px;
+    margin: 100px auto 0;
+}
+
+.box {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 50px;
+}
+.coupon {
+    background: $color--white;
+    padding: 40px 40px 50px 15px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    position: relative;
+
+    .close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        cursor: pointer;
+        border: none;
+        outline: none;
+        background: transparent;
+        transition: 0.1s;
+
+        &:hover {
+            background-color: $bg-white;
+        }
+    }
+
+    &_question {
+        color: $color--black;
+        font-size: 35px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+    }
+
+    &_input {
+        margin-top: 20px;
+        width: 100%;
+
+        input {
+            width: 70%;
+            padding: 10px 20px;
+            border: 2px solid $color-primary;
+            font-size: 20px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+            outline: none;
+        }
+
+        button {
+            width: 25%;
+            padding: 12px 20px;
+            background: $color-primary;
+            border: none;
+            color: $color--white;
+            font-size: 20px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+        }
+    }
+}
+
+.tour-info {
+    margin-top: 50px;
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 50px;
+
+    .left,
+    .right {
+        padding: 50px 50px;
+        background: $color--white;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .heading {
+        font-size: 40px;
+    }
+
+    .form-info {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        gap: 20px;
+        h1 {
+            color: $color-primary;
+            font-weight: bold;
+        }
+    }
+
+    .form-group {
+        position: relative;
+        width: 90%;
+
+        label {
+            position: absolute;
+            top: 10px;
+            left: 20px;
+            font-size: 24px;
+            color: $color--black;
+            background: $color--white;
+            line-height: normal;
+            transition: 0.2s;
+            pointer-events: none;
+        }
+
+        input:focus ~ label,
+        input:valid ~ label {
+            top: -16px;
+            color: $color-primary;
+        }
+
+        input:focus,
+        input:valid {
+            border: 2px solid $color-primary;
+        }
+
+        input {
+            position: relative;
+            width: 100%;
+            padding: 10px 30px 10px 15px;
+            border: 2px solid $color--black;
+            outline: none;
+            transition: 0.3s;
+        }
+    }
+
+    .btn-group {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .btn {
+        margin-top: 20px;
+        width: fit-content;
+        padding: 5px 25px;
+        transition: 0.3s;
+        background: $color--white;
+        color: $color-primary;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+        &:hover {
+            background: $color-primary;
+            color: $color--white;
+        }
+    }
+
+    // right
+    .right {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        height: fit-content;
+
+        .heading {
+            text-align: start;
+            font-size: 30px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: normal;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .about-tour {
+            background: $bg-blue;
+            margin-bottom: 20px;
+            padding: 20px 15px;
+            display: grid;
+            gap: 10px;
+
+            h1 {
+                font-size: 25px;
+                font-style: normal;
+                font-weight: 700;
+                line-height: normal;
+                text-transform: uppercase;
+            }
+
+            .date {
+                color: $color--black;
+                font-size: 20px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: normal;
+                text-transform: uppercase;
+            }
+
+            .tripcode {
+                width: fit-content;
+                border-radius: 20px;
+                border: 0px solid #000;
+                background: #fff;
+                padding: 5px 10px;
+                // text
+                color: $color--black;
+                font-size: 20px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: normal;
+            }
+        }
+
+        .desc {
+            font-size: 32px;
+            font-weight: bold;
+            text-align: start;
+            text-transform: uppercase;
+        }
+
+        .info-item {
+            font-size: 18px;
+            font-weight: bold;
+            text-align: start;
+            text-transform: uppercase;
+        }
+
+        .info-item span {
+            font-size: 18px;
+            float: right;
+            text-transform: uppercase;
+            color: $color--black;
+            opacity: 0.8;
+        }
+
+        .total {
+            margin-top: 10px;
+            color: $color--black;
+            text-align: end;
+            font-size: 25px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: normal;
+        }
+    }
 }

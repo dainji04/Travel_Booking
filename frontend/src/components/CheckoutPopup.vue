@@ -21,6 +21,8 @@ const onSelect = (date: any, { source }: any) => {
 };
 
 const nextStep = () => {
+    console.log(step.value);
+
     if (step.value == 1) {
         if (quantityAdult.value == 0 && quantityChildren.value == 0) {
             alert('Please select at least one person!');

@@ -95,7 +95,7 @@ const formSubmit = () => {
                         v-model="formData.lastName"
                         name="lastName"
                         type="text"
-                        class="main__input"
+                        class="main__input input-primary"
                         placeholder="Last Name*"
                         autocomplete="off"
                     />
@@ -103,7 +103,7 @@ const formSubmit = () => {
                         v-model="formData.firstName"
                         name="firstName"
                         type="text"
-                        class="main__input"
+                        class="main__input input-primary"
                         placeholder="First Name*"
                         autocomplete="off"
                     />
@@ -113,7 +113,7 @@ const formSubmit = () => {
                         v-model="formData.email"
                         name="email"
                         type="email"
-                        class="main__input"
+                        class="main__input input-primary"
                         placeholder="email*"
                         autocomplete="off"
                     />
@@ -121,7 +121,7 @@ const formSubmit = () => {
                         v-model="formData.phoneNumber"
                         name="phoneNumber"
                         type="text"
-                        class="main__input"
+                        class="main__input input-primary"
                         placeholder="phone Number*"
                         autocomplete="off"
                     />
@@ -131,7 +131,7 @@ const formSubmit = () => {
                         v-model="formData.comment"
                         name="comment"
                         type="text"
-                        class="main__input main__textarea"
+                        class="main__input input-primary main__textarea"
                         placeholder="write something..."
                     ></textarea>
                 </div>
