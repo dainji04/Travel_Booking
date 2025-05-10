@@ -1,6 +1,7 @@
 import { BookingTour } from "src/booking-tour/entities/booking-tour.entity";
 import { TypeCar } from "src/common/type_Car.common";
 import { Hotel } from "src/hotel/entities/hotel.entity";
+import { Itinerary } from "src/itinerary/entities/itinerary.entity";
 import { Location } from "src/location/entities/location.entity";
 import { OrderHistory } from "src/order-history/entities/order-history.entity";
 import { Rating } from "src/rating/entities/rating.entity";
@@ -55,5 +56,8 @@ export class Tour {
 
     @OneToMany(()=> OrderHistory, orderHistory => orderHistory.tour) 
     orderHistories:OrderHistory[]
+
+    @OneToMany(() => Itinerary , ite => ite.tour) 
+    itineraries:Itinerary
 
 }

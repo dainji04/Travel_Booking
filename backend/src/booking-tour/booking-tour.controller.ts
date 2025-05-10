@@ -8,6 +8,10 @@ import {
   UseGuards,
   Patch,
   Query,
+  Res,
+  NotFoundException,
+  BadRequestException,
+  ForbiddenException,
 } from '@nestjs/common';
 import { BookingTourService } from './booking-tour.service';
 import { CreateBookingTourDto } from './dto/create-booking-tour.dto';
@@ -21,11 +25,21 @@ import { BookingTourQueryDto } from './dto/search-booking-tour.dto';
 import { BookingTour } from './entities/booking-tour.entity';
 import { CurrentUser } from 'src/decorators/current-user.decorator';
 import { User } from 'src/user/entities/user.entity';
+import { Response } from 'express';
+import * as fs from 'fs';
+import * as fsPromises from 'fs/promises';
+import * as path from 'path'
+import { PdfService } from './pdf-booking.service';
 
 @Controller('booking-tour')
 @ApiTags('Booking Tour')
 export class BookingTourController {
-  constructor(private readonly bookingTourService: BookingTourService) {}
+  constructor(
+    private readonly bookingTourService: BookingTourService,
+    private readonly pdfService:PdfService
+
+              
+  ) {}
 
  
  
@@ -90,4 +104,61 @@ export class BookingTourController {
   async getAllBookingTour(@Query() query: BookingTourQueryDto) {
     return this.bookingTourService.getAllBookingTour(query);
   }
+
+
+  @Get('download-pdf/:id')
+  async downloadFilePdfBookingTour(
+    @Param('id') id: number,
+    @CurrentUser() currentUser: User,
+    @Res() res: Response,
+  ) {
+    const booking = await this.bookingTourService.findByIdBookingTour(id);
+  
+    if (booking.bookingTour_user.id !== currentUser.id && !currentUser.roles.includes(Roles.ADMIN)) {
+      throw new ForbiddenException('You are not allowed to download this PDF');
+    }
+  
+    const pdfDir = path.join(process.cwd(), 'pdfs');
+    let filePath = path.join(pdfDir, `booking-${id}.pdf`);
+  
+    if (!fs.existsSync(pdfDir)) {
+      fs.mkdirSync(pdfDir, { recursive: true });
+    }
+  
+    if (!fs.existsSync(filePath)) {
+      const {
+        bookingTour_user,
+        bookingTour_Date,
+        bookingTour_TotalPrice,
+        bookingTour_Deposit,
+      } = booking;
+      const mustPay = bookingTour_TotalPrice - bookingTour_Deposit;
+      const { email, name } = currentUser;
+  
+      let pdfPath = await this.pdfService.generateBookingTourPdf({
+        id,
+        userName: name,
+        email,
+        bookingDate: String(bookingTour_Date),
+        totalPrice: bookingTour_TotalPrice,
+        deposit: bookingTour_Deposit,
+        mustPay,
+      });
+  
+      filePath = pdfPath;
+    }
+  
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', `attachment; filename=booking-${id}.pdf`);
+  
+    const stream = fs.createReadStream(filePath);
+    return stream.pipe(res);
+  }
+  
+
+
+
+
+
+  
 }
