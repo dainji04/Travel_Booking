@@ -1,0 +1,65 @@
+@use '@/assets/scss/variables' as *;
+
+.thankyou {
+    margin-top: 100px;
+}
+
+.container {
+    max-width: 1300px;
+    margin: 100px auto 0;
+}
+
+.bill {
+    margin-top: 100px;
+    background: $color--white;
+    padding: 60px 40px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+
+    &_title {
+        color: $color--black;
+        font-size: 40px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+        text-transform: uppercase;
+    }
+
+    &_table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    &_item {
+        border-bottom: 1px solid $color--black;
+        td {
+            padding: 20px 0;
+            width: 49.99%;
+        }
+    }
+
+    h3 {
+        color: $color--black;
+        font-size: 35px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+        text-transform: capitalize;
+    }
+    .index {
+        color: $color-primary;
+        font-size: 35px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+        text-transform: capitalize;
+    }
+
+    p {
+        color: $color--black;
+        font-size: 30px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+        text-transform: capitalize;
+    }
+}

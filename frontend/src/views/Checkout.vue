@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router';
+import router from '@/router';
 import Pagination from '@/components/Pagination.vue';
 import { ref } from 'vue';
 
 import ProgressBarCheckOut from '@/components/ProgressBarCheckOut.vue';
 
-const route = useRoute();
+import checkEmail from '@/plugins/checkEmail';
 
-const step = ref(2);
+const route = useRoute();
 
 // Access query parameters
 const date = route.query.date;
@@ -18,6 +19,84 @@ const tourId = route.query.tourId;
 const total = Number(adults) * 600 + Number(children) * 400;
 
 console.log(date, adults, children, tourId); // Debugging: Check the values
+
+interface AdultForm {
+    name: string;
+    cccd: string;
+    email: string;
+}
+
+interface ChildForm {
+    name: string;
+}
+
+const adultForms = ref<AdultForm[]>([]);
+const childForms = ref<ChildForm[]>([]);
+for (let i = 0; i < Number(adults); i++) {
+    adultForms.value.push({ name: '', cccd: '', email: '' });
+}
+for (let i = 0; i < Number(children); i++) {
+    childForms.value.push({ name: '' });
+}
+
+const focusEmptyInput = () => {
+    const emptyAdultInput = adultForms.value.findIndex(
+        (adult) => !adult.name || !adult.cccd || !adult.email
+    );
+    if (emptyAdultInput !== -1) {
+        const input = document.querySelector(
+            `.form-info .form-group:nth-of-type(${
+                emptyAdultInput * 3 + 1
+            }) input`
+        ) as HTMLInputElement;
+
+        input?.focus();
+        return false;
+    }
+
+    const emptyChildInput = childForms.value.findIndex((child) => !child.name);
+    if (emptyChildInput !== -1) {
+        const input = document.querySelector(
+            `.form-info .form-group:nth-of-type(${
+                adultForms.value.length * 3 + emptyChildInput + 1
+            }) input`
+        ) as HTMLInputElement;
+        input?.focus();
+        return false;
+    }
+    return true;
+};
+
+const handleFormSubmit = () => {
+    const isNotEmpty = focusEmptyInput();
+    const isEmailValidated = checkEmail(
+        adultForms.value.map((adult) => adult.email)
+    );
+    console.log(isEmailValidated);
+
+    if (isEmailValidated && isNotEmpty) {
+        router.push({
+            name: 'thankYou',
+            state: {
+                date,
+                adults,
+                children,
+                tourId,
+                adultForms: JSON.stringify(adultForms.value),
+                childForms: JSON.stringify(childForms.value),
+            },
+        });
+    }
+};
+
+const clearForms = () => {
+    adultForms.value = adultForms.value.map(() => ({
+        name: '',
+        cccd: '',
+        email: '',
+    }));
+    childForms.value = childForms.value.map(() => ({ name: '' }));
+};
 </script>
 
 <template>
@@ -27,10 +106,10 @@ console.log(date, adults, children, tourId); // Debugging: Check the values
         :pagination="['Homepage', 'Check out']"
     />
     <div class="checkout">
-        <ProgressBarCheckOut :step="step" />
+        <ProgressBarCheckOut :step="2" />
         <div class="container">
             <!-- step 3 -->
-            <div class="step container-step" v-show="step == 2">
+            <div class="step container-step">
                 <div class="box">
                     <div class="coupon">
                         <button class="close">
@@ -65,14 +144,19 @@ console.log(date, adults, children, tourId); // Debugging: Check the values
                                         class="input-primary"
                                         type="text"
                                         required
+                                        v-model="adultForms[index - 1].name"
                                     />
-                                    <label>name</label>
+                                    <label>Name</label>
                                 </div>
                                 <div class="form-group">
                                     <input
                                         class="input-primary"
                                         type="text"
                                         required
+                                        v-model="adultForms[index - 1].cccd"
+                                        minlength="12"
+                                        maxlength="12"
+                                        oninput="this.value = this.value.replace(/[^0-9]/g, '');"
                                     />
                                     <label>CCCD</label>
                                 </div>
@@ -81,8 +165,9 @@ console.log(date, adults, children, tourId); // Debugging: Check the values
                                         class="input-primary"
                                         type="text"
                                         required
+                                        v-model="adultForms[index - 1].email"
                                     />
-                                    <label>email</label>
+                                    <label>Email</label>
                                 </div>
                             </template>
                             <template v-for="i in Number(children)" :key="i">
@@ -92,19 +177,23 @@ console.log(date, adults, children, tourId); // Debugging: Check the values
                                         class="input-primary"
                                         type="text"
                                         required
+                                        v-model="childForms[i - 1].name"
                                     />
-                                    <label>name</label>
+                                    <label>Name</label>
                                 </div>
                             </template>
                             <div class="btn-group">
                                 <button
                                     type="submit"
                                     class="button-primary btn"
-                                    @click.stop.prevent="step++"
+                                    @click.stop.prevent="handleFormSubmit()"
                                 >
                                     Book Now
                                 </button>
-                                <button class="button-primary btn">
+                                <button
+                                    class="button-primary btn"
+                                    @click.prevent="clearForms()"
+                                >
                                     reset
                                 </button>
                             </div>
@@ -137,7 +226,6 @@ console.log(date, adults, children, tourId); // Debugging: Check the values
                     </div>
                 </div>
             </div>
-            <div class="step container-step" v-show="step == 3">step 3</div>
         </div>
     </div>
 </template>
