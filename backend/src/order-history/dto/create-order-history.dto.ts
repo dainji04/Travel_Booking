@@ -24,14 +24,7 @@ export class CreateOrderHistoryDto {
         }
       )
       tourId:number
-    //   @IsNumber()
-    //   @ApiPropertyOptional(
-    //     {
-    //         example:'1',
-    //         description:'ID của tour'
-    //     }
-    //   )
-    //   billId:
+    
     
 
 

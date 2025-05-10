@@ -250,6 +250,15 @@ export class BookingTourService {
     return found
   }
 
+
+  async findByIdBookingTour(id:number) {
+    const booking = await this.bookingTourRepo.findOne({
+      where:{id},
+      relations:['bookingTour_user']
+    })
+    if(!booking) throw new NotFoundException('Booking tour not found')
+    return booking
+  }
   
 
 
