@@ -6,6 +6,8 @@ import { Tour } from './entities/tour.entity';
 import { Repository } from 'typeorm';
 import { SearchTourDto } from './dto/search-tour.dto';
 import { LocationService } from 'src/location/location.service';
+import { Itinerary } from 'src/itinerary/entities/itinerary.entity';
+import { Activity } from 'src/itinerary/entities/activity-itinerary.entity';
 
 @Injectable()
 export class TourService {
@@ -15,7 +17,7 @@ export class TourService {
     private readonly hotelService: LocationService,
   ) {}
   async create(createTourDto: CreateTourDto) {
-    const { locationId, hotelId, tour_start, tour_end, tour_typeCars , tour_Imgs , tour_special  } = createTourDto;
+    const { locationId, hotelId, tour_start, tour_end, tour_typeCars , tour_Imgs , tour_special , itineraries  } = createTourDto;
     const location = await this.locationService.findOne(locationId);
     if (!location) {
       throw new NotFoundException('Không tìm thấy địa điểm');
@@ -44,13 +46,26 @@ export class TourService {
     if (overlappingTour.length > 0) {
       throw new BadRequestException('Tour không thể trùng với tour khác');
     }
-    const tour = this.tourRepository.create({
+    let tour = this.tourRepository.create({
       ...createTourDto,
       location,
       hotel,
       tour_typeCars,
       tour_special,
       tour_Imgs:tour_Imgs || []
+    });
+
+    tour.itineraries = itineraries.map((itineraryDto) => {
+      const itinerary = new Itinerary();
+      itinerary.itinerary_Title = itineraryDto.itinerary_Title;
+  
+      itinerary.activities = (itineraryDto.activities || []).map((activityDto) => {
+        const activity = new Activity();
+        activity.name = activityDto.name;
+        return activity;
+      });
+  
+      return itinerary;
     });
     return this.tourRepository.save(tour);
   }

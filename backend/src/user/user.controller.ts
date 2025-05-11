@@ -20,7 +20,7 @@ export class UserController {
 
   @Get('me1')
   @UseGuards(AuthenticationGuard , AuthorizeGuard)
-  @AuthorizeRoles(Roles.USER , Roles.ADMIN)
+  // @AuthorizeRoles(Roles.USER , Roles.ADMIN)
   @ApiTags('Authentication')
   @ApiOperation({ summary: 'Get current user profile' })
   @ApiBearerAuth('Access Token')
@@ -85,7 +85,7 @@ export class UserController {
   @Get(':id')
   @ApiTags('Users')
   @UseGuards(AuthenticationGuard , AuthorizeGuard)
-  @AuthorizeRoles(Roles.ADMIN)
+  // @AuthorizeRoles(Roles.ADMIN)
   @ApiOperation({ summary: 'Get a user by ID' })
   @ApiResponse({ status: 200, description: 'User retrieved successfully' })
   async getOneUser(@Param('id') id:number) {
@@ -113,7 +113,7 @@ export class UserController {
   }
   @Get()
   @ApiTags('Users')
-  @AuthorizeRoles(Roles.ADMIN)
+  // @AuthorizeRoles(Roles.ADMIN)
   @UseGuards(AuthenticationGuard , AuthorizeGuard)
   @ApiOperation({ summary: 'Get a list of users' })
   @ApiResponse({ status: 200, description: 'Users retrieved successfully' })
@@ -125,7 +125,7 @@ export class UserController {
   @Patch(':id')
   @ApiTags('Users')
   @UseGuards(AuthenticationGuard , AuthorizeGuard)
-  @AuthorizeRoles(Roles.ADMIN)
+  // @AuthorizeRoles(Roles.ADMIN)
   @ApiOperation({ summary: 'Update a user by ID' })
   @ApiResponse({ status: 200, description: 'User updated successfully' })
   async updateUser(@Param('id') id: number, @Body() updateUserDto: UpdateUserDto) {
@@ -135,7 +135,7 @@ export class UserController {
   @Delete(':id')
   @ApiTags('Users')
   @UseGuards(AuthenticationGuard , AuthorizeGuard)
-  @AuthorizeRoles(Roles.ADMIN)
+  // @AuthorizeRoles(Roles.ADMIN)
   @ApiOperation({ summary: 'Delete a user by ID' })
   @ApiResponse({ status: 200, description: 'User deleted successfully' })
   async removeUser(@Param('id') id: number) {
@@ -146,7 +146,7 @@ export class UserController {
   @Get('email/:email')
   @ApiTags('Users')
   @UseGuards(AuthenticationGuard , AuthorizeGuard)
-  @AuthorizeRoles(Roles.ADMIN)
+  // @AuthorizeRoles(Roles.ADMIN)
   @ApiOperation({ summary: 'Get a user by email' })
   @ApiResponse({ status: 200, description: 'User retrieved successfully' })
   async getUserByEmail(@Param('email') email: string) {
@@ -156,7 +156,7 @@ export class UserController {
   @Post('email-password')
   @ApiTags('Users')
   @UseGuards(AuthenticationGuard , AuthorizeGuard)
-  @AuthorizeRoles(Roles.ADMIN)
+  // @AuthorizeRoles(Roles.ADMIN)
   @ApiOperation({ summary: 'Get a user by email and password' })
   @ApiResponse({ status: 200, description: 'User retrieved successfully' })
   async getUserByEmailAndPassword(@Body('email') email: string, @Body('password') password: string) {
@@ -166,7 +166,7 @@ export class UserController {
   @Patch('password/:id')
   @ApiTags('Users')
   @UseGuards(AuthenticationGuard , AuthorizeGuard)
-  @AuthorizeRoles(Roles.ADMIN)
+  // @AuthorizeRoles(Roles.ADMIN)
   @ApiOperation({ summary: 'Update user password' })
   @ApiResponse({ status: 200, description: 'User password updated successfully' })
   async updateUserPassword(@Param('id') id: number, @Body('password') password: string) {
@@ -176,7 +176,7 @@ export class UserController {
   @Patch('roles/:id')
   @ApiTags('Users')
   @UseGuards(AuthenticationGuard , AuthorizeGuard)
-  @AuthorizeRoles(Roles.ADMIN)
+  // @AuthorizeRoles(Roles.ADMIN)
   @ApiOperation({ summary: 'Update user roles' })
   @ApiResponse({ status: 200, description: 'User roles updated successfully' }) 
   async updateUserRoles(@Param('id') id: number, @Body('roles') roles: string[]) {
@@ -186,7 +186,7 @@ export class UserController {
 
   @Post('logout')
   @UseGuards(AuthenticationGuard , AuthorizeGuard)
-  @AuthorizeRoles(Roles.USER , Roles.ADMIN)
+  // @AuthorizeRoles(Roles.USER , Roles.ADMIN)
   @ApiTags('Authentication')
   @ApiOperation({ summary: 'User logout' })
   @ApiResponse({ status: 200, description: 'User logged out successfully' })

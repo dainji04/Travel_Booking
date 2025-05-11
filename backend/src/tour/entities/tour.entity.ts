@@ -57,7 +57,7 @@ export class Tour {
     @OneToMany(()=> OrderHistory, orderHistory => orderHistory.tour) 
     orderHistories:OrderHistory[]
 
-    @OneToMany(() => Itinerary , ite => ite.tour) 
-    itineraries:Itinerary
+    @OneToMany(() => Itinerary , ite => ite.tour , {cascade:true}) 
+    itineraries:Itinerary[]
 
 }

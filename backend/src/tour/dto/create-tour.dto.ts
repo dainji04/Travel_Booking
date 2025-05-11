@@ -1,6 +1,7 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsArray, IsEnum, IsInt, IsNumber, IsOptional, IsString, MaxLength } from 'class-validator';
+import { IsArray, IsEnum, IsInt, IsNotEmpty, IsNumber, IsOptional, IsString, MaxLength } from 'class-validator';
 import { TypeCar } from 'src/common/type_Car.common';
+import { CreateItineraryDto } from 'src/itinerary/dto/create-itineraty.dto';
 
 export class CreateTourDto {
   @ApiProperty({
@@ -76,4 +77,16 @@ export class CreateTourDto {
     description:'Điểm đặc biệt trong tour'})
   tour_special?: string;
 
+
+
+  @IsNotEmpty()
+  @ApiPropertyOptional({
+    example:''
+  })
+  itineraries: CreateItineraryDto[];
+
 }
+
+
+
+

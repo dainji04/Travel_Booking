@@ -46,7 +46,7 @@ export class BookingTourController {
   
   @Post()
   @UseGuards(AuthenticationGuard, AuthorizeGuard)
-  @AuthorizeRoles(Roles.USER)
+  // @AuthorizeRoles(Roles.USER)
   @ApiCreatedResponse({ description: 'Đặt tour thành công', type: BookingTour })
   @ApiBadRequestResponse({ description: 'Dữ liệu không hợp lệ' })
   async createBookingTour(
@@ -57,7 +57,7 @@ export class BookingTourController {
   }
 
   @Get(':id')
-  @AuthorizeRoles(Roles.ADMIN)
+  // @AuthorizeRoles(Roles.ADMIN)
   @UseGuards(AuthenticationGuard, AuthorizeGuard)
   @ApiOkResponse({ description: 'Lấy thông tin booking tour theo ID thành công', type: BookingTour })
   @ApiNotFoundResponse({ description: 'Không tìm thấy booking tour' })
@@ -66,7 +66,7 @@ export class BookingTourController {
   }
 
   @Patch(':id')
-  @AuthorizeRoles(Roles.ADMIN)
+  // @AuthorizeRoles(Roles.ADMIN)
   @UseGuards(AuthenticationGuard, AuthorizeGuard)
   @ApiOkResponse({ description: 'Cập nhật booking tour thành công', type: BookingTour })
   @ApiNotFoundResponse({ description: 'Không tìm thấy booking tour để cập nhật' })
@@ -87,7 +87,7 @@ export class BookingTourController {
   }
 
   @Get('user/:userId')
-  @AuthorizeRoles(Roles.ADMIN, Roles.USER)
+  // @AuthorizeRoles(Roles.ADMIN, Roles.USER)
   @ApiBearerAuth('token')
   @UseGuards(AuthenticationGuard, AuthorizeGuard)
   @ApiOkResponse({ description: 'Lấy danh sách booking tour theo user', type: [BookingTour] })
@@ -96,7 +96,7 @@ export class BookingTourController {
   }
 
   @Get()
-  @AuthorizeRoles(Roles.ADMIN, Roles.USER)
+  // @AuthorizeRoles(Roles.ADMIN, Roles.USER)
   @ApiBearerAuth('token')
   @UseGuards(AuthenticationGuard, AuthorizeGuard)
   @ApiQuery({ name: 'status', required: false, description: 'Lọc theo trạng thái booking' })
