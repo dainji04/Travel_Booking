@@ -34,8 +34,8 @@ export class TourController {
   constructor(private readonly tourService: TourService) {}
 
   @Post()
-  @AuthorizeRoles(Roles.ADMIN, Roles.USER)
-  @UseGuards(AuthenticationGuard, AuthorizeGuard)
+  // @AuthorizeRoles(Roles.ADMIN, Roles.USER)
+  // @UseGuards(AuthenticationGuard, AuthorizeGuard)
   @ApiCreatedResponse({ description: 'Tạo tour thành công', type: Tour })
   @ApiBadRequestResponse({ description: 'Dữ liệu không hợp lệ' })
   async create(@Body() createTourDto: CreateTourDto) {
@@ -43,8 +43,8 @@ export class TourController {
   }
 
   @Get(':id')
-  @AuthorizeRoles(Roles.ADMIN)
-  @UseGuards(AuthenticationGuard, AuthorizeGuard)
+  // @AuthorizeRoles(Roles.ADMIN)
+  // @UseGuards(AuthenticationGuard, AuthorizeGuard)
   @ApiOkResponse({ description: 'Lấy tour theo ID thành công', type: Tour })
   @ApiNotFoundResponse({ description: 'Không tìm thấy tour' })
   async getOne(@Param('id', ParseIntPipe) id: number) {
@@ -52,8 +52,8 @@ export class TourController {
   }
 
   @Get()
-  @AuthorizeRoles(Roles.ADMIN, Roles.USER)
-  @UseGuards(AuthenticationGuard, AuthorizeGuard)
+  // @AuthorizeRoles(Roles.ADMIN, Roles.USER)
+  // @UseGuards(AuthenticationGuard, AuthorizeGuard)
   @ApiQuery({ name: 'keyword', required: false })
   @ApiOkResponse({ description: 'Danh sách tour', type: [Tour] })
   async findAll(@Query() searchTourDto: SearchTourDto) {
@@ -61,8 +61,8 @@ export class TourController {
   }
 
   @Patch(':id')
-  @AuthorizeRoles(Roles.ADMIN, Roles.USER)
-  @UseGuards(AuthenticationGuard, AuthorizeGuard)
+  // @AuthorizeRoles(Roles.ADMIN, Roles.USER)
+  // @UseGuards(AuthenticationGuard, AuthorizeGuard)
   @ApiOkResponse({ description: 'Cập nhật tour thành công', type: Tour })
   @ApiNotFoundResponse({ description: 'Không tìm thấy tour' })
   async update(
@@ -74,8 +74,8 @@ export class TourController {
   }
 
   @Delete(':id')
-  @AuthorizeRoles(Roles.ADMIN, Roles.USER)
-  @UseGuards(AuthenticationGuard, AuthorizeGuard)
+  // @AuthorizeRoles(Roles.ADMIN, Roles.USER)
+  // @UseGuards(AuthenticationGuard, AuthorizeGuard)
   @ApiOkResponse({ description: 'Xoá tour thành công' })
   @ApiNotFoundResponse({ description: 'Không tìm thấy tour để xoá' })
   async remove(@Param('id', ParseIntPipe) id: number) {

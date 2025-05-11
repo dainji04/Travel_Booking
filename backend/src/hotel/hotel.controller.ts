@@ -21,7 +21,7 @@ export class HotelController {
   @ApiForbiddenResponse({ description: 'Lấy khách sạn theo ID thất bại vì chưa đăng nhập ' })
   @ApiNotFoundResponse({ description: 'Không tìm thấy khách sạn' })
   // @AuthorizeRoles(Roles.ADMIN, Roles.USER)
-  @UseGuards(AuthenticationGuard, AuthorizeGuard)
+  // @UseGuards(AuthenticationGuard, AuthorizeGuard)
   async getOne(@Param('id') id: number) {
     const res  = await this.hotelService.findOne(id);
     return res
@@ -44,7 +44,7 @@ export class HotelController {
   @ApiForbiddenResponse({ description: 'Lấy danh sách tour theo khách sạn thất bại vì chưa đăng nhập ' })
   @ApiNotFoundResponse({ description: 'Không tìm thấy khách sạn' })
   // @AuthorizeRoles(Roles.ADMIN, Roles.USER)
-  @UseGuards(AuthenticationGuard, AuthorizeGuard)
+  // @UseGuards(AuthenticationGuard, AuthorizeGuard)
   async getTourByHotel(@Param('id') id: number) {
     const res = await this.hotelService.findOneWithTours(id);
     return res
@@ -55,7 +55,7 @@ export class HotelController {
   @ApiBadRequestResponse({ description: 'Cập nhật khách sạn thất bại' })
   @ApiForbiddenResponse({ description: 'Cập nhật khách sạn thất bại vì chưa đăng nhập ' })
   // @AuthorizeRoles(Roles.ADMIN ,Roles.USER) 
-  @UseGuards(AuthenticationGuard, AuthorizeGuard)
+  // @UseGuards(AuthenticationGuard, AuthorizeGuard)
   async update(@Param('id') id:number,@Body() createHotelDto: UpdateHotelDto) {
     const res = await this.hotelService.update(id,createHotelDto);
     return res
@@ -66,7 +66,7 @@ export class HotelController {
   @ApiBadRequestResponse({ description: 'Tìm khách sạn thất bại' })
   @ApiForbiddenResponse({ description: 'Tìmkhách sạn thất bại vì chưa đăng nhập ' })
   // @AuthorizeRoles(Roles.ADMIN ,Roles.USER) 
-  @UseGuards(AuthenticationGuard, AuthorizeGuard)
+  // @UseGuards(AuthenticationGuard, AuthorizeGuard)
   async getAll(@Query() searchHotelDto: SearchHotelDto) {
     const res = await this.hotelService.findAll(searchHotelDto);
     return res
