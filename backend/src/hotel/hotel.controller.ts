@@ -32,7 +32,7 @@ export class HotelController {
   @ApiBadRequestResponse({ description: 'Tạo khách sạn thất bại' })
   @ApiForbiddenResponse({ description: 'Tạo khách sạn thất bại vì chưa đăng nhập ' })
   // @AuthorizeRoles(Roles.ADMIN ,Roles.USER)
-  @UseGuards(AuthenticationGuard, AuthorizeGuard)
+  // @UseGuards(AuthenticationGuard, AuthorizeGuard)
   async create(@Body() createHotelDto: CreateHotelDto) {
     const res = await this.hotelService.create(createHotelDto);
     return res

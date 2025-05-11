@@ -14,15 +14,15 @@ export class LocationController {
   constructor(private readonly locationService: LocationService) {}
 
  @Post()
- @AuthorizeRoles(Roles.ADMIN , Roles.USER)
- @UseGuards(AuthenticationGuard , AuthorizeGuard)
+//  @AuthorizeRoles(Roles.ADMIN , Roles.USER)
+//  @UseGuards(AuthenticationGuard , AuthorizeGuard)
   async create(@Body() createLocationDto: CreateLocationDto) {
     return await this.locationService.create(createLocationDto);
   }
   
   @Get(':id/tours')
   // @AuthorizeRoles(Roles.ADMIN , Roles.USER)
-  @UseGuards(AuthenticationGuard , AuthorizeGuard)
+  // @UseGuards(AuthenticationGuard , AuthorizeGuard)
   async findOneWithTour(
     @Param('id') id: number,
   ) {
@@ -32,7 +32,7 @@ export class LocationController {
  
   @Get()
   // @AuthorizeRoles(Roles.ADMIN , Roles.USER)
-  @UseGuards(AuthenticationGuard , AuthorizeGuard)
+  // @UseGuards(AuthenticationGuard , AuthorizeGuard)
   async findAll(@Query() query:SearchLocationDto) {
     return await this.locationService.findAll(query);
   }
@@ -43,7 +43,7 @@ export class LocationController {
 @ApiForbiddenResponse({ status: 403, description: 'Forbidden' })
 @ApiInternalServerErrorResponse({status:500 , description:'InternalServerError'} , )
 // @AuthorizeRoles(Roles.ADMIN , Roles.USER)
-@UseGuards(AuthenticationGuard , AuthorizeGuard)
+// @UseGuards(AuthenticationGuard , AuthorizeGuard)
 async getHotelsByLocation(
   @Param('id', ParseIntPipe) id: number,
   @Query('page') page = '1',
