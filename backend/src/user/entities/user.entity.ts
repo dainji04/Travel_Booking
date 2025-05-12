@@ -37,7 +37,7 @@ export class Account {
     @OneToMany(() => Rating , rating => rating.Account)
     ratings:Rating[]
 
-    @OneToMany(() => Bill , bill =>bill.Account)
+    @OneToMany(() => Bill , bill =>bill.Acc)
     bills:Bill[]
 
     @OneToMany(() => OrderHistory , orderHistory => orderHistory.user)

@@ -93,7 +93,7 @@ export class BookingTourService {
       price: bookingTour_TotalPrice,
       deposit: deposit,
       mustPaid,
-      Account: user,
+      Acc: user,
     });
     await this.billRepo.save(bill);
   

@@ -32,7 +32,7 @@ export class Bill {
     
 
     @ManyToOne(() => Account , user => user.bills)
-    Account:Account
+    Acc:Account
 
     @OneToMany(() => OrderHistory , orderHistory => orderHistory.bill) 
     orderHistories:OrderHistory[]
