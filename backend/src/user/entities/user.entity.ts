@@ -1,13 +1,13 @@
 import { Bill } from "src/bill/entities/bill.entity";
 import { BookingTourService } from "src/booking-tour/booking-tour.service";
 import { BookingTour } from "src/booking-tour/entities/booking-tour.entity";
-import { Roles } from "src/common/role_User.common";
+import { Roles } from "src/util/common/role_User.common";
 import { OrderHistory } from "src/order-history/entities/order-history.entity";
 import { Rating } from "src/rating/entities/rating.entity";
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
-@Entity('User')
-export class User {
+@Entity('Account')
+export class Account {
     @PrimaryGeneratedColumn()
     id: number;
 
@@ -34,10 +34,10 @@ export class User {
     bookingTour:BookingTour[]
 
 
-    @OneToMany(() => Rating , rating => rating.user)
+    @OneToMany(() => Rating , rating => rating.Account)
     ratings:Rating[]
 
-    @OneToMany(() => Bill , bill =>bill.user)
+    @OneToMany(() => Bill , bill =>bill.Account)
     bills:Bill[]
 
     @OneToMany(() => OrderHistory , orderHistory => orderHistory.user)

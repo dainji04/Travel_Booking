@@ -1,6 +1,6 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsArray, IsEnum, IsInt, IsNotEmpty, IsNumber, IsOptional, IsString, MaxLength } from 'class-validator';
-import { TypeCar } from 'src/common/type_Car.common';
+import { TypeCar } from 'src/util/common/type_Car.common';
 import { CreateItineraryDto } from 'src/itinerary/dto/create-itineraty.dto';
 
 export class CreateTourDto {

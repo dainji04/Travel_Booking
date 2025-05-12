@@ -1,6 +1,6 @@
 import { OrderHistory } from "src/order-history/entities/order-history.entity";
 import { Tour } from "src/tour/entities/tour.entity";
-import { User } from "src/user/entities/user.entity";
+import { Account } from "src/user/entities/user.entity";
 import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('Bill')
@@ -31,8 +31,8 @@ export class Bill {
     cccdClient:string
     
 
-    @ManyToOne(() => User , user => user.bills)
-    user:User
+    @ManyToOne(() => Account , user => user.bills)
+    Account:Account
 
     @OneToMany(() => OrderHistory , orderHistory => orderHistory.bill) 
     orderHistories:OrderHistory[]

@@ -17,14 +17,14 @@ import { BookingTourService } from './booking-tour.service';
 import { CreateBookingTourDto } from './dto/create-booking-tour.dto';
 import { UpdateBookingTourDto } from './dto/update-booking-tour.dto';
 import { ApiBearerAuth, ApiTags, ApiOkResponse, ApiCreatedResponse, ApiNotFoundResponse, ApiBadRequestResponse, ApiQuery } from '@nestjs/swagger';
-import { AuthenticationGuard } from 'src/guard/authentication.guard';
-import { AuthorizeGuard } from 'src/guard/authorization.guard';
-import { Roles } from 'src/common/role_User.common';
-import { AuthorizeRoles } from 'src/decorators/authorize.roles.decorator';
+import { AuthenticationGuard } from 'src/util/guard/authentication.guard';
+import { AuthorizeGuard } from 'src/util/guard/authorization.guard';
+import { Roles } from 'src/util/common/role_User.common';
+import { AuthorizeRoles } from 'src/util/decorators/authorize.roles.decorator';
 import { BookingTourQueryDto } from './dto/search-booking-tour.dto';
 import { BookingTour } from './entities/booking-tour.entity';
-import { CurrentUser } from 'src/decorators/current-user.decorator';
-import { User } from 'src/user/entities/user.entity';
+import { CurrentUser } from 'src/util/decorators/current-user.decorator';
+import { Account } from 'src/user/entities/user.entity';
 import { Response } from 'express';
 import * as fs from 'fs';
 import * as fsPromises from 'fs/promises';
@@ -50,7 +50,7 @@ export class BookingTourController {
   @ApiCreatedResponse({ description: 'Đặt tour thành công', type: BookingTour })
   @ApiBadRequestResponse({ description: 'Dữ liệu không hợp lệ' })
   async createBookingTour(
-    @CurrentUser() currentUser:User,
+    @CurrentUser() currentUser:Account,
     @Body() createBookingTour: CreateBookingTourDto,
   ) {
     return this.bookingTourService.createBookingTour(currentUser,createBookingTour);
@@ -109,7 +109,7 @@ export class BookingTourController {
   @Get('download-pdf/:id')
   async downloadFilePdfBookingTour(
     @Param('id') id: number,
-    @CurrentUser() currentUser: User,
+    @CurrentUser() currentUser: Account,
     @Res() res: Response,
   ) {
     const booking = await this.bookingTourService.findByIdBookingTour(id);

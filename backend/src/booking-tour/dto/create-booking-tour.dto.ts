@@ -11,7 +11,7 @@ import {
   ValidateNested,
 } from "class-validator";
 import { Type } from "class-transformer";
-import { typeBooking } from "src/common/type_Booking.common";
+import { typeBooking } from "src/util/common/type_Booking.common";
 
 class BookingTourCustomDetailsDto {
   @ApiProperty({ example: ['Đà Lạt', 'Nha Trang'], description: 'Danh sách điểm đến' })

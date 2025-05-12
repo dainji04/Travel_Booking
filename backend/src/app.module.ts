@@ -15,11 +15,12 @@ import { PaymentModule } from './payment/payment.module';
 import { BillModule } from './bill/bill.module';
 import { OrderHistoryModule } from './order-history/order-history.module';
 import { ItineraryModule } from './itinerary/itinerary.module';
+import { BlogModule } from './blog/blog.module';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot(dataSourceOptions)
-    ,UserModule, EmailModule, BookingTourModule, TourModule, RatingModule, LocationModule, HotelModule, PaymentModule, BillModule, OrderHistoryModule, ItineraryModule],
+    ,UserModule, EmailModule, BookingTourModule, TourModule, RatingModule, LocationModule, HotelModule, PaymentModule, BillModule, OrderHistoryModule, ItineraryModule, BlogModule],
   controllers: [AppController],
   providers: [AppService],
 })

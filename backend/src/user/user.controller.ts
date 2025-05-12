@@ -5,12 +5,12 @@ import { SignInDto } from './dto/signIn.dto';
 import  {Request, Response} from'express'
 import { GetUsersDto } from './dto/search.dto';
 import { ApiBadRequestResponse, ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { CurrentUser } from 'src/decorators/current-user.decorator';
-import { User } from './entities/user.entity';
-import { AuthenticationGuard } from 'src/guard/authentication.guard';
-import { AuthorizeGuard } from 'src/guard/authorization.guard';
-import { AuthorizeRoles } from 'src/decorators/authorize.roles.decorator';
-import { Roles } from 'src/common/role_User.common';
+import { CurrentUser } from 'src/util/decorators/current-user.decorator';
+import { Account } from './entities/user.entity';
+import { AuthenticationGuard } from 'src/util/guard/authentication.guard';
+import { AuthorizeGuard } from 'src/util/guard/authorization.guard';
+import { AuthorizeRoles } from 'src/util/decorators/authorize.roles.decorator';
+import { Roles } from 'src/util/common/role_User.common';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { OtpUserDto } from './dto/otp-user.dto';
 
@@ -25,7 +25,7 @@ export class UserController {
   @ApiOperation({ summary: 'Get current user profile' })
   @ApiBearerAuth('Access Token')
   @ApiResponse({ status: 200, description: 'User profile retrieved successfully' })
-  async getProfile(@CurrentUser() currentUser:User) {
+  async getProfile(@CurrentUser() currentUser:Account) {
     return currentUser
   }
   @Post('signUp')
@@ -190,7 +190,7 @@ export class UserController {
   @ApiTags('Authentication')
   @ApiOperation({ summary: 'User logout' })
   @ApiResponse({ status: 200, description: 'User logged out successfully' })
-  async logOut(@CurrentUser() currentUser: User, @Res({ passthrough: true }) res: Response) {
+  async logOut(@CurrentUser() currentUser: Account, @Res({ passthrough: true }) res: Response) {
     const response = await this.userService.logout(currentUser.id);
     res.clearCookie('refreshToken');
     return response;

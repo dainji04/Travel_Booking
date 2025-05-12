@@ -20,7 +20,7 @@ export class RatingService {
 
     const existingRating = await this.ratingRepository.findOne({
       where:{
-        user:{id:createRatingDto.userId} ,
+        Account:{id:createRatingDto.userId} ,
         tour:{id:createRatingDto.tourId}
       }
     })
@@ -40,7 +40,7 @@ export class RatingService {
     const rating = await this.ratingRepository.create({
       ...createRatingDto,
       tour,
-      user
+      Account:user
     });
     return await this.ratingRepository.save(rating);
   }

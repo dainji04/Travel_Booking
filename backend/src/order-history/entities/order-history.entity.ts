@@ -1,6 +1,6 @@
 import { Bill } from "src/bill/entities/bill.entity";
 import { Tour } from "src/tour/entities/tour.entity";
-import { User } from "src/user/entities/user.entity";
+import { Account } from "src/user/entities/user.entity";
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('OrderHistory')
@@ -11,8 +11,8 @@ export class OrderHistory {
     @Column()
     Day:Date
 
-    @ManyToOne(() => User , user => user.orderHistories , {eager:true})
-    user:User
+    @ManyToOne(() => Account , user => user.orderHistories , {eager:true})
+    user:Account
 
     @ManyToOne(() => Tour , tour => tour.orderHistories , {eager:true})
     tour:Tour

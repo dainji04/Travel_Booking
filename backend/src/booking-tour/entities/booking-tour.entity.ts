@@ -1,7 +1,7 @@
-import { StatusBookingTour } from "src/common/status_BookingTour.enum";
-import { typeBooking } from "src/common/type_Booking.common";
+import { StatusBookingTour } from "src/util/common/status_BookingTour.enum";
+import { typeBooking } from "src/util/common/type_Booking.common";
 import { Tour } from "src/tour/entities/tour.entity";
-import { User } from "src/user/entities/user.entity";
+import { Account } from "src/user/entities/user.entity";
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity('Book')
@@ -33,8 +33,8 @@ export class BookingTour {
 
     //relation
 
-    @ManyToOne(() => User , user => user.bookingTour)
-    bookingTour_user:User
+    @ManyToOne(() => Account , user => user.bookingTour)
+    bookingTour_user:Account
 
     @ManyToOne(() => Tour , tour => tour.bookingTours)
     tour:Tour

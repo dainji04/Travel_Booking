@@ -3,10 +3,10 @@ import { HotelService } from './hotel.service';
 import { CreateHotelDto } from './dto/create-hotel.dto';
 import { UpdateHotelDto } from './dto/update-hotel.dto';
 import { ApiBadRequestResponse, ApiForbiddenResponse, ApiNotFoundResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
-import { AuthorizeRoles } from 'src/decorators/authorize.roles.decorator';
-import { AuthorizeGuard } from 'src/guard/authorization.guard';
-import { AuthenticationGuard } from 'src/guard/authentication.guard';
-import { Roles } from 'src/common/role_User.common';
+import { AuthorizeRoles } from 'src/util/decorators/authorize.roles.decorator';
+import { AuthorizeGuard } from 'src/util/guard/authorization.guard';
+import { AuthenticationGuard } from 'src/util/guard/authentication.guard';
+import { Roles } from 'src/util/common/role_User.common';
 import { SearchHotelDto } from './dto/search-hotel.dto';
 
 @Controller('hotel')

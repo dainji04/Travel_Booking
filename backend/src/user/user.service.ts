@@ -7,24 +7,22 @@ import {
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User } from './entities/user.entity';
+import { Account } from './entities/user.entity';
 import { Repository } from 'typeorm';
 import { SignUpDto } from './dto/signUp.dto';
 import { hash, compare } from 'bcrypt';
 import { sign, verify } from 'jsonwebtoken';
-import { EmailModule } from 'src/email/email.module';
 import { EmailService } from 'src/email/email.service';
 import { SignInDto } from './dto/signIn.dto';
-import { decode } from 'punycode';
 import { GetUsersDto } from './dto/search.dto';
-import { Roles } from 'src/common/role_User.common';
+import { Roles } from 'src/util/common/role_User.common';
 import * as crypto from 'crypto';
 import { Otp } from './entities/otpUser.entity';
 import { OtpUserDto } from './dto/otp-user.dto';
 @Injectable()
 export class UserService {
   constructor(
-    @InjectRepository(User) private readonly userRepository: Repository<User>,
+    @InjectRepository(Account) private readonly userRepository: Repository<Account>,
     private readonly emailService: EmailService,
     @InjectRepository(Otp) private readonly otpRepository: Repository<Otp>,
   ) {}
@@ -325,7 +323,7 @@ export class UserService {
     return user;
   }
 
-  async generateToken(user: User) {
+  async generateToken(user: Account) {
     const payload = { id: user.id, email: user.email, roles: user.roles };
     return sign(payload);
   }

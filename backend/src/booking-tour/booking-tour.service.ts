@@ -4,14 +4,14 @@ import { UpdateBookingTourDto } from './dto/update-booking-tour.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { BookingTour } from './entities/booking-tour.entity';
 import { Repository } from 'typeorm';
-import { User } from 'src/user/entities/user.entity';
+import { Account } from 'src/user/entities/user.entity';
 import { UserService } from 'src/user/user.service';
 import { EmailService } from 'src/email/email.service';
 import { BookingTourQueryDto } from './dto/search-booking-tour.dto';
 import { Bill } from 'src/bill/entities/bill.entity';
 import { TourService } from 'src/tour/tour.service';
 import { PdfService } from './pdf-booking.service';
-import { typeBooking } from 'src/common/type_Booking.common';
+import { typeBooking } from 'src/util/common/type_Booking.common';
 import { OrderHistory } from 'src/order-history/entities/order-history.entity';
 
 @Injectable()
@@ -28,7 +28,7 @@ export class BookingTourService {
 
 
   ){}
-  async createBookingTour(user: User, dto: CreateBookingTourDto) {
+  async createBookingTour(user: Account, dto: CreateBookingTourDto) {
     const {
       bookingTour_TotalPrice,
       bookingTour_Date,
@@ -93,7 +93,7 @@ export class BookingTourService {
       price: bookingTour_TotalPrice,
       deposit: deposit,
       mustPaid,
-      user,
+      Account: user,
     });
     await this.billRepo.save(bill);
   

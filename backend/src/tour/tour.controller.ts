@@ -13,10 +13,10 @@ import {
 import { TourService } from './tour.service';
 import { CreateTourDto } from './dto/create-tour.dto';
 import { UpdateTourDto } from './dto/update-tour.dto';
-import { AuthorizeRoles } from 'src/decorators/authorize.roles.decorator';
-import { Roles } from 'src/common/role_User.common';
-import { AuthenticationGuard } from 'src/guard/authentication.guard';
-import { AuthorizeGuard } from 'src/guard/authorization.guard';
+import { AuthorizeRoles } from 'src/util/decorators/authorize.roles.decorator';
+import { Roles } from 'src/util/common/role_User.common';
+import { AuthenticationGuard } from 'src/util/guard/authentication.guard';
+import { AuthorizeGuard } from 'src/util/guard/authorization.guard';
 import { SearchTourDto } from './dto/search-tour.dto';
 import {
   ApiTags,
