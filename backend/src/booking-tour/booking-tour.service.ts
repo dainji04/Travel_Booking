@@ -90,15 +90,15 @@ export class BookingTourService {
     });
   
     const bill = this.billRepo.create({
-      totalPrice: bookingTour_TotalPrice,
-      paid: deposit,
+      price: bookingTour_TotalPrice,
+      deposit: deposit,
       mustPaid,
       user,
     });
     await this.billRepo.save(bill);
   
     const orderHistory = await this.orderHistoryRepo.save({
-      orderHistory_Day:new Date(),
+      Day:new Date(),
       user,
       tour,
       bill

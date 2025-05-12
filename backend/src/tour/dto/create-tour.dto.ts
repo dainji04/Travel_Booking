@@ -11,7 +11,7 @@ export class CreateTourDto {
     format: 'date-time',
   })
   @IsString()
-  tour_start: Date;
+  DayStart: Date;
 
   @ApiProperty({
     example: '2025-06-05T17:00:00.000Z',
@@ -20,15 +20,14 @@ export class CreateTourDto {
     format: 'date-time',
   })
   @IsString()
-  tour_end: Date;
+  DayEnd: Date;
 
   @ApiProperty({
     example: 3500000,
     description: 'Tổng giá tiền của tour',
     type: Number,
   })
-  @IsNumber()
-  tour_totalPrice: number;
+  
 
   @ApiProperty({
     example: 'Tour Đà Lạt 4 ngày 3 đêm',

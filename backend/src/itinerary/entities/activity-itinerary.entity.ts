@@ -1,7 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
 import { Itinerary } from './itinerary.entity';
 
-@Entity()
+@Entity('Activity')
 export class Activity {
     @PrimaryGeneratedColumn()
     id: number;

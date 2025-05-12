@@ -6,7 +6,7 @@ import { OrderHistory } from "src/order-history/entities/order-history.entity";
 import { Rating } from "src/rating/entities/rating.entity";
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
-@Entity()
+@Entity('User')
 export class User {
     @PrimaryGeneratedColumn()
     id: number;

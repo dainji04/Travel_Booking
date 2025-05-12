@@ -21,7 +21,7 @@ export class ItineraryService {
     const tour = await this.tourService.getOne(tourId)
     if(!tour) throw new NotFoundException('Tour not found')
     const itinerary = this.itiRepo.create({
-      itinerary_Title:itinerary_Title,
+      title:itinerary_Title,
       tour
     })
     itinerary.activities = activities.map(a => 

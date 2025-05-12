@@ -2,14 +2,14 @@ import { Tour } from "src/tour/entities/tour.entity";
 import { User } from "src/user/entities/user.entity";
 import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, Unique, UpdateDateColumn } from "typeorm";
 
-@Entity()
+@Entity('Rating')
 @Unique(['user', 'tour'])
 export class Rating {
     @PrimaryGeneratedColumn()
     id: number;
 
     @Column({type:'int'})
-    rating: number;
+    rate: number;
 
     @Column({ type: 'text', nullable: true })
     comment: string;

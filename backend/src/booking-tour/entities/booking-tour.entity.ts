@@ -4,7 +4,7 @@ import { Tour } from "src/tour/entities/tour.entity";
 import { User } from "src/user/entities/user.entity";
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
-@Entity()
+@Entity('Book')
 export class BookingTour {
 
     @PrimaryGeneratedColumn()

@@ -3,13 +3,13 @@ import { Tour } from "src/tour/entities/tour.entity";
 import { User } from "src/user/entities/user.entity";
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
-@Entity()
+@Entity('OrderHistory')
 export class OrderHistory {
     @PrimaryGeneratedColumn()
     id:number
 
     @Column()
-    orderHistory_Day:Date
+    Day:Date
 
     @ManyToOne(() => User , user => user.orderHistories , {eager:true})
     user:User

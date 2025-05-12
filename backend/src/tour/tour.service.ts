@@ -17,7 +17,7 @@ export class TourService {
     private readonly hotelService: LocationService,
   ) {}
   async create(createTourDto: CreateTourDto) {
-    const { locationId, hotelId, tour_start, tour_end, type , Imgs , Special , itineraries , Overview , Excludes } = createTourDto;
+    const { locationId, hotelId, DayStart, DayEnd, type , Imgs , Special , itineraries , Overview , Excludes } = createTourDto;
     const location = await this.locationService.findOne(locationId);
     if (!location) {
       throw new NotFoundException('Không tìm thấy địa điểm');
@@ -27,8 +27,8 @@ export class TourService {
       throw new NotFoundException('Không tìm thấy khách sạn');
     }
     const now = new Date();
-    const start = new Date(tour_start);
-    const end = new Date(tour_end);
+    const start = new Date(DayStart);
+    const end = new Date(DayEnd);
     const diffDays = (end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24);
     if (diffDays > 30) {
       throw new BadRequestException('Tour không thể dài hơn 30 ngày');
@@ -59,7 +59,7 @@ export class TourService {
 
     tour.itineraries = itineraries.map((itineraryDto) => {
       const itinerary = new Itinerary();
-      itinerary.itinerary_Title = itineraryDto.itinerary_Title;
+      itinerary.title = itineraryDto.itinerary_Title;
   
       itinerary.activities = (itineraryDto.activities || []).map((activityDto) => {
         const activity = new Activity();
@@ -140,8 +140,8 @@ export class TourService {
     const overlappingTour = await this.tourRepository.createQueryBuilder('tour')
       .where('tour.id != :id', { id })
       .andWhere('tour.tour_start < :end AND tour.tour_end > :start', {
-        start: updateTourDto.tour_start,
-        end: updateTourDto.tour_end,
+        start: updateTourDto.DayStart,
+        end: updateTourDto.DayEnd,
       })
       .getMany();
     if (overlappingTour.length > 0) {
@@ -154,14 +154,14 @@ export class TourService {
     }
   
     //check tour thoi gian 
-    if (updateTourDto.tour_start && new Date(updateTourDto.tour_start) <= now) {
+    if (updateTourDto.DayStart && new Date(updateTourDto.DayStart) <= now) {
       throw new BadRequestException('Ngày bắt đầu tour không được ở quá khứ');
     }
   
     if (
-      updateTourDto.tour_start &&
-      updateTourDto.tour_end &&
-      new Date(updateTourDto.tour_end) <= new Date(updateTourDto.tour_start)
+      updateTourDto.DayStart &&
+      updateTourDto.DayEnd &&
+      new Date(updateTourDto.DayEnd) <= new Date(updateTourDto.DayStart)
     ) {
       throw new BadRequestException('Ngày kết thúc phải sau ngày bắt đầu');
     }

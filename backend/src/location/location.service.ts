@@ -18,12 +18,16 @@ export class LocationService {
   ) {}
   async create(createLocationDto: CreateLocationDto): Promise<Location> {
     const existingLocation = await this.locationRepository.findOne({
-      where: { location_Name: createLocationDto.location_Name },
+      where: { Name: createLocationDto.name },
     });
     if (existingLocation) {
       throw new BadRequestException('Location already exists');
     }
-    const location = this.locationRepository.create(createLocationDto);
+    const location = this.locationRepository.create({
+      Name:createLocationDto.name,
+      Describe:createLocationDto.Describe,
+      Avatar:createLocationDto.Image
+    });
     return await this.locationRepository.save(location);
   }
 

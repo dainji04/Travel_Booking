@@ -6,13 +6,13 @@ export class CreateLocationDto {
    
     @ApiPropertyOptional({ example: 'Đà Lạt', description: 'Tên địa điểm' })
     @IsOptional()
-    location_Name: string;
+    name: string;
     @ApiPropertyOptional({ example: 'Chỗ này thật đẹp', description: 'Miêu tả địa điểm' })
     @IsOptional()
-    location_Description: string;
+    Describe: string;
     @ApiPropertyOptional({ example: 'Đà lạt mùa xuân', description: 'Ảnh địa điểm' })
     @IsOptional()
-    location_Image: string;
+    Image: string;
 
  
 }
