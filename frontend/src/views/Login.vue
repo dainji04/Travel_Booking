@@ -6,6 +6,9 @@ import { required, email, minLength } from '@vuelidate/validators';
 
 import AuthLayout from '@/layouts/AuthLayout.vue';
 import { authStore } from '@/stores/auth.ts';
+import notifications from '@/components/notifications.vue';
+
+const isLoading = ref(false);
 
 const formData = ref({
     email: '',
@@ -33,12 +36,13 @@ const router = useRouter();
 const submit = async () => {
     const isValid = await v$.value.$validate();
     if (isValid) {
+        isLoading.value = true;
         const useAuth = authStore();
         const isLogged = await useAuth.Login(formData.value);
         if (isLogged) {
             await router.push({
-              path: '/',
-              replace: true,
+                path: '/',
+                replace: true,
             });
         } else {
             errorCredentials.value = 'Tài khoản hoặc mật khẩu không đúng!';
@@ -106,17 +110,20 @@ const submit = async () => {
                     class="login__submit login__form-group"
                     type="submit"
                     @click.prevent="submit()"
+                    :class="{ 'login__submit--loading': isLoading }"
+                    :disabled="isLoading"
                 >
-                    <span>login</span>
+                    <span v-if="isLoading">Logging in...</span>
+                    <span v-else>Login</span>
                 </button>
                 <div class="login__options">
                     <div class="login__remember">
-                        <input
+                        <!-- <input
                             v-model="formData.remember"
                             class="login__checkbox"
                             type="checkbox"
                         />
-                        <span>Remember password</span>
+                        <span>Remember password</span> -->
                     </div>
                     <div class="login__forgot-link">
                         <router-link
@@ -135,7 +142,7 @@ const submit = async () => {
             <p class="login__or-text">or</p>
             <span class="login__line"></span>
         </div>
-        <div class="login__social-auth">
+        <!-- <div class="login__social-auth">
             <img
                 class="login__social-icon login__social-icon--facebook"
                 src="@/assets/fonts/facebook.svg"
@@ -146,7 +153,7 @@ const submit = async () => {
                 src="@/assets/fonts/google.svg"
                 alt="Google login"
             />
-        </div>
+        </div> -->
         <div class="login__footer">
             <p class="login__footer-text">Don't have an account?</p>
             <router-link class="login__footer-link" :to="{ name: 'register' }">

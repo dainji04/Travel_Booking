@@ -57,7 +57,7 @@ const checkLogin = computed(() => useAuth.isAuthenticated);
                                 tour available
                             </li>
                         </router-link>
-                        <router-link :to="{ name: 'tourOrder' }">
+                        <router-link :to="{ name: 'hotel' }">
                             <li class="list_link-option-item">
                                 create your tour
                             </li>
@@ -87,19 +87,11 @@ const checkLogin = computed(() => useAuth.isAuthenticated);
                 </router-link>
             </div>
         </div>
-        <!-- <div class="logo">
-            <div class="logo__box">
-                <img
-                    loading="lazy"
-                    class="logo__image"
-                    src="@/assets/fonts/logo.svg"
-                    alt=""
-                />
-            </div>
-        </div> -->
     </header>
     <!--    <button class="scroll-to-top" v-if="ScrollToTop" @click="toTop">top</button>-->
-    <a-back-top />
+    <a-back-top
+        style="width: 60px; height: 60px; right: 150px; bottom: 100px"
+    />
 </template>
 
 <style lang="scss" scoped>

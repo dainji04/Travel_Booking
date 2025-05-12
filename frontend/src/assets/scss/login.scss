@@ -104,6 +104,10 @@
         }
     }
 
+    &__submit--loading {
+        opacity: 0.3;
+    }
+
     &__submit:hover {
         background: $secondary-color;
     }

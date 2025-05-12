@@ -1,6 +1,11 @@
 <script setup lang="ts">
+import { onMounted, ref, watch } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+
 import Pagination from '@/components/Pagination.vue';
 import TicketList from '@/components/TicketList.vue';
+
+import { tourStore } from '@/stores/tourStore.ts';
 
 import hueImg from '@/assets/images/tour_available/hue.png';
 import BuonMeThuotImg from '@/assets/images/tour_available/buon_me_thuot.png';
@@ -47,6 +52,23 @@ const tourAvailable = [
         slug: 'ninh-thuan',
     },
 ];
+
+const { getTourList } = tourStore();
+getTourList();
+
+const route = useRoute();
+const router = useRouter();
+
+const page = ref(Number(route.query.page) || 1);
+
+onMounted(() => {
+    router.replace({
+        query: {
+            page: page.value.toString(),
+            limit: 10,
+        },
+    });
+});
 </script>
 
 <template>

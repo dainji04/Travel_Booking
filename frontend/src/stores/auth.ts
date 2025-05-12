@@ -20,8 +20,8 @@ export const authStore = defineStore('auth', {
         };
     },
     getters: {
-        isAdmin:(state) => {
-            console.log(state.user?.role)
+        isAdmin: (state) => {
+            console.log(state.user?.role);
             return false;
         },
         isAuthenticated: (state: any) => {
@@ -29,7 +29,7 @@ export const authStore = defineStore('auth', {
         },
         getUser: (state) => {
             return state.user;
-        }
+        },
     },
     actions: {
         async Login(data: UserLogin) {
@@ -53,7 +53,13 @@ export const authStore = defineStore('auth', {
             }
         },
         async SignUp(data: UserSignUp) {
-            await axios.post('/user/signUp', data);
+            try {
+                const res = await axios.post('/user/signUp', data);
+                return res.status === 201;
+            } catch (error: any) {
+                console.log('Error signing up:', error);
+                return false;
+            }
         },
         async verifyEmailOTP(otp: string, email: string) {
             try {
@@ -61,9 +67,8 @@ export const authStore = defineStore('auth', {
                     email,
                     otp,
                 });
-                console.log(response);
-                return response.status === 200;
 
+                return response.status === 201;
             } catch (error: any) {
                 console.log(error);
                 return false;
@@ -75,7 +80,6 @@ export const authStore = defineStore('auth', {
                     email,
                 });
                 return response.status === 201;
-
             } catch (error: any) {
                 return false;
             }
@@ -92,7 +96,6 @@ export const authStore = defineStore('auth', {
                     resetToken,
                 });
                 return response.status === 201;
-
             } catch (error: any) {
                 return false;
             }

@@ -84,6 +84,12 @@ const routes = [
                 component: () => import('../views/BookingHotel.vue'),
             },
             {
+                path: 'hotel/:id',
+                name: 'hotelDetail',
+                component: () => import('../views/HotelDetail.vue'),
+                props: true,
+            },
+            {
                 path: 'about',
                 name: 'about',
                 // route level code-splitting
