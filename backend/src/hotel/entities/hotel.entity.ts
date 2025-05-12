@@ -13,23 +13,21 @@ export class Hotel {
     @Column({type:'varchar',nullable:true})
     avatar: string;
 
-    @Column({type:'varchar',nullable:true})
-    detail_avatar: string;
-
     @Column({type:'decimal',transformer:{
         to:(value:number) => value,
         from:(value:string)=> parseFloat(value)
     }})
-    star: number;
+    rate: number;
+
 
     @Column({type:'text',array:true,nullable:true})
-    feature: string[];
-
-    @Column({type:'varchar',length:100})
-    city:string
+    images: string[];
 
     @Column({type:'varchar',length:100})
     address:string
+
+    @Column({type:'text'})
+    describes:string
 
     @Column({type:'decimal',nullable:true})
     price:number

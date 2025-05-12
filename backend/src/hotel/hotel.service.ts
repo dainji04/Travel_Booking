@@ -32,7 +32,7 @@ export class HotelService {
         if (!location) {
             throw new NotFoundException('Location not found');
         }
-        if(createHotelDto.star < 0 || createHotelDto.star > 5) {
+        if(createHotelDto.rate < 0 || createHotelDto.rate > 5) {
             throw new BadRequestException('Star rating must be between 0 and 5');
         }
         if(createHotelDto.price <= 0 && createHotelDto.price !== undefined) {
@@ -45,12 +45,10 @@ export class HotelService {
         const hotel = this.hotelRepository.create({
             name: createHotelDto.name,
             price: createHotelDto.price,
-            star: createHotelDto.star,
-            city: createHotelDto.city,
+            rate: createHotelDto.rate,
             address: createHotelDto.address,
             location,
             avatar: createHotelDto.avatar,
-            detail_avatar: createHotelDto.detail_avatar,
           });
           return await this.hotelRepository.save(hotel);
     }
@@ -89,13 +87,13 @@ export class HotelService {
     async update(id: number, updateHotelDto: UpdateHotelDto) {
         const hotel = await this.hotelRepository.findOne({ where: { id } });
         if (!hotel) throw new NotFoundException('Hotel not found');
-        if (updateHotelDto.star < 0 || updateHotelDto.star > 5) {
+        if (updateHotelDto.rate < 0 || updateHotelDto.rate > 5) {
             throw new BadRequestException('Star rating must be between 0 and 5');
         }
         if (updateHotelDto.price !== undefined && updateHotelDto.price <= 0){
             throw new BadRequestException('Price must be greater than 0');
         }
-        if(updateHotelDto.feature && !Array.isArray(updateHotelDto.feature)) {
+        if(updateHotelDto.images && !Array.isArray(updateHotelDto.images)) {
             throw new BadRequestException('Feature must be an array');
         }
         Object.assign(hotel, updateHotelDto);

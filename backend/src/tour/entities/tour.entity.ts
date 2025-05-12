@@ -15,11 +15,11 @@ export class Tour {
     @Column({ length: 255 })
     tour_name: string;
 
-    @Column()
-    tour_start: Date;
+    @Column({nullable:true})
+    DayStart: Date;
 
-    @Column()
-    tour_end: Date;
+    @Column({nullable:true})
+    DayEnd: Date;
 
     @Column({ type: 'int', default: 0 })
     tour_totalPrice: number;
@@ -31,12 +31,19 @@ export class Tour {
     tour_Price:number
 
     @Column({type:'varchar',length:200 , nullable:true})
-    tour_special:string
+    Special:string
 
     @Column({type:'text' , array:true , nullable:true})
-    tour_Imgs:string[]
+    Imgs:string[]
 
+    @Column({type:'text' , array:true , nullable:true})
+    Includes:string[]
 
+    @Column({type:'text' , array:true , nullable:true})
+    Excludes:string[]
+
+    @Column({type:'varchar' ,length:500})
+    Overview:string
 
 
     @ManyToOne(() => Location , location => location.tours)
@@ -52,7 +59,7 @@ export class Tour {
     hotel: Hotel;
     
     @Column({ type: 'enum', enum: TypeCar, array: true, default: [] })
-    tour_typeCars: TypeCar[]; 
+    type: TypeCar[]; 
 
     @OneToMany(()=> OrderHistory, orderHistory => orderHistory.tour) 
     orderHistories:OrderHistory[]

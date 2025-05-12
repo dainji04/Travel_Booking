@@ -17,7 +17,7 @@ export class TourService {
     private readonly hotelService: LocationService,
   ) {}
   async create(createTourDto: CreateTourDto) {
-    const { locationId, hotelId, tour_start, tour_end, tour_typeCars , tour_Imgs , tour_special , itineraries  } = createTourDto;
+    const { locationId, hotelId, tour_start, tour_end, type , Imgs , Special , itineraries , Overview , Excludes } = createTourDto;
     const location = await this.locationService.findOne(locationId);
     if (!location) {
       throw new NotFoundException('Không tìm thấy địa điểm');
@@ -50,9 +50,11 @@ export class TourService {
       ...createTourDto,
       location,
       hotel,
-      tour_typeCars,
-      tour_special,
-      tour_Imgs:tour_Imgs || []
+      type,
+      Special,
+      Overview,
+      Imgs:Imgs || [],
+      Excludes:Excludes || []
     });
 
     tour.itineraries = itineraries.map((itineraryDto) => {
@@ -131,7 +133,7 @@ export class TourService {
     }
   
     const now = new Date();
-    const tourStart = new Date(tour.tour_start);
+    const tourStart = new Date(tour.DayStart);
 
 
     //check trungff

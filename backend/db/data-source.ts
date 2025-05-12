@@ -6,7 +6,7 @@ export const dataSourceOptions: DataSourceOptions = {
   port: 5433,
   username: 'nestjs_ecommerce',
   password: '13095',
-  database: 'Travel_Booking',
+  database: 'Travel-Booking-2',
   entities: ['dist/**/*.entity{.ts,.js}'],
   migrations: [],
   synchronize: true

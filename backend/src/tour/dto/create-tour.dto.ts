@@ -54,7 +54,7 @@ export class CreateTourDto {
     isArray: true,
     description: 'Danh sách loại xe được hỗ trợ cho tour',
   })
-  tour_typeCars: TypeCar[];
+  type: TypeCar[];
   @IsInt()
   @ApiProperty({ example: 1, description: 'ID của khách sạn (hotel)' })
   @IsNumber()
@@ -66,7 +66,26 @@ export class CreateTourDto {
   @ApiPropertyOptional({
     example:'***.jdg' , description:' Ảnh của tour'
   })
-  tour_Imgs?: string[];
+  Imgs?: string[];
+
+
+  @IsOptional()
+  @IsArray()
+  @IsString({each:true})
+  @ApiPropertyOptional({
+    example:'Accommondation at-4star hotel(or upgraded upon request',
+    description:''
+  })
+  Excludes?:string[]
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(200)
+  @ApiPropertyOptional({
+    example:'Đà lạt đẹp vc , tôi chỉ muốn sau này đi đà lạt với chiếc Z900 =))) ' , 
+    description:'Điểm đặc biệt trong tour'})
+    Special?: string;
+
 
 
   @IsOptional()
@@ -75,8 +94,7 @@ export class CreateTourDto {
   @ApiPropertyOptional({
     example:'Đà lạt đẹp vc , tôi chỉ muốn sau này đi đà lạt với chiếc Z900 =))) ' , 
     description:'Điểm đặc biệt trong tour'})
-  tour_special?: string;
-
+    Overview?: string;
 
 
   @IsNotEmpty()

@@ -19,13 +19,13 @@ export class CreateHotelDto {
   @IsNumber()
   @Min(0)
   @Max(5)
-  star: number;
+  rate: number;
 
   @ApiPropertyOptional({ example: ["Gần biển", "Hồ bơi"], description: "Đặc điểm khách sạn" })
   @IsOptional()
   @IsArray()
   @IsString({ each: true })
-  feature?: string[];
+  images?: string[];
 
   @ApiPropertyOptional({ example: "Thành phố Hồ Chí Minh", description: "Thành phố" })
   @IsString()
