@@ -21,18 +21,18 @@ export class ItineraryService {
     const tour = await this.tourService.getOne(tourId)
     if(!tour) throw new NotFoundException('Tour not found')
     const itinerary = this.itiRepo.create({
-      title:itinerary_Title,
-      tour
+      Title:itinerary_Title,
+      Tour:tour
     })
-    itinerary.activities = activities.map(a => 
-      this.acRepo.create({name: a.name, itinerary})
+    itinerary.Activities = activities.map(a => 
+      this.acRepo.create({Name: a.name, Itinerary:itinerary})
     );
     
     return this.itiRepo.save(itinerary)
   }
  async findByTour(tourId: number): Promise<Itinerary[]> {
     return this.itiRepo.find({
-      where: { tour: { id: tourId } },
+      where: { Tour: { id: tourId } },
       relations: ['activities'],
     });
   }

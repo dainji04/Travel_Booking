@@ -3,7 +3,7 @@ import { Account } from "src/user/entities/user.entity";
 import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, Unique, UpdateDateColumn } from "typeorm";
 
 @Entity('Rating')
-@Unique(['Account', 'tour'])
+@Unique(['Acc', 'Tour'])
 export class Rating {
     @PrimaryGeneratedColumn()
     id: number;
@@ -21,9 +21,9 @@ export class Rating {
 
 
     // retionship with user
-    @ManyToOne(() => Account, (user) => user.ratings)
-    Account: Account;
+    @ManyToOne(() => Account, (user) => user.Ratings)
+    Acc: Account;
 
-    @ManyToOne(() => Tour , (tour) => tour.ratings)
-    tour: Tour;
+    @ManyToOne(() => Tour , (tour) => tour.Ratings)
+    Tour: Tour;
 }

@@ -5,41 +5,44 @@ import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGenerate
 @Entity('Hotel')
 export class Hotel {
     @PrimaryGeneratedColumn()
-    id:number
-    
-    @Column({type:'varchar',length:50})
-    name: string;
+    id: number
 
-    @Column({type:'varchar',nullable:true})
-    avatar: string;
+    @Column({ type: 'varchar', length: 50 })
+    Name: string;
 
-    @Column({type:'decimal',transformer:{
-        to:(value:number) => value,
-        from:(value:string)=> parseFloat(value)
-    }})
-    rate: number;
+    @Column({ type: 'varchar', nullable: true })
+    Avatar: string;
 
+    @Column({
+        type: 'decimal',
+        transformer: {
+            to: (value: number) => value,
+            from: (value: string) => parseFloat(value)
+        }
+    })
+    Rate: number;
 
-    @Column({type:'text',array:true,nullable:true})
-    images: string[];
+    @Column({ type: 'text', array: true, nullable: true })
+    Images: string[];
 
-    @Column({type:'varchar',length:100})
-    address:string
+    @Column({ type: 'varchar', length: 100 })
+    Address: string;
 
-    @Column({type:'text'})
-    describes:string
+    @Column({ type: 'text' })
+    Describes: string;
 
-    @Column({type:'decimal',nullable:true})
-    price:number
-    
-    @OneToMany(() => Tour , tour => tour.hotel)
-    tours: Tour[];
+    @Column({ type: 'decimal', nullable: true })
+    Price: number;
 
-    @ManyToOne(() => Location , location => location.hotel)
-    location: Location;
+    @OneToMany(() => Tour, tour => tour.Hotel)
+    Tours: Tour[];
 
-    @CreateDateColumn() 
-    createdAt: Date;
+    @ManyToOne(() => Location, location => location.Hotel)
+    Location: Location;
+
+    @CreateDateColumn()
+    CreatedAt: Date;
+
     @UpdateDateColumn()
-    updatedAt: Date;
+    UpdatedAt: Date;
 }

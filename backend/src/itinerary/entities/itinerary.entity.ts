@@ -4,17 +4,15 @@ import { Activity } from "./activity-itinerary.entity";
 
 @Entity('Itinerary')
 export class Itinerary {
-    @PrimaryGeneratedColumn()
-    id:number
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column({length:200})
-    title:string
+  @Column({ length: 200 })
+  Title: string;
 
-    @OneToMany(() => Activity, activity => activity.itinerary, { cascade: true })
-    activities: Activity[];
+  @OneToMany(() => Activity, activity => activity.Itinerary, { cascade: true })
+  Activities: Activity[];
 
-    @ManyToOne(() => Tour, (tour) => tour.itineraries, { onDelete: 'CASCADE' })
-    tour: Tour;
-
-
+  @ManyToOne(() => Tour, (tour) => tour.Itineraries, { onDelete: 'CASCADE' })
+  Tour: Tour;
 }

@@ -30,7 +30,7 @@ export class UserService {
   async signUp(signUpDto: SignUpDto) {
     const { email, password, name } = signUpDto;
 
-    const existingUser = await this.userRepository.findOneBy({ email });
+    const existingUser = await this.userRepository.findOneBy({ Email:email });
     if (existingUser) throw new BadRequestException('Email đã tồn tại');
 
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
@@ -69,10 +69,10 @@ export class UserService {
     if (record.otpHash !== hashOtp)
       throw new BadRequestException('OTP không hợp lệ');
     const newUser = this.userRepository.create({
-      email: record.email,
-      password: record.tempPassword,
-      name: record.tempName,
-      isVerified: true,
+      Email: record.email,
+      Password: record.tempPassword,
+      Name: record.tempName,
+      IsVerified: true,
     });
     await this.userRepository.save(newUser);
     await this.otpRepository.delete({ email });
@@ -83,10 +83,10 @@ export class UserService {
     if (createUserDto.email) throw new BadRequestException('EMAIL VALID');
     const hashPassword = await hash(createUserDto.password, 10);
     const newUser = this.userRepository.create({
-      email: createUserDto.email,
-      name: createUserDto.name,
-      password: hashPassword,
-      roles: createUserDto.roles,
+      Email: createUserDto.email,
+      Name: createUserDto.name,
+      Password: hashPassword,
+      Roles: createUserDto.roles,
     });
     await this.userRepository.save(newUser);
     return newUser;
@@ -98,20 +98,20 @@ export class UserService {
     if (!signInDto.email) throw new BadRequestException('Email Invalid');
 
     const userExist = await this.userRepository.findOne({
-      where: { email: signInDto.email },
-      select: ['id', 'email', 'password'],
+      where: { Email: signInDto.email },
+      select: ['id', 'Email', 'Password'],
     });
 
     if (!userExist) throw new UnauthorizedException('Bad Credentials');
 
     const isPasswordValid = await compare(
       signInDto.password,
-      userExist.password,
+      userExist.Password,
     );
     if (!isPasswordValid) throw new UnauthorizedException('Bad Credentials');
 
     const accessToken = sign(
-      { id: userExist.id, email: userExist.email },
+      { id: userExist.id, email: userExist.Email },
       process.env.ACCESSTOKEN_KEY,
       { expiresIn: '15m' },
     );
@@ -122,9 +122,9 @@ export class UserService {
       { expiresIn: '7d' },
     );
 
-    delete userExist.password;
+    delete userExist.Password;
 
-    await this.emailService.handleSendmailSignIn(userExist.email);
+    await this.emailService.handleSendmailSignIn(userExist.Email);
 
     return { user: userExist, accessToken, refreshToken };
   }
@@ -136,7 +136,7 @@ export class UserService {
       });
       if (!user) throw new UnauthorizedException('Invalid token');
       const accessToken = sign(
-        { id: user.id, email: user.email },
+        { id: user.id, email: user.Email },
         process.env.ACCESSTOKEN_KEY,
         { expiresIn: '7d' },
       );
@@ -157,7 +157,7 @@ export class UserService {
   }
 
   async forgotPassword(email: string) {
-    const user = await this.userRepository.findOne({ where: { email } });
+    const user = await this.userRepository.findOne({ where: { Email:email } });
     if (!user) throw new NotFoundException('User not found');
 
     const resetToken = sign({ email }, process.env.ACCESSTOKEN_KEY, {
@@ -165,7 +165,7 @@ export class UserService {
     });
     const hashedResetToken = await hash(resetToken, 10);
 
-    user.resetToken = hashedResetToken;
+    user.ResetToken = hashedResetToken;
     await this.userRepository.save(user);
     await this.emailService.handleForgotPassword(email, resetToken);
     console.log(resetToken);
@@ -173,20 +173,20 @@ export class UserService {
     return { message: 'Reset token sent to email' };
   }
   async resetPassword(email: string, password: string, resetToken: string) {
-    const user = await this.userRepository.findOne({ where: { email } });
+    const user = await this.userRepository.findOne({ where: { Email:email } });
     if (!user) throw new NotFoundException('User not found');
 
-    const isTokenValid = await compare(resetToken, user.resetToken);
+    const isTokenValid = await compare(resetToken, user.ResetToken);
     if (!isTokenValid)
       throw new BadRequestException('Invalid or expired reset token');
 
-    user.password = await hash(password, 10);
-    user.resetToken = null;
+    user.Password = await hash(password, 10);
+    user.ResetToken = null;
     await this.userRepository.save(user);
     await this.emailService.handleResetPassword(email);
     try {
       const decoded = verify(resetToken, process.env.ACCESSTOKEN_KEY);
-      if (decoded.email !== user.email)
+      if (decoded.email !== user.Email)
         throw new BadRequestException('Invalid token');
     } catch (error) {
       throw new BadRequestException('Expired or invalid token');
@@ -271,29 +271,29 @@ export class UserService {
     return user;
   }
   async getUserByEmail(email: string) {
-    const user = await this.userRepository.findOne({ where: { email } });
+    const user = await this.userRepository.findOne({ where: { Email:email} });
     if (!user) throw new NotFoundException('User not found');
     return user;
   }
 
   async getUserByEmailAndPassword(email: string, password: string) {
-    const user = await this.userRepository.findOne({ where: { email } });
+    const user = await this.userRepository.findOne({ where: { Email:email } });
     if (!user) throw new NotFoundException('User not found');
-    const isPasswordValid = await compare(password, user.password);
+    const isPasswordValid = await compare(password, user.Password);
     if (!isPasswordValid) throw new UnauthorizedException('Invalid password');
     return user;
   }
   async updateUserPassword(id: number, newPassword: string) {
     const user = await this.userRepository.findOne({ where: { id } });
     if (!user) throw new NotFoundException('User not found');
-    user.password = await hash(newPassword, 10);
+    user.Password = await hash(newPassword, 10);
     await this.userRepository.save(user);
     return user;
   }
   async updateUserRoles(id: number, roles: string[]) {
     const user = await this.userRepository.findOne({ where: { id } });
     if (!user) throw new NotFoundException('User not found');
-    user.roles = roles.map((role) => role as Roles);
+    user.Roles = roles.map((role) => role as Roles);
     await this.userRepository.save(user);
     return user;
   }
@@ -309,13 +309,13 @@ export class UserService {
     provider: string;
   }) {
     let user = await this.userRepository.findOne({
-      where: { email: googleUser.email },
+      where: { Email: googleUser.email },
     });
 
     if (!user) {
       user = await this.userRepository.save({
         ...googleUser,
-        password: await hash(googleUser.password, 10),
+        Password: await hash(googleUser.password, 10),
         provider: 'google',
       });
     }
@@ -324,7 +324,7 @@ export class UserService {
   }
 
   async generateToken(user: Account) {
-    const payload = { id: user.id, email: user.email, roles: user.roles };
+    const payload = { id: user.id, email: user.Email, roles: user.Roles };
     return sign(payload);
   }
 }

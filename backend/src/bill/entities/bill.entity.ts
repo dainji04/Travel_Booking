@@ -7,38 +7,35 @@ import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "ty
 export class Bill {
 
     @PrimaryGeneratedColumn()
-    id:number
+    id: number
 
-    @Column({type:'float'})
-    price:number
+    @Column({ type: 'float' })
+    Price: number
 
-    @Column({type:'float'})
-    deposit:number
+    @Column({ type: 'float' })
+    Deposit: number
 
-    @Column({type:'float'})
-    mustPaid:number
+    @Column({ type: 'float' })
+    MustPaid: number
 
-    @Column({type:'float'})
-    payable:number
+    @Column({ type: 'float' })
+    Payable: number
 
-    @Column({type:'text'})
-    emailClient:string
+    @Column({ type: 'text' })
+    EmailClient: string
 
-    @Column({type:'text'})
-    nameClient:string
+    @Column({ type: 'text' })
+    NameClient: string
 
-    @Column({type:'text'})
-    cccdClient:string
-    
+    @Column({ type: 'text' })
+    CccdClient: string
 
-    @ManyToOne(() => Account , user => user.bills)
-    Acc:Account
+    @ManyToOne(() => Account, user => user.Bills)
+    Acc: Account
 
-    @OneToMany(() => OrderHistory , orderHistory => orderHistory.bill) 
-    orderHistories:OrderHistory[]
+    @OneToMany(() => OrderHistory, orderHistory => orderHistory.bill)
+    OrderHistories: OrderHistory[]
 
-    @ManyToOne(() => Tour , tour => tour.bills)
-    tour:Tour
-
-
+    @ManyToOne(() => Tour, tour => tour.Bills)
+    Tour: Tour
 }

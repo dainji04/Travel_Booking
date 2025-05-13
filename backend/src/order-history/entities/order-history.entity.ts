@@ -11,12 +11,12 @@ export class OrderHistory {
     @Column()
     Day:Date
 
-    @ManyToOne(() => Account , user => user.orderHistories , {eager:true})
+    @ManyToOne(() => Account , user => user.OrderHistories , {eager:true})
     user:Account
 
-    @ManyToOne(() => Tour , tour => tour.orderHistories , {eager:true})
-    tour:Tour
+    @ManyToOne(() => Tour , tour => tour.OrderHistories , {eager:true})
+    Tour:Tour
     
-    @ManyToOne(() => Bill, (bill) => bill.orderHistories, { eager: false })
+    @ManyToOne(() => Bill, (bill) => bill.OrderHistories, { eager: false })
     bill: Bill;
 }

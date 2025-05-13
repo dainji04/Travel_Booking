@@ -7,8 +7,8 @@ export class Activity {
     id: number;
 
     @Column({ length: 200 })
-    name: string;
+    Name: string;
 
-    @ManyToOne(() => Itinerary, itinerary => itinerary.activities, { onDelete: 'CASCADE' })
-    itinerary: Itinerary;
+    @ManyToOne(() => Itinerary, itinerary => itinerary.Activities, { onDelete: 'CASCADE' })
+    Itinerary: Itinerary;
 }

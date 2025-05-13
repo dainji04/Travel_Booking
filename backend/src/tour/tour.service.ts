@@ -48,22 +48,22 @@ export class TourService {
     }
     let tour = this.tourRepository.create({
       ...createTourDto,
-      location,
-      hotel,
-      type,
+      Location:location,
+      Hotel:hotel,
+      Type:type,
       Special,
       Overview,
       Imgs:Imgs || [],
       Excludes:Excludes || []
     });
 
-    tour.itineraries = itineraries.map((itineraryDto) => {
+    tour.Itineraries = itineraries.map((itineraryDto) => {
       const itinerary = new Itinerary();
-      itinerary.title = itineraryDto.itinerary_Title;
+      itinerary.Title = itineraryDto.itinerary_Title;
   
-      itinerary.activities = (itineraryDto.activities || []).map((activityDto) => {
+      itinerary.Activities = (itineraryDto.activities || []).map((activityDto) => {
         const activity = new Activity();
-        activity.name = activityDto.name;
+        activity.Name = activityDto.name;
         return activity;
       });
   
@@ -176,7 +176,7 @@ export class TourService {
       throw new NotFoundException('Không tìm thấy tour');
     }
 
-    if (tour.bookingTours && tour.bookingTours.length > 0) {
+    if (tour.BookingTours && tour.BookingTours.length > 0) {
       throw new BadRequestException('Tour đã có người đặt không thể xóa');
     }
 
@@ -190,7 +190,7 @@ export class TourService {
       relations: ['hotel'],
     })
     if(!tour) throw new NotFoundException('Không tìm thấy tour');
-    return tour.hotel
+    return tour.Hotel
   }
 
   

@@ -47,8 +47,8 @@ export class BookingTourService {
     // Kiểm tra trùng booking theo ngày
     const existingBooking = await this.bookingTourRepo.findOne({
       where: {
-        bookingTour_user: user,
-        bookingTour_Date: bookingDate,
+        Acc: user,
+        Day: bookingDate,
       },
     });
     if (existingBooking)
@@ -69,20 +69,20 @@ export class BookingTourService {
     const mustPaid = bookingTour_TotalPrice - deposit;
   
     const newBookingTour = this.bookingTourRepo.create({
-      bookingTour_Date,
-      bookingTour_TotalPrice,
-      bookingTour_Deposit: deposit,
-      bookingTour_user: user,
+      Day:bookingTour_Date,
+      Total_amount:bookingTour_TotalPrice,
+      Deposit:deposit,
+      Acc: user,
       bookingTour_Type,
-      tour,
+      Tour:tour,
       bookingTour_CustomDetails: bookingTour_CustomDetails ? JSON.stringify(bookingTour_CustomDetails) : null,
     });
     await this.bookingTourRepo.save(newBookingTour);
   
     const pdfPath = await this.pdfService.generateBookingTourPdf({
       id: newBookingTour.id,
-      userName: user.name,
-      email: user.email,
+      userName: user.Name,
+      email: user.Email,
       bookingDate: new Date().toLocaleDateString('vi-VN'),
       totalPrice: bookingTour_TotalPrice,
       deposit,
@@ -90,9 +90,9 @@ export class BookingTourService {
     });
   
     const bill = this.billRepo.create({
-      price: bookingTour_TotalPrice,
-      deposit: deposit,
-      mustPaid,
+      Price: bookingTour_TotalPrice,
+      Deposit: deposit,
+      MustPaid:mustPaid,
       Acc: user,
     });
     await this.billRepo.save(bill);
@@ -106,8 +106,8 @@ export class BookingTourService {
     })
     try {
       await this.emailService.handleSendMailBookingTour(
-        user.email,
-        user.name,
+        user.Email,
+        user.Name,
         bookingTour_TotalPrice,
         deposit,
         mustPaid,
@@ -134,15 +134,15 @@ export class BookingTourService {
       relations:['bookingTour_user' , 'tour'],
       select: {
         id: true,
-        bookingTour_Date: true,
-        bookingTour_Deposit: true,
-        bookingTour_TotalPrice: true,
+        Day: true,
+        Deposit: true,
+        Total_amount: true,
         updated_at: true,
-        bookingTour_user: {
+        Acc: {
           id: true,
-          name: true,
-          email: true,
-          roles:true
+          Name: true,
+          Email: true,
+          Roles:true
 
         },
       },
@@ -231,18 +231,18 @@ export class BookingTourService {
   }
   async getBookingTourByUserId(userId:number) {
     const found = await this.bookingTourRepo.find({
-      where:{bookingTour_user:{id:userId}},
+      where:{Acc:{id:userId}},
       relations:['bookingTour_user'],
       select: {
         id: true,
-        bookingTour_Date: true,
-        bookingTour_Deposit: true,
-        bookingTour_TotalPrice: true,
+        Day: true,
+        Deposit: true,
+        Total_amount: true,
         updated_at: true,
-        bookingTour_user: {
+        Acc: {
           id: true,
-          name: true,
-          email: true,
+          Name: true,
+          Email: true,
         },
       },
     })

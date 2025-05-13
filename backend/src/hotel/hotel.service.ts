@@ -43,12 +43,12 @@ export class HotelService {
         createHotelDto.address = createHotelDto.address.trim();
        
         const hotel = this.hotelRepository.create({
-            name: createHotelDto.name,
-            price: createHotelDto.price,
-            rate: createHotelDto.rate,
-            address: createHotelDto.address,
-            location,
-            avatar: createHotelDto.avatar,
+            Name: createHotelDto.name,
+            Price: createHotelDto.price,
+            Rate: createHotelDto.rate,
+            Address: createHotelDto.address,
+            Location:location,
+            Avatar: createHotelDto.avatar,
           });
           return await this.hotelRepository.save(hotel);
     }

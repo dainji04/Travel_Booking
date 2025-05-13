@@ -24,7 +24,7 @@ export class Blog {
 
 
 
-    @ManyToOne(() => Tour , tour => tour.blogs)
-    tour:Tour
+    @ManyToOne(() => Tour , tour => tour.Blogs)
+    Tour:Tour
 
 }

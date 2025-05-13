@@ -15,61 +15,59 @@ export class Tour {
     id: number;
 
     @Column({ length: 255 })
-    name: string;
+    Name: string;
 
-    @Column({nullable:true})
+    @Column({ nullable: true })
     DayStart: Date;
 
-    @Column({nullable:true})
+    @Column({ nullable: true })
     DayEnd: Date;
 
-    @OneToMany(() => BookingTour , (bookingTour) => bookingTour.tour)
-    bookingTours: BookingTour[];
+    @OneToMany(() => BookingTour, (bookingTour) => bookingTour.Tour)
+    BookingTours: BookingTour[];
 
-    @Column({ type:'int',default:0})
-    Price:number
+    @Column({ type: 'int', default: 0 })
+    Price: number;
 
-    @Column({type:'varchar',length:200 , nullable:true})
-    Special:string
+    @Column({ type: 'varchar', length: 200, nullable: true })
+    Special: string;
 
-    @Column({type:'text' , array:true , nullable:true})
-    Imgs:string[]
+    @Column({ type: 'text', array: true, nullable: true })
+    Imgs: string[];
 
-    @Column({type:'text' , array:true , nullable:true})
-    Includes:string[]
+    @Column({ type: 'text', array: true, nullable: true })
+    Includes: string[];
 
-    @Column({type:'text' , array:true , nullable:true})
-    Excludes:string[]
+    @Column({ type: 'text', array: true, nullable: true })
+    Excludes: string[];
 
-    @Column({type:'varchar' ,length:500})
-    Overview:string
+    @Column({ type: 'varchar', length: 500 })
+    Overview: string;
 
+    @ManyToOne(() => Location, location => location.Tours)
+    Location: Location;
 
-    @ManyToOne(() => Location , location => location.tours)
-    location: Location;
-
-    @OneToMany(() => Rating, (rating) => rating.tour)
-    ratings: Rating[];
+    @OneToMany(() => Rating, (rating) => rating.Tour)
+    Ratings: Rating[];
 
     @CreateDateColumn()
-    createdAt: Date;
+    CreatedAt: Date;
 
-    @ManyToOne(() => Hotel , hotel => hotel.tours)
-    hotel: Hotel;
-    
+    @ManyToOne(() => Hotel, hotel => hotel.Tours)
+    Hotel: Hotel;
+
     @Column({ type: 'enum', enum: TypeCar, array: true, default: [] })
-    type: TypeCar[]; 
+    Type: TypeCar[];
 
-    @OneToMany(()=> OrderHistory, orderHistory => orderHistory.tour) 
-    orderHistories:OrderHistory[]
+    @OneToMany(() => OrderHistory, orderHistory => orderHistory.Tour)
+    OrderHistories: OrderHistory[];
 
-    @OneToMany(() => Itinerary , ite => ite.tour , {cascade:true}) 
-    itineraries:Itinerary[]
+    @OneToMany(() => Itinerary, ite => ite.Tour, { cascade: true })
+    Itineraries: Itinerary[];
 
-    @OneToMany(() => Bill , bill => bill.tour)
-    bills:Bill[]
+    @OneToMany(() => Bill, bill => bill.Tour)
+    Bills: Bill[];
 
-    @OneToMany(() => Blog  , blog => blog.tour)
-    blogs:Blog[]
-
+    @OneToMany(() => Blog, blog => blog.Tour)
+    Blogs: Blog[];
 }

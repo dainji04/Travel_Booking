@@ -17,13 +17,13 @@ export class Location {
     @Column({ type: 'text', nullable: true })
     Avatar: string;
 
-    @OneToMany(() => Tour , tour => tour.location , {cascade: true})
-    tours: Tour[];
+    @OneToMany(() => Tour , tour => tour.Location , {cascade: true})
+    Tours: Tour[];
 
     
 
-    @OneToMany(() => Hotel , hotel => hotel.location)
-    hotel: Hotel[];
+    @OneToMany(() => Hotel , hotel => hotel.Location)
+    Hotel: Hotel[];
 
     @CreateDateColumn()
     createdAt: Date;

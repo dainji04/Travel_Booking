@@ -114,7 +114,7 @@ export class BookingTourController {
   ) {
     const booking = await this.bookingTourService.findByIdBookingTour(id);
   
-    if (booking.bookingTour_user.id !== currentUser.id && !currentUser.roles.includes(Roles.ADMIN)) {
+    if (booking.Acc.id !== currentUser.id && !currentUser.Roles.includes(Roles.ADMIN)) {
       throw new ForbiddenException('You are not allowed to download this PDF');
     }
   
@@ -127,21 +127,21 @@ export class BookingTourController {
   
     if (!fs.existsSync(filePath)) {
       const {
-        bookingTour_user,
-        bookingTour_Date,
-        bookingTour_TotalPrice,
-        bookingTour_Deposit,
+        Acc,
+        Day,
+        Total_amount,
+        Deposit,
       } = booking;
-      const mustPay = bookingTour_TotalPrice - bookingTour_Deposit;
-      const { email, name } = currentUser;
+      const mustPay = Total_amount - Deposit;
+      const { Email, Name } = currentUser;
   
       let pdfPath = await this.pdfService.generateBookingTourPdf({
         id,
-        userName: name,
-        email,
-        bookingDate: String(bookingTour_Date),
-        totalPrice: bookingTour_TotalPrice,
-        deposit: bookingTour_Deposit,
+        userName: Name,
+        email:Email,
+        bookingDate: String(Day),
+        totalPrice: Total_amount,
+        deposit: Deposit,
         mustPay,
       });
   

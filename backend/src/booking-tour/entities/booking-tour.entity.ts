@@ -11,13 +11,13 @@ export class BookingTour {
     id:number
 
     @Column({type:'timestamp'})
-    bookingTour_Date:Date;
+    Day:Date;
 
     @Column({type:'int',default:0})
-    bookingTour_Deposit:number
+    Deposit:number
 
     @Column({default:0 , type:'int'})
-    bookingTour_TotalPrice:number
+    Total_amount:number
 
 
     @UpdateDateColumn()
@@ -33,11 +33,11 @@ export class BookingTour {
 
     //relation
 
-    @ManyToOne(() => Account , user => user.bookingTour)
-    bookingTour_user:Account
+    @ManyToOne(() => Account , user => user.BookingTour)
+    Acc:Account
 
-    @ManyToOne(() => Tour , tour => tour.bookingTours)
-    tour:Tour
+    @ManyToOne(() => Tour , tour => tour.BookingTours)
+    Tour:Tour
 
     
 

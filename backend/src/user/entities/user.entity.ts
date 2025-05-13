@@ -1,5 +1,4 @@
 import { Bill } from "src/bill/entities/bill.entity";
-import { BookingTourService } from "src/booking-tour/booking-tour.service";
 import { BookingTour } from "src/booking-tour/entities/booking-tour.entity";
 import { Roles } from "src/util/common/role_User.common";
 import { OrderHistory } from "src/order-history/entities/order-history.entity";
@@ -11,37 +10,35 @@ export class Account {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()
-    name: string;
+    @Column({nullable:true})
+    Name: string;
 
-    @Column({ unique: true })
-    email: string;
+    @Column({ unique: true , nullable:true })
+    Email: string;
 
-    @Column({ select: false })
-    password: string;
+    @Column({ select: false , nullable:true })
+    Password: string;
 
     @Column({ type: 'enum', enum: Roles, array: true, default: [Roles.USER] })
-    roles: Roles[];
-    @Column({nullable:true})
-    resetToken:string
-    @Column({default:false})
-    isVerified:boolean
+    Roles: Roles[];
 
+    @Column({ nullable: true })
+    ResetToken: string;
 
-    //relation
+    @Column({ default: false })
+    IsVerified: boolean;
 
-    @OneToMany(() => BookingTour , bt => bt.bookingTour_user)
-    bookingTour:BookingTour[]
+    // relation
 
+    @OneToMany(() => BookingTour, bt => bt.Acc)
+    BookingTour: BookingTour[];
 
-    @OneToMany(() => Rating , rating => rating.Account)
-    ratings:Rating[]
+    @OneToMany(() => Rating, rating => rating.Acc)
+    Ratings: Rating[];
 
-    @OneToMany(() => Bill , bill =>bill.Acc)
-    bills:Bill[]
+    @OneToMany(() => Bill, bill => bill.Acc)
+    Bills: Bill[];
 
-    @OneToMany(() => OrderHistory , orderHistory => orderHistory.user)
-    orderHistories:OrderHistory[]
-
-  
+    @OneToMany(() => OrderHistory, orderHistory => orderHistory.user)
+    OrderHistories: OrderHistory[];
 }
