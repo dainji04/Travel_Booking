@@ -156,102 +156,43 @@ console.log(props.id);
                 </form>
             </div>
             <div class="rooms">
-                <div class="card">
-                    <img src="../assets/images/hotel.png" alt="" />
-                    <div class="info">
-                        <h1 class="name">abc room</h1>
-                        <div class="facilities">
-                            <div class="facility">
-                                <img
-                                    src="../assets/fonts/hotel/business-services.svg"
-                                    alt="business services"
-                                />
-                                <p>
-                                    A king-size bed or twin beds for a restful
-                                    night’s sleep
-                                </p>
-                            </div>
-                            <div class="facility">
-                                <img
-                                    src="../assets/fonts/hotel/swimming.svg"
-                                    alt="sleep 3"
-                                />
-                                <p>Sleep 3</p>
-                            </div>
-                            <div class="facility">
-                                <img
-                                    src="../assets/fonts/hotel/top-rated.svg"
-                                    alt="free wifi"
-                                />
-                                <p>1 double bed and 1 twin bed</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card">
-                    <img src="../assets/images/hotel.png" alt="" />
-                    <div class="info">
-                        <h1 class="name">abc room</h1>
-                        <div class="facilities">
-                            <div class="facility">
-                                <img
-                                    src="../assets/fonts/hotel/business-services.svg"
-                                    alt="business services"
-                                />
-                                <p>
-                                    A king-size bed or twin beds for a restful
-                                    night’s sleep
-                                </p>
-                            </div>
-                            <div class="facility">
-                                <img
-                                    src="../assets/fonts/hotel/swimming.svg"
-                                    alt="sleep 3"
-                                />
-                                <p>Sleep 3</p>
-                            </div>
-                            <div class="facility">
-                                <img
-                                    src="../assets/fonts/hotel/top-rated.svg"
-                                    alt="free wifi"
-                                />
-                                <p>1 double bed and 1 twin bed</p>
+                <template v-for="i in 3">
+                    <div class="card">
+                        <img src="../assets/images/hotel.png" alt="" />
+                        <div class="info">
+                            <h1 class="name">abc room</h1>
+                            <div class="facilities">
+                                <div class="facility">
+                                    <img
+                                        src="../assets/fonts/hotel/business-services.svg"
+                                        alt="business services"
+                                    />
+                                    <p>
+                                        A king-size bed or twin beds for a
+                                        restful night’s sleep
+                                    </p>
+                                </div>
+                                <div class="facility">
+                                    <img
+                                        src="../assets/fonts/hotel/swimming.svg"
+                                        alt="sleep 3"
+                                    />
+                                    <p>Sleep 3</p>
+                                </div>
+                                <div class="facility">
+                                    <img
+                                        src="../assets/fonts/hotel/top-rated.svg"
+                                        alt="free wifi"
+                                    />
+                                    <p>1 double bed and 1 twin bed</p>
+                                </div>
                             </div>
                         </div>
+                        <button class="button-primary btn-reverse">
+                            Reverse suite
+                        </button>
                     </div>
-                </div>
-                <div class="card">
-                    <img src="../assets/images/hotel.png" alt="" />
-                    <div class="info">
-                        <h1 class="name">abc room</h1>
-                        <div class="facilities">
-                            <div class="facility">
-                                <img
-                                    src="../assets/fonts/hotel/business-services.svg"
-                                    alt="business services"
-                                />
-                                <p>
-                                    A king-size bed or twin beds for a restful
-                                    night’s sleep
-                                </p>
-                            </div>
-                            <div class="facility">
-                                <img
-                                    src="../assets/fonts/hotel/swimming.svg"
-                                    alt="sleep 3"
-                                />
-                                <p>Sleep 3</p>
-                            </div>
-                            <div class="facility">
-                                <img
-                                    src="../assets/fonts/hotel/top-rated.svg"
-                                    alt="free wifi"
-                                />
-                                <p>1 double bed and 1 twin bed</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                </template>
             </div>
         </div>
     </div>

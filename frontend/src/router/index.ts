@@ -103,6 +103,12 @@ const routes = [
                 component: () => import('../views/Blog.vue'),
             },
             {
+                path: 'blog/:blog',
+                name: 'blog-detail',
+                component: () => import('../views/BlogDetail.vue'),
+                props: true,
+            },
+            {
                 path: 'contact',
                 name: 'contact',
                 component: () => import('../views/Contact.vue'),

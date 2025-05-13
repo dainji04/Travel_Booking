@@ -1,0 +1,76 @@
+@use 'variables' as *;
+
+.blog {
+    max-width: 1300px;
+    margin: 120px auto 0;
+
+    .list-blogs {
+        margin-top: 50px;
+        display: grid;
+        gap: 60px;
+    }
+
+    &_card {
+        padding: 20px;
+        background-color: $color--white;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+
+        &:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        .img {
+            background: url('@/assets/images/tour-tips1.png') no-repeat center
+                center;
+            background-size: cover;
+            width: 100%;
+            height: 500px;
+            border-radius: 15px;
+        }
+        .info {
+            margin-top: 30px;
+            padding: 10px 20px 0;
+        }
+        .title {
+            color: $color--black;
+            font-size: 40px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: normal;
+            text-transform: uppercase;
+        }
+        .description {
+            margin-top: 20px;
+            color: $color--black;
+            font-size: 20px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 40px; /* 200% */
+            max-width: 80%;
+            text-align: justify;
+        }
+        .line {
+            display: block;
+            margin-top: 20px;
+            width: 100%;
+            height: 1px;
+            background-color: $color-primary;
+        }
+        .footer {
+            margin-top: 20px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+
+            p {
+                color: $color-primary;
+                font-size: 25px;
+                font-style: normal;
+                font-weight: 700;
+                line-height: normal;
+            }
+        }
+    }
+}
