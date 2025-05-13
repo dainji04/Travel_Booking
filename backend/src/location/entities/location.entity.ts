@@ -8,14 +8,14 @@ export class Location {
     @PrimaryGeneratedColumn()
     id:number
 
-    @Column({ type: 'text', nullable: true })
-    Name: string;
+    @Column({ type: 'varchar', length: 50, name: 'Name' })
+    name: string;
 
     @Column({ type: 'text', nullable: true })
     Describe: string;
 
-    @Column({ type: 'text', nullable: true })
-    Avatar: string;
+    @Column({ type: 'varchar', nullable: true, name: 'Avatar' })
+    avatar: string;
 
     @OneToMany(() => Tour , tour => tour.Location , {cascade: true})
     Tours: Tour[];

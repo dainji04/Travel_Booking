@@ -18,24 +18,24 @@ export class LocationService {
   ) {}
   async create(createLocationDto: CreateLocationDto): Promise<Location> {
     const existingLocation = await this.locationRepository.findOne({
-      where: { Name: createLocationDto.name },
+      where: { name: createLocationDto.name },
     });
     if (existingLocation) {
       throw new BadRequestException('Location already exists');
     }
     const location = this.locationRepository.create({
-      Name:createLocationDto.name,
-      Describe:createLocationDto.Describe,
-      Avatar:createLocationDto.Image
+      name: createLocationDto.name,
+      Describe: createLocationDto.Describe,
+      avatar: createLocationDto.Image, 
     });
     return await this.locationRepository.save(location);
   }
 
 
-  async findOne(id:number ) {
+  async findOne(id: number) {
     const foundLocation = await this.locationRepository.findOne({
       where: { id },
-      relations:['hotel']
+      relations: ['Hotel'], 
     });
     if (!foundLocation) {
       throw new Error('Location not found');
@@ -54,16 +54,16 @@ export class LocationService {
   
     const tours = await this.tourRepository
       .createQueryBuilder('tour')
-      .leftJoin('tour.location', 'location')
-      .leftJoin('tour.ratings', 'rating')
-      .leftJoin('tour.bookingTours', 'booking')
+      .leftJoin('tour.Location', 'location')
+      .leftJoin('tour.Ratings', 'rating')
+      .leftJoin('tour.BookingTours', 'booking')
       .where('location.id = :id', { id })
       .select([
         'tour.id',
-        'tour.tour_name',
-        'tour.tour_start',
-        'tour.tour_end',
-        'tour.tour_totalPrice',
+        'tour.Name',
+        'tour.DayStart',
+        'tour.DayEnd',
+        'tour.Price',
       ])
       .addSelect('AVG(rating.rating)', 'ratingAverage')
       .addSelect('COUNT(DISTINCT booking.id)', 'bookingCount')
@@ -96,18 +96,18 @@ export class LocationService {
       .leftJoinAndSelect('hotel.location', 'location')
       .where('location.id = :id', { id })
       if(filter.maxPrice) {
-        queryBuilder.andWhere('hotel.price <= :maxPrice', { maxPrice: filter.maxPrice });
+        queryBuilder.andWhere('hotel.Price <= :maxPrice', { maxPrice: filter.maxPrice });
       }
       if(filter.minPrice) {
-        queryBuilder.andWhere('hotel.price >= :minPrice', { minPrice: filter.minPrice });
+        queryBuilder.andWhere('hotel.Price >= :minPrice', { minPrice: filter.minPrice });
       }
       if(filter.maxStar) {
-        queryBuilder.andWhere('hotel.star <= :maxStar', { maxStar: filter.maxStar });
+        queryBuilder.andWhere('hotel.Rate <= :maxStar', { maxStar: filter.maxStar });
 
         
       }
       if(filter.minStar) {
-        queryBuilder.andWhere('hotel.star >= :minStar', { minStar: filter.minStar });
+        queryBuilder.andWhere('hotel.Rate >= :minStar', { minStar: filter.minStar });
       }
       queryBuilder.skip((page - 1) * limit).take(limit);
       const [hotels, total] = await queryBuilder.getManyAndCount();
@@ -127,16 +127,16 @@ export class LocationService {
     const qb = this.locationRepository.createQueryBuilder('location');
   
     if (search) {
-      qb.where('LOWER(location.location_Name) LIKE :search', {
+      qb.where('LOWER(location.Name) LIKE :search', {
         search: `%${search.toLowerCase()}%`,
       });
     }
   
-    const allowedSortFields = ['id', 'location_Name', 'createdAt', 'updatedAt'];
+    const allowedSortFields = ['id', 'Name', 'CreatedAt', 'UpdatedAt'];
     if (allowedSortFields.includes(sort)) {
       qb.orderBy(`location.${sort}`, order.toUpperCase() === 'DESC' ? 'DESC' : 'ASC');
     } else {
-      qb.orderBy('location.id', 'ASC'); 
+      qb.orderBy('location.id', 'ASC');
     }
   
     qb.skip(skip).take(limit);
@@ -152,8 +152,7 @@ export class LocationService {
         lastPage: Math.ceil(total / limit),
       },
     };
-  }
   
-
+  }
   
 }

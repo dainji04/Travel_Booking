@@ -131,7 +131,7 @@ export class BookingTourService {
   async getBookingTour(id:number) {
     const found = await this.bookingTourRepo.findOne({
       where:{id},
-      relations:['bookingTour_user' , 'tour'],
+      relations:['Acc' , 'tour'],
       select: {
         id: true,
         Day: true,
@@ -161,26 +161,26 @@ export class BookingTourService {
     } = query;
   
     const qb = this.bookingTourRepo.createQueryBuilder('bookingTour')
-      .leftJoinAndSelect('bookingTour.bookingTour_user', 'user');
+      .leftJoinAndSelect('bookingTour.Acc', 'user'); 
   
     if (bookingTour_Deposit) {
-      qb.andWhere('bookingTour.bookingTour_Deposit = :deposit', { deposit: bookingTour_Deposit });
+      qb.andWhere('bookingTour.Deposit = :deposit', { deposit: bookingTour_Deposit });
     }
   
     if (bookingTour_user_name) {
-      qb.andWhere('user.name ILIKE :userName', { userName: `%${bookingTour_user_name}%` });
+      qb.andWhere('user.Name ILIKE :userName', { userName: `%${bookingTour_user_name}%` });
     }
   
     if (search) {
       qb.andWhere(
-        `(user.name ILIKE :search OR user.email ILIKE :search)`,
+        `(user.Name ILIKE :search OR user.Email ILIKE :search)`,
         { search: `%${search}%` },
       );
     }
   
     if (sort) {
       const [field, direction] = sort.split(':');
-      const validFields = ['bookingTour_Date', 'bookingTour_TotalPrice', 'updated_at'];
+      const validFields = ['Day', 'Total_amount', 'updated_at'];
       if (validFields.includes(field)) {
         qb.orderBy(`bookingTour.${field}`, direction.toUpperCase() === 'DESC' ? 'DESC' : 'ASC');
       }
@@ -203,6 +203,7 @@ export class BookingTourService {
       },
     };
   }
+  
   
   async updateBookingTour(id:number, updateBookingTourDto: UpdateBookingTourDto) {
     const found = await this.bookingTourRepo.findOne({where:{id}})

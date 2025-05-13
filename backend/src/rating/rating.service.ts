@@ -48,7 +48,7 @@ export class RatingService {
 
   async update(id:number,updateRatingDto:UpdateRatingDto) {
     
-    const rating = await this.ratingRepository.findOne({where:{id} , relations:['tour' , 'user']});
+    const rating = await this.ratingRepository.findOne({where:{id} , relations:['Tour' , 'Acc']});
     if(!rating) {
       throw new NotFoundException('Rating not found');
     }
@@ -63,7 +63,7 @@ export class RatingService {
 
 
   async getOne(id:number) {
-    const rating = await this.ratingRepository.findOne({where:{id} , relations:['tour' , 'user']});
+    const rating = await this.ratingRepository.findOne({where:{id} , relations:['Tour' , 'Acc']});
     if(!rating) {
       throw new NotFoundException('Rating not found');
     }
@@ -71,7 +71,7 @@ export class RatingService {
   }
 
   async remove(id: number) {
-    const rating = await this.ratingRepository.findOne({where:{id} , relations:['tour' , 'user']});
+    const rating = await this.ratingRepository.findOne({where:{id} , relations:['Tour' , 'Acc']});
     if(!rating) {
       throw new NotFoundException('Rating not found');
     }

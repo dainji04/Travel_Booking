@@ -20,7 +20,7 @@ export class HotelService {
     async findOne(id: number): Promise<Hotel> {
         const hotel = await this.hotelRepository.findOne({
             where:{id},
-            relations:['tours']
+            relations:['Tours']
         })
         if(!hotel) throw new NotFoundException('Hotel not found');
         return hotel
@@ -64,16 +64,16 @@ export class HotelService {
     
         const tours = await this.tourRepository
             .createQueryBuilder('tour')
-            .leftJoin('tour.hotel', 'hotel')
-            .leftJoin('tour.ratings', 'rating')
-            .leftJoin('tour.bookingTours', 'booking')
+            .leftJoin('tour.Hotel', 'hotel')
+            .leftJoin('tour.Ratings', 'rating')
+            .leftJoin('tour.BookingTours', 'booking')
             .where('hotel.id = :id', { id })
             .select([
                 'tour.id',
-                'tour.tour_name',
-                'tour.tour_start',
-                'tour.tour_end',
-                'tour.tour_totalPrice',
+                'tour.Name',
+                'tour.DayStart',
+                'tour.DayEnd',
+                'tour.Price',
             ])
             .getMany();
     
@@ -109,37 +109,32 @@ export class HotelService {
         const qh =this.hotelRepository.createQueryBuilder('hotel')
         .select([
                 'hotel.id',
-                'hotel.name',
-                'hotel.city',
-                'hotel.address',
-                'hotel.star',
-                'hotel.price',
-                'hotel.feature',
-                'hotel.createdAt',
-                'hotel.updatedAt',
+                'hotel.Name',
+                'hotel.Address',
+                'hotel.Rate',
+                'hotel.Price',
+                'hotel.CreatedAt',
+                'hotel.UpdatedAt',
         ])
         .where('1=1')
         if(address) {
-            qh.andWhere('hotel.address LIKE :address', { address: `%${address}%` });
+            qh.andWhere('hotel.Address LIKE :address', { address: `%${address}%` });
         }
         if(name) {
-            qh.andWhere('hotel.name LIKE :name', { name: `%${name}%` });
+            qh.andWhere('hotel.Name LIKE :name', { name: `%${name}%` });
         }
         if(star) {
-            qh.andWhere('hotel.star = :star', { star });
-        }
-        if(city) {
-            qh.andWhere('hotel.city = :city', { city });
+            qh.andWhere('hotel.Rate = :star', { star });
         }
         if(price) {
-            qh.andWhere('hotel.price <= :price', { price });
+            qh.andWhere('hotel.Price <= :price', { price });
         }
         if(sort) {
             const [field, order] = sort.split(':');
             qh.orderBy(`hotel.${field}`, order.toUpperCase() as 'ASC' | 'DESC');
         }
         else {
-            qh.orderBy('hotel.createdAt', 'DESC');
+            qh.orderBy('hotel.CreatedAt', 'DESC');
         }
         const [items, total] = await qh
         .skip(skip)
