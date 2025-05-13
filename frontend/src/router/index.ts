@@ -90,6 +90,11 @@ const routes = [
                 props: true,
             },
             {
+                path: 'car',
+                name: 'car',
+                component: () => import('../views/Car.vue'),
+            },
+            {
                 path: 'about',
                 name: 'about',
                 // route level code-splitting
