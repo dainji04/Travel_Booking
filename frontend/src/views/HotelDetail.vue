@@ -17,7 +17,9 @@ console.log(props.id);
             <div class="thumbnails">
                 <img src="../assets/images/hotel.png" alt="Room" />
                 <img src="../assets/images/hotel.png" alt="View" />
-                <img src="../assets/images/hotel.png" alt="Pool" />
+                <div class="more-images">
+                    <div>+37 images</div>
+                </div>
             </div>
         </div>
         <div class="tabs">
@@ -25,78 +27,229 @@ console.log(props.id);
             <button>Rooms {{ props.id }}</button>
             <button>Guest Reviews</button>
         </div>
+        <span class="line"></span>
         <div class="overview">
-            <h1>Hotel du Parc Hanoi</h1>
-            <div class="rating">
-                <span>⭐⭐⭐⭐</span>
-                <small>4.5 (22 reviews)</small>
-            </div>
-            <p class="location">
-                123 Luxury Street, Travel District, Melbourne, Australia
-            </p>
-            <p class="description">
-                Hotel du Parc Hanoi offers a perfect blend of comfort,
-                convenience, and warm hospitality, making it an ideal choice for
-                travelers visiting Hanoi. The hotel offers spacious and
-                elegantly furnished rooms, fine dining, and modern amenities in
-                a peaceful setting.
-            </p>
-            <div class="features">
-                <ul>
-                    <li>Free WiFi</li>
-                    <li>Air Conditioning</li>
-                    <li>Parking available</li>
-                    <li>Business Services</li>
-                    <li>Swimming pool</li>
-                    <li>Top-rated on reviews</li>
-                </ul>
-            </div>
-            <div class="explore">
-                <h3>Explore the area</h3>
-                <ul>
-                    <li>St Joseph's Cathedral - 1 min walk</li>
-                    <li>Hoan Kiem Lake - 3 min walk</li>
-                    <li>Old Quarter - 6 min walk</li>
-                </ul>
-            </div>
-        </div>
-        <div class="availability">
-            <div class="filters">
-                <input type="date" />
-                <input type="date" />
-                <select>
-                    <option>2 adults, 1 room</option>
-                </select>
-                <button class="check-btn">Check Availability</button>
-            </div>
-            <div class="rooms">
-                <div class="room">
-                    <img
-                        src="../assets/images/hotel.png"
-                        alt="Executive Suite King"
-                    />
-                    <div class="info">
-                        <h4>Executive Suite King</h4>
-                        <ul>
-                            <li>King-size bed</li>
-                            <li>Spacious room with luxury bathroom</li>
-                            <li>Includes breakfast</li>
-                        </ul>
-                        <button class="reserve">Reserve suite</button>
+            <div class="left">
+                <h1 class="title">Hotel du Parc Hanoi</h1>
+                <div class="rating">
+                    <span>⭐⭐⭐⭐</span>
+                    <p>4.5 (22 reviews)</p>
+                </div>
+                <div class="description">
+                    <p>Overview</p>
+                    <p class="text">
+                        Hôtel du Parc Hanoï offers a perfect blend of comfort,
+                        convenience, and warm hospitality, making it a top
+                        choice for travelers visiting Hanoi. With well-equipped
+                        rooms featuring free WiFi, flat-screen TVs, and
+                        minibars, guests can relax with ease. The hotel provides
+                        room service, a swimming pool, a restaurant, and free
+                        parking.
+                        <br /><br />
+                        Its central location puts guests within easy reach of
+                        key attractions such as Hoan Kiem Lake, St. Joseph’s
+                        Cathedral, Thang Long Imperial Citadel, Hoa Lo Prison,
+                        Temple of Literature, and Vietnamese Women’s Museum.
+                        Guests also enjoy nearby green spaces like Thong Nhat
+                        Park and Ly Thai To Park.<br /><br />
+                        Whether you're here for business or leisure, Hôtel du
+                        Parc Hanoï offers a peaceful stay with easy access to
+                        the best of Hanoi.
+                    </p>
+                </div>
+                <span class="line"></span>
+                <div class="top-facilities">
+                    <h1>Top facilities</h1>
+                    <div class="list-facilities">
+                        <div class="facility">
+                            <img
+                                src="../assets/fonts/hotel/free-wifi.svg"
+                                alt="free wifi"
+                            />
+                            <p>Free Wifi</p>
+                        </div>
+                        <div class="facility">
+                            <img
+                                src="../assets/fonts/hotel/business-services.svg"
+                                alt=""
+                            />
+                            <p>Business Services</p>
+                        </div>
+                    </div>
+                    <div class="list-facilities">
+                        <div class="facility">
+                            <img
+                                src="../assets/fonts/hotel/air-condition.svg"
+                                alt=""
+                            />
+                            <p>Air Conditioning</p>
+                        </div>
+                        <div class="facility">
+                            <img
+                                src="../assets/fonts/hotel/swimming.svg"
+                                alt=""
+                            />
+                            <p>Swimming Pool</p>
+                        </div>
+                    </div>
+                    <div class="list-facilities">
+                        <div class="facility">
+                            <img
+                                src="../assets/fonts/hotel/parking.svg"
+                                alt=""
+                            />
+                            <p>Parking Available</p>
+                        </div>
+                        <div class="facility">
+                            <img
+                                src="../assets/fonts/hotel/top-rated.svg"
+                                alt=""
+                            />
+                            <p>Top Rated</p>
+                        </div>
                     </div>
                 </div>
-                <div class="room">
-                    <img
-                        src="../assets/images/hotel.png"
-                        alt="Deluxe Twin Bed"
-                    />
+            </div>
+            <div class="right">
+                <img src="@/assets/images/hotel.png" alt="hotel cover" />
+                <!-- <div class="info">
+                    <p>explore the area</p>
+                    <table>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </table>
+                </div> -->
+            </div>
+        </div>
+
+        <div class="availability">
+            <h1>Available Room</h1>
+            <div class="research-panel">
+                <form class="research-form">
+                    <div class="form-group">
+                        <input type="date" id="dateStart" />
+                    </div>
+                    <div class="form-group">
+                        <input type="date" id="dateEnd" />
+                    </div>
+                    <div class="form-group">
+                        <input type="number" id="adults" min="1" value="1" />
+                    </div>
+                    <div class="form-group">
+                        <input type="number" id="children" min="0" value="0" />
+                    </div>
+                    <button type="submit">Search</button>
+                </form>
+            </div>
+            <div class="rooms">
+                <div class="card">
+                    <img src="../assets/images/hotel.png" alt="" />
                     <div class="info">
-                        <h4>Deluxe Twin Bed</h4>
-                        <ul>
-                            <li>2 Single beds</li>
-                            <li>Includes WiFi and breakfast</li>
-                        </ul>
-                        <button class="reserve">Reserve suite</button>
+                        <h1 class="name">abc room</h1>
+                        <div class="facilities">
+                            <div class="facility">
+                                <img
+                                    src="../assets/fonts/hotel/business-services.svg"
+                                    alt="business services"
+                                />
+                                <p>
+                                    A king-size bed or twin beds for a restful
+                                    night’s sleep
+                                </p>
+                            </div>
+                            <div class="facility">
+                                <img
+                                    src="../assets/fonts/hotel/swimming.svg"
+                                    alt="sleep 3"
+                                />
+                                <p>Sleep 3</p>
+                            </div>
+                            <div class="facility">
+                                <img
+                                    src="../assets/fonts/hotel/top-rated.svg"
+                                    alt="free wifi"
+                                />
+                                <p>1 double bed and 1 twin bed</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="../assets/images/hotel.png" alt="" />
+                    <div class="info">
+                        <h1 class="name">abc room</h1>
+                        <div class="facilities">
+                            <div class="facility">
+                                <img
+                                    src="../assets/fonts/hotel/business-services.svg"
+                                    alt="business services"
+                                />
+                                <p>
+                                    A king-size bed or twin beds for a restful
+                                    night’s sleep
+                                </p>
+                            </div>
+                            <div class="facility">
+                                <img
+                                    src="../assets/fonts/hotel/swimming.svg"
+                                    alt="sleep 3"
+                                />
+                                <p>Sleep 3</p>
+                            </div>
+                            <div class="facility">
+                                <img
+                                    src="../assets/fonts/hotel/top-rated.svg"
+                                    alt="free wifi"
+                                />
+                                <p>1 double bed and 1 twin bed</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="../assets/images/hotel.png" alt="" />
+                    <div class="info">
+                        <h1 class="name">abc room</h1>
+                        <div class="facilities">
+                            <div class="facility">
+                                <img
+                                    src="../assets/fonts/hotel/business-services.svg"
+                                    alt="business services"
+                                />
+                                <p>
+                                    A king-size bed or twin beds for a restful
+                                    night’s sleep
+                                </p>
+                            </div>
+                            <div class="facility">
+                                <img
+                                    src="../assets/fonts/hotel/swimming.svg"
+                                    alt="sleep 3"
+                                />
+                                <p>Sleep 3</p>
+                            </div>
+                            <div class="facility">
+                                <img
+                                    src="../assets/fonts/hotel/top-rated.svg"
+                                    alt="free wifi"
+                                />
+                                <p>1 double bed and 1 twin bed</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
