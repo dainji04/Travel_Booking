@@ -25,6 +25,10 @@ export class Account {
     @Column({ nullable: true })
     ResetToken: string;
 
+    
+    @Column({ nullable: true })
+    Phone: string;
+
     @Column({ default: false })
     IsVerified: boolean;
 

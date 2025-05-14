@@ -6,7 +6,7 @@ import { Itinerary } from "src/itinerary/entities/itinerary.entity";
 import { Location } from "src/location/entities/location.entity";
 import { OrderHistory } from "src/order-history/entities/order-history.entity";
 import { Rating } from "src/rating/entities/rating.entity";
-import { Column, CreateDateColumn, Entity, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Blog } from "src/blog/entities/blog.entity";
 import { Car } from "src/car/entities/car.entity";
 
@@ -57,8 +57,7 @@ export class Tour {
     @ManyToOne(() => Hotel, hotel => hotel.Tours)
     Hotel: Hotel;
 
-    @Column({ type: 'enum', enum: TypeCar, array: true, default: [] })
-    Type: TypeCar[];
+      
 
     @OneToMany(() => OrderHistory, orderHistory => orderHistory.Tour)
     OrderHistories: OrderHistory[];
@@ -72,6 +71,7 @@ export class Tour {
     @OneToMany(() => Blog, blog => blog.Tour)
     Blogs: Blog[];
 
-    @ManyToOne(() => Car , car => car.tours)
-    car:Car
+    @ManyToMany(() => Car , car => car.tours)
+    @JoinTable()
+    cars:Car[]
 }

@@ -54,15 +54,6 @@ export class CreateTourDto {
   @Type(() => Number)
   locationId: number;
 
-  @IsArray()
-  @IsEnum(TypeCar, { each: true })
-  @ApiProperty({
-    example: [TypeCar.MOTOBIKE, TypeCar.FOURSEAT],
-    enum: TypeCar,
-    isArray: true,
-    description: 'Danh sách loại xe được hỗ trợ cho tour',
-  })
-  type: TypeCar[];
   @IsInt()
   @ApiProperty({ example: 1, description: 'ID của khách sạn (hotel)' })
   @Type(() => Number)
@@ -111,6 +102,13 @@ export class CreateTourDto {
     example:''
   })
   itineraries?: CreateItineraryDto[];
+
+
+  @IsArray()
+  @IsNumber({}, { each: true })
+  @ApiProperty({ example: [1, 2], description: 'Danh sách ID các xe', type: [Number] })
+  carIds: number[];
+
 
 }
 

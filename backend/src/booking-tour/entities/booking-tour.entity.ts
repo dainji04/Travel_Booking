@@ -3,6 +3,7 @@ import { typeBooking } from "src/util/common/type_Booking.common";
 import { Tour } from "src/tour/entities/tour.entity";
 import { Account } from "src/user/entities/user.entity";
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Payment_Method } from "src/payment/entities/payment.entity";
 
 @Entity('Book')
 export class BookingTour {
@@ -38,6 +39,9 @@ export class BookingTour {
 
     @ManyToOne(() => Tour , tour => tour.BookingTours)
     Tour:Tour
+
+    @ManyToOne(() => Payment_Method , pm => pm.Book)
+    Payment:Payment_Method
 
     
 

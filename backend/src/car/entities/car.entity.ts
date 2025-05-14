@@ -1,5 +1,5 @@
 import { Tour } from "src/tour/entities/tour.entity";
-import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, ManyToMany, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity('Car')
 export class Car {
@@ -23,7 +23,7 @@ export class Car {
     createdAt:Date
 
 
-    @OneToMany(() => Tour , tour => tour.car)
+    @ManyToMany(() => Tour , tour => tour.cars)
     tours:Tour[]
 
 

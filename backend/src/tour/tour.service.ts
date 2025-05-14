@@ -9,16 +9,22 @@ import { LocationService } from 'src/location/location.service';
 import { Itinerary } from 'src/itinerary/entities/itinerary.entity';
 import { Activity } from 'src/itinerary/entities/activity-itinerary.entity';
 import { HotelService } from 'src/hotel/hotel.service';
+import { Car } from 'src/car/entities/car.entity';
+import { CarService } from 'src/car/car.service';
 
 @Injectable()
 export class TourService {
   constructor(
     @InjectRepository(Tour) private readonly tourRepository: Repository<Tour>,
+    private readonly carService:CarService,
     private readonly locationService: LocationService,
     private readonly hotelService: HotelService,
   ) {}
   async create(createTourDto: CreateTourDto) {
-    const { locationId, hotelId, DayStart, DayEnd, type , Imgs , Special , itineraries , Overview , Excludes } = createTourDto;
+    const { locationId, hotelId, DayStart, DayEnd, carIds , Imgs , Special , itineraries , Overview , Excludes } = createTourDto;
+
+    const cars = await this.carService.findByIds(carIds)
+
     const location = await this.locationService.findOne(locationId);
     const hotel = await this.hotelService.findOne(hotelId);
     const now = new Date();
@@ -45,11 +51,12 @@ export class TourService {
       ...createTourDto,
       Location:location,
       Hotel:hotel,
-      Type:type,
       Special,
       Overview,
       Imgs:Imgs || [],
-      Excludes:Excludes || []
+      Excludes:Excludes || [],
+      cars
+    
     });
 
     tour.Itineraries = (itineraries || []).map((itineraryDto) => {

@@ -1,4 +1,5 @@
 import { OrderHistory } from "src/order-history/entities/order-history.entity";
+import { Payment_Method } from "src/payment/entities/payment.entity";
 import { Tour } from "src/tour/entities/tour.entity";
 import { Account } from "src/user/entities/user.entity";
 import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
@@ -38,4 +39,8 @@ export class Bill {
 
     @ManyToOne(() => Tour, tour => tour.Bills)
     Tour: Tour
+
+
+    @ManyToOne(()=> Payment_Method , pm=>pm.Bills)
+    Payment:Payment_Method
 }
