@@ -1,36 +1,37 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { FaqsService } from './faqs.service';
 import { CreateFaqDto } from './dto/create-faq.dto';
 import { UpdateFaqDto } from './dto/update-faq.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBadRequestResponse, ApiNotFoundResponse, ApiOkResponse, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { SearchFaqsDto } from './dto/search-faqs.dto';
 
 @Controller('faqs')
 @ApiTags('Fags')
 export class FaqsController {
   constructor(private readonly faqsService: FaqsService) {}
-
-  @Post()
-  create(@Body() createFaqDto: CreateFaqDto) {
-    return this.faqsService.create(createFaqDto);
-  }
-
-  @Get()
-  findAll() {
-    return this.faqsService.findAll();
-  }
-
+  @ApiOkResponse({status:200, description: 'Lấy Faqs theo ID thành công' })
+  @ApiBadRequestResponse({status:400, description: 'Lấy Faqs theo ID thất bại' })
+  @ApiNotFoundResponse({ status:404, description: 'Không tìm thấy Faqs' })
+  @ApiOperation({ summary: 'get Faqs successfully' })
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.faqsService.findOne(+id);
-  }
+  async findOne(@Param('id') id:number) {
+    const res = await this.faqsService.findOne(id)
+    return res
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateFaqDto: UpdateFaqDto) {
-    return this.faqsService.update(+id, updateFaqDto);
-  }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.faqsService.remove(+id);
   }
+    @Get()
+    @ApiOkResponse({status:200, description: 'Lấy Faqs thành công' })
+    @ApiBadRequestResponse({status:400, description: 'Lấy Faqs thất bại' })
+    @ApiNotFoundResponse({ status:404, description: 'Không tìm thấy Faqs' })
+    async getAllBlogs(@Query() searchBlogDto: SearchFaqsDto) {
+      const { page, limit } = searchBlogDto;
+      const res = await this.faqsService.findAll({ page, limit, ...searchBlogDto });
+      return res;
+    }
+
+  
+
+
+
 }
