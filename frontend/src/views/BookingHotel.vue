@@ -1,7 +1,10 @@
 <script lang="ts" setup>
-import { reactive, ref, watch } from 'vue';
+import { computed, onMounted, reactive, ref, watch } from 'vue';
 import axios from 'axios';
-import { get } from '@vueuse/core';
+import { useRoute, useRouter } from 'vue-router';
+import { hotelStore } from '@/stores/hotelStore';
+
+import type { Hotel } from '@/types/hotel';
 
 const location = ref<string>('');
 const dateStart = ref<string>('');
@@ -17,8 +20,6 @@ function searchHotels(): void {
         adults: adults.value,
         children: children.value,
     };
-    console.log('Searching with parameters:', searchParams);
-    // Add your search logic here
 }
 
 const provinces = reactive<any[]>([]);
@@ -38,8 +39,6 @@ const getProvince = async () => {
     }
 };
 
-getProvince();
-
 watch([dateStart, dateEnd], ([newStart, newEnd]) => {
     if (newEnd && newStart && newEnd < newStart) {
         alert('End date cannot be before start date.');
@@ -48,13 +47,39 @@ watch([dateStart, dateEnd], ([newStart, newEnd]) => {
 });
 
 const openDatePicker = (event: Event) => {
-    console.log(1);
-
     const target = event.target as HTMLInputElement;
     if (target) {
         target.showPicker();
     }
 };
+
+const route = useRoute();
+const router = useRouter();
+const page = ref(Number(route.query.page) || 1);
+
+const useHotelStore = hotelStore();
+const getListHotels = useHotelStore.getListHotels;
+const listHotels = ref<Hotel[]>([]);
+
+const originalPrice = (price: number) => {
+    const discount: number = 0.15;
+    const discountedPrice = price - price * discount;
+    return parseFloat(discountedPrice.toFixed(2));
+};
+
+onMounted(async () => {
+    router.replace({
+        query: {
+            page: page.value.toString(),
+            limit: 5,
+        },
+    });
+
+    await getListHotels(page.value, 5);
+
+    listHotels.value = useHotelStore.getHotels;
+    getProvince();
+});
 </script>
 
 <template>
@@ -294,18 +319,17 @@ const openDatePicker = (event: Event) => {
             </div>
         </div>
         <div class="hotel-list">
-            <template v-for="i in 4">
-                <router-link :to="{ name: 'hotelDetail', params: { id: i } }">
+            <template v-for="hotel in listHotels">
+                <router-link
+                    :to="{ name: 'hotelDetail', params: { id: hotel.id } }"
+                >
                     <div class="hotel-card">
                         <div class="hotel-img">
-                            <img
-                                src="@/assets/images/hotel.png"
-                                alt="Hotel du Parc Hanoi"
-                            />
+                            <img :src="hotel.Avatar" :alt="hotel.Name" />
                         </div>
 
                         <div class="hotel-info">
-                            <h3 class="hotel-name">Hotel du Parc Hanoi</h3>
+                            <h3 class="hotel-name">{{ hotel.Name }}</h3>
 
                             <div class="rating">
                                 <span class="stars">★★★★★</span>
@@ -314,7 +338,7 @@ const openDatePicker = (event: Event) => {
                             </div>
 
                             <p class="description">
-                                Hôtel du Parc Hanoi is a 5-star hotel blending
+                                {{ hotel.Name }} is a 5-star hotel blending
                                 Vietnamese charm with Japanese elegance, located
                                 near Hanoi’s Old Quarter. It offers luxurious
                                 rooms, fine dining, and modern amenities in a
@@ -333,8 +357,12 @@ const openDatePicker = (event: Event) => {
                                             1 room 2 days
                                         </div>
                                         <div class="price">
-                                            <span class="original">$1,400</span>
-                                            <span class="current">$1,200</span>
+                                            <span class="original">
+                                                {{ originalPrice(hotel.Price) }}
+                                            </span>
+                                            <span class="current">
+                                                {{ hotel.Price }}
+                                            </span>
                                         </div>
                                         <div class="tax-note">
                                             Includes taxes and fees

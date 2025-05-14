@@ -1,12 +1,13 @@
 interface User {
-    name: string;
-    email: string;
-    role: string[];
+    Name: string;
+    Email: string;
+    Roles: string[];
+    Phone: string;
 }
 
 interface AuthCredentials {
-    email: string;
-    password: string;
+    Email: string;
+    Password: string;
 }
 
 interface UserLogin extends AuthCredentials {
@@ -14,7 +15,7 @@ interface UserLogin extends AuthCredentials {
 }
 
 interface UserSignUp extends AuthCredentials {
-    name: string;
+    Name: string;
 }
 
 export type { UserLogin, UserSignUp, User };

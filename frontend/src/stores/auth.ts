@@ -7,11 +7,6 @@ interface AuthStore {
     accessToken: string | null;
 }
 
-interface data {
-    user: User;
-    accessToken: string;
-}
-
 export const authStore = defineStore('auth', {
     state: (): AuthStore => {
         return {
@@ -21,7 +16,7 @@ export const authStore = defineStore('auth', {
     },
     getters: {
         isAdmin: (state) => {
-            console.log(state.user?.role);
+            console.log(state.user?.Role);
             return false;
         },
         isAuthenticated: (state: any) => {
@@ -36,8 +31,8 @@ export const authStore = defineStore('auth', {
             try {
                 // Fetch users from json-server
                 const response = await axios.post('/user/signIn', {
-                    email: data.email,
-                    password: data.password,
+                    email: data.Email,
+                    password: data.Password,
                 });
                 if (response.status === 201) {
                     localStorage.setItem(

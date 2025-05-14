@@ -6,68 +6,25 @@ import Pagination from '@/components/Pagination.vue';
 import TicketList from '@/components/TicketList.vue';
 
 import { tourStore } from '@/stores/tourStore.ts';
-
-import hueImg from '@/assets/images/tour_available/hue.png';
-import BuonMeThuotImg from '@/assets/images/tour_available/buon_me_thuot.png';
-import HaNoiImg from '@/assets/images/tour_available/ha_noi.png';
-import MangDenImg from '@/assets/images/tour_available/mang_den.png';
-import PhuYenImg from '@/assets/images/tour_available/phu_yen.png';
-import NinhThuanImg from '@/assets/images/tour_available/ninh_thuan.png';
-
-const tourAvailable = [
-    {
-        img: hueImg,
-        title: 'Hue',
-        tourNumber: 1,
-        slug: 'hue',
-    },
-    {
-        img: HaNoiImg,
-        title: 'Ha Noi',
-        tourNumber: 1,
-        slug: 'ha-noi',
-    },
-    {
-        img: BuonMeThuotImg,
-        title: 'Buon Me Thuot',
-        tourNumber: 1,
-        slug: 'buon-me-thuot',
-    },
-    {
-        img: MangDenImg,
-        title: 'Mang Den',
-        tourNumber: 1,
-        slug: 'mang-den',
-    },
-    {
-        img: PhuYenImg,
-        title: 'Phu Yen',
-        tourNumber: 1,
-        slug: 'phu-yen',
-    },
-    {
-        img: NinhThuanImg,
-        title: 'Ninh Thuan',
-        tourNumber: 1,
-        slug: 'ninh-thuan',
-    },
-];
+import type { Tour } from '@/types/tour';
+const tourAvailable = ref<Tour[]>([]);
 
 const { getTourList } = tourStore();
-getTourList();
 
 const route = useRoute();
 const router = useRouter();
 
 const page = ref(Number(route.query.page) || 1);
 
-onMounted(() => {
+onMounted(async () => {
     router.replace({
         query: {
             page: page.value.toString(),
-            limit: 10,
+            limit: 6,
         },
     });
+    await getTourList(page.value, 10);
+    tourAvailable.value = tourStore().getTours;
 });
 </script>
 
@@ -85,17 +42,18 @@ onMounted(() => {
         <h1 class="subheading">give you comfort and convenience</h1>
         <div class="available__container">
             <!-- slice make sure just render item 0->5 (6 items) -->
-            <template
-                v-for="(tour, index) in tourAvailable.slice(0, 6)"
-                :key="index"
-            >
+            <template v-for="tour in tourAvailable" :key="tour.id">
                 <RouterLink
-                    :to="{ name: 'tourDetail', params: { slug: tour.slug } }"
+                    :to="{ name: 'tourDetail', params: { id: tour.id } }"
                 >
                     <div class="available__item">
-                        <img :src="tour.img" alt="" />
+                        <img
+                            class="available__item-thumbnail"
+                            :src="tour.Thumbnail"
+                            alt=""
+                        />
                         <div>
-                            <h1 class="available__title">{{ tour.title }}</h1>
+                            <h1 class="available__title">{{ tour.Name }}</h1>
                             <img src="@/assets/fonts/right-arrow2.svg" alt="" />
                         </div>
                     </div>

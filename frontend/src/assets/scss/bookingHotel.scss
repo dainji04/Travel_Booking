@@ -342,23 +342,30 @@
     }
 }
 
+.hotel-list {
+    display: grid;
+    gap: 20px;
+    margin-top: 20px;
+}
+
 .hotel-card {
     width: 100%;
     display: grid;
     grid-template-columns: 1fr 2fr;
     border: 1px solid #ddd;
     border-radius: 10px;
-    overflow: hidden;
     cursor: pointer;
     color: $color--black;
+    overflow: hidden;
 
     .hotel-img {
         padding: 20px 10px 20px 10px;
-
+        width: 100%;
         img {
             border-radius: 8px;
             width: 100%;
-            height: 100%;
+            height: 300px;
+
             object-fit: cover;
         }
     }

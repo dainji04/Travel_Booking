@@ -64,9 +64,10 @@ const routes = [
                 component: () => import('../views/TourOrder.vue'),
             },
             {
-                path: 'tour/:slug',
+                path: 'tour/:id',
                 name: 'tourDetail',
                 component: () => import('../views/TourDetail.vue'),
+                props: true,
             },
             {
                 path: 'checkout',
@@ -108,7 +109,7 @@ const routes = [
                 component: () => import('../views/Blog.vue'),
             },
             {
-                path: 'blog/:blog',
+                path: 'blog/:id',
                 name: 'blog-detail',
                 component: () => import('../views/BlogDetail.vue'),
                 props: true,

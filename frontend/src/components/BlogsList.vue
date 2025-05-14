@@ -1,30 +1,28 @@
 <script setup lang="ts">
+import Pagination from '@/components/Pagination.vue';
+import { blogStore } from '@/stores/blogStore';
+import type { Blog } from '@/types/blog';
+import { onMounted, ref } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 
+const { getBlogList } = blogStore();
 
-import hoianBlog from '@/assets/images/hoianBlog.png';
-import daklakBlog from '@/assets/images/daklakBlog.png';
-import phuyenBlog from '@/assets/images/phuyenBlog.png';
+const blogList = ref<Blog[]>([]);
 
-const blogs = [
-    {
-        img: hoianBlog,
-        title: 'Top 10 things to do when coming to Hoi An',
-        description:
-            "Hoi An's Ancient Town is a well-preserved historical site, known for its blend of traditional Vietnamese, Chinese, and Japanese architecture. The charming streets, lantern-lit evenings, and vibrant markets make it a UNESCO World Heritage gem.",
-    },
-    {
-        img: daklakBlog,
-        title: 'Top 10 things to do when coming to Hoi An',
-        description:
-            "Hoi An's Ancient Town is a well-preserved historical site, known for its blend of traditional Vietnamese, Chinese, and Japanese architecture. The charming streets, lantern-lit evenings, and vibrant markets make it a UNESCO World Heritage gem.",
-    },
-    {
-        img: phuyenBlog,
-        title: 'Top 10 things to do when coming to Hoi An',
-        description:
-            "Hoi An's Ancient Town is a well-preserved historical site, known for its blend of traditional Vietnamese, Chinese, and Japanese architecture. The charming streets, lantern-lit evenings, and vibrant markets make it a UNESCO World Heritage gem.",
-    },
-];
+const route = useRoute();
+const router = useRouter();
+const page = Number(route.query.page || 1);
+onMounted(async () => {
+    router.replace({
+        query: {
+            page: page,
+            limit: 3,
+        },
+    });
+
+    await getBlogList(page, 3);
+    blogList.value = blogStore().getBlogs;
+});
 </script>
 
 <template>
@@ -34,18 +32,18 @@ const blogs = [
             <h3 class="subheading">new post</h3>
         </div>
         <div class="blogs__container">
-            <template v-for="blog in blogs" :key="blog">
+            <template v-for="blog in blogList" :key="blog">
                 <div class="blogs__post">
                     <div
                         class="blogs__image"
                         :style="{
-                            background: ` url(${blog.img}) lightgray 50% / cover no-repeat`,
+                            background: ` url(${blog.Thumbail}) lightgray 50% / cover no-repeat`,
                         }"
                     ></div>
                     <div class="blogs__content">
-                        <h1 class="blogs__title">{{ blog.title }}</h1>
+                        <h1 class="blogs__title">10 things you can expected</h1>
                         <p class="blogs__description">
-                            {{ blog.description }}
+                            {{ blog.Content }}
                         </p>
                     </div>
                     <button class="blogs__button button-primary">
