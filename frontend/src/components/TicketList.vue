@@ -51,19 +51,38 @@ const tourTicket = [
         dollarsPrice: '500$',
         VietNamDongPrice: '12,000,000VND',
     },
+    // {
+    //     img: 'https://photo.znews.vn/w1920/Uploaded/jac_iik/2015_05_04/mui_dai_lanh_18.jpg',
+    //     title: 'Phu Yen tour',
+    //     locate: 'Tuy Hoa city',
+    //     guide: 'Mr.Minh Quy',
+    //     times: '3 days 2 nights',
+    //     dollarsPrice: '400$',
+    //     VietNamDongPrice: '9,600,000VND',
+    // },
 ];
 
 const tourList = useTemplateRef('tour-list');
+const currentIndex = ref(0);
+const itemsPerSlide = 3;
 
 const nextSlide = () => {
     if (tourList.value) {
-        tourList.value.style.transform = `translateX(-60%)`;
+        const totalItems = tourTicket.length;
+        const maxIndex = Math.ceil(totalItems / itemsPerSlide) - 1;
+        currentIndex.value = Math.min(currentIndex.value + 1, maxIndex);
+        const offset = -currentIndex.value * 69;
+        console.log(offset);
+
+        tourList.value.style.transform = `translateX(${offset}%)`;
     }
 };
 
 const prevSlide = () => {
     if (tourList.value) {
-        tourList.value.style.transform = `translateX(0)`;
+        currentIndex.value = Math.max(currentIndex.value - 1, 0);
+        const offset = -currentIndex.value * 100;
+        tourList.value.style.transform = `translateX(${offset}%)`;
     }
 };
 </script>
@@ -84,6 +103,7 @@ const prevSlide = () => {
             <button
                 class="ticket__btn-prev ticket__btn-primary"
                 @click="prevSlide"
+                :disabled="currentIndex === 0"
             >
                 <img
                     loading="lazy"
@@ -95,6 +115,10 @@ const prevSlide = () => {
             <button
                 class="ticket__btn-next ticket__btn-primary"
                 @click="nextSlide"
+                :disabled="
+                    currentIndex ===
+                    Math.ceil(tourTicket.length / itemsPerSlide) - 1
+                "
             >
                 <img
                     loading="lazy"
@@ -104,71 +128,77 @@ const prevSlide = () => {
                 />
             </button>
         </div>
-        <div ref="tour-list" class="ticket__list-item">
-            <template v-for="ticket in tourTicket">
-                <div class="ticket__item">
-                    <div
-                        class="ticket__image"
-                        :style="{
-                            backgroundImage: `url(${ticket.img})`,
-                        }"
-                    >
-                        <!-- <img :src="ticket.img" alt="" /> -->
-                    </div>
-                    <div class="ticket__content">
-                        <h1 class="ticket__title">{{ ticket.title }}</h1>
-                        <div class="ticket__box">
-                            <div class="ticket__information">
-                                <div class="ticket__info-item ticket__location">
-                                    <img
-                                        loading="lazy"
-                                        src="@/assets/fonts/location.svg"
-                                        alt=""
-                                    />
-                                    <p class="ticket__text">
-                                        {{ ticket.locate }}
+        <div class="box-ticket">
+            <div ref="tour-list" class="ticket__list-item">
+                <template v-for="ticket in tourTicket">
+                    <div class="ticket__item">
+                        <div
+                            class="ticket__image"
+                            :style="{
+                                backgroundImage: `url(${ticket.img})`,
+                            }"
+                        >
+                            <!-- <img :src="ticket.img" alt="" /> -->
+                        </div>
+                        <div class="ticket__content">
+                            <h1 class="ticket__title">{{ ticket.title }}</h1>
+                            <div class="ticket__box">
+                                <div class="ticket__information">
+                                    <div
+                                        class="ticket__info-item ticket__location"
+                                    >
+                                        <img
+                                            loading="lazy"
+                                            src="@/assets/fonts/location.svg"
+                                            alt=""
+                                        />
+                                        <p class="ticket__text">
+                                            {{ ticket.locate }}
+                                        </p>
+                                    </div>
+                                    <div class="ticket__info-item ticket__user">
+                                        <img
+                                            loading="lazy"
+                                            src="@/assets/fonts/user.svg"
+                                            alt=""
+                                        />
+                                        <p class="ticket__text">
+                                            {{ ticket.guide }}
+                                        </p>
+                                    </div>
+                                    <div
+                                        class="ticket__info-item ticket__times"
+                                    >
+                                        <img
+                                            loading="lazy"
+                                            src="@/assets/fonts/clock.svg"
+                                            alt=""
+                                        />
+                                        <p class="ticket__text">
+                                            {{ ticket.times }}
+                                        </p>
+                                    </div>
+                                </div>
+                                <span class="ticket__line"></span>
+                                <div class="ticket__price">
+                                    <p class="ticket__price-text">
+                                        {{ ticket.dollarsPrice }}
+                                    </p>
+                                    <p class="ticket__price-text">OR</p>
+                                    <p class="ticket__price-text">
+                                        {{ ticket.VietNamDongPrice }}
                                     </p>
                                 </div>
-                                <div class="ticket__info-item ticket__user">
-                                    <img
-                                        loading="lazy"
-                                        src="@/assets/fonts/user.svg"
-                                        alt=""
-                                    />
-                                    <p class="ticket__text">
-                                        {{ ticket.guide }}
-                                    </p>
-                                </div>
-                                <div class="ticket__info-item ticket__times">
-                                    <img
-                                        loading="lazy"
-                                        src="@/assets/fonts/clock.svg"
-                                        alt=""
-                                    />
-                                    <p class="ticket__text">
-                                        {{ ticket.times }}
-                                    </p>
-                                </div>
-                            </div>
-                            <span class="ticket__line"></span>
-                            <div class="ticket__price">
-                                <p class="ticket__price-text">
-                                    {{ ticket.dollarsPrice }}
-                                </p>
-                                <p class="ticket__price-text">OR</p>
-                                <p class="ticket__price-text">
-                                    {{ ticket.VietNamDongPrice }}
-                                </p>
                             </div>
                         </div>
+                        <div class="ticket__button-box">
+                            <button class="ticket__button button-primary">
+                                Booking now
+                            </button>
+                        </div>
                     </div>
-                    <div class="ticket__button-box">
-                        <button class="ticket__button button-primary">
-                            Booking now
-                        </button>
-                    </div>
-                </div>
-            </template>
+                </template>
+            </div>
         </div>
         <div class="ticket__background">
             <img
@@ -233,6 +263,11 @@ const prevSlide = () => {
         justify-content: center;
         align-items: center;
         cursor: pointer;
+
+        &:disabled {
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
     }
 
     &__icon-navigation {
@@ -240,8 +275,14 @@ const prevSlide = () => {
         height: 42px;
     }
 
+    .box-ticket {
+        max-width: 1350px;
+        margin: 0 auto;
+        overflow: hidden;
+    }
+
     &__list-item {
-        max-width: 1300px;
+        width: 1300px;
         margin: 0 auto;
         display: flex;
         // justify-content: center;
