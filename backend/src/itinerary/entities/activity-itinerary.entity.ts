@@ -6,7 +6,7 @@ export class Activity {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column({ length: 200 })
+    @Column({ length: 500 })
     Name: string;
 
     @ManyToOne(() => Itinerary, itinerary => itinerary.Activities, { onDelete: 'CASCADE' })
