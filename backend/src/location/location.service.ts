@@ -68,24 +68,30 @@ export class LocationService {
         'tour.DayEnd',
         'tour.Price',
       ])
-      .addSelect('AVG(rating.rating)', 'ratingAverage')
+      .addSelect('AVG(rating.rate)', 'ratingAverage')  
       .addSelect('COUNT(DISTINCT booking.id)', 'bookingCount')
       .groupBy('tour.id')
+      .addGroupBy('tour.Name')
+      .addGroupBy('tour.DayStart')
+      .addGroupBy('tour.DayEnd')
+      .addGroupBy('tour.Price')
       .getRawMany();
   
     return {
       ...location,
       tours: tours.map(tour => ({
         id: tour.tour_id,
-        tour_name: tour.tour_tour_name,
-        tour_start: tour.tour_tour_start,
-        tour_end: tour.tour_tour_end,
-        tour_totalPrice: tour.tour_tour_totalPrice,
+        tour_name: tour.tour_Name,
+        tour_start: tour.tour_DayStart,
+        tour_end: tour.tour_DayEnd,
+        tour_totalPrice: tour.tour_Price,
         ratingAverage: parseFloat(tour.ratingAverage) || 0,
         bookingCount: parseInt(tour.bookingCount, 10),
       }))
+      
     };
   }
+  
 
   async findOneWithHotels(id: number , page:number , limit:number , filter: {
     minPrice?: number;
