@@ -12,7 +12,7 @@ export class CreateLocationDto {
     Describe: string;
     @ApiPropertyOptional({ example: 'Đà lạt mùa xuân', description: 'Ảnh địa điểm' })
     @IsOptional()
-    Image: string;
+    avatar: string;
 
  
 }

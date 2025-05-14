@@ -8,7 +8,7 @@ export class AuthorizeGuard implements CanActivate {
     canActivate(context: ExecutionContext): boolean  {
         const allowedRoles = this.reflector.get<string[]>('allowedRoles',context.getHandler())
         const req = context.switchToHttp().getRequest()
-        const result = req?.currentUser?.roles.map((role:string) => allowedRoles.includes(role)).find((val:boolean) => val === true);
+        const result = req?.currentUser?.Roles.map((role:string) => allowedRoles.includes(role)).find((val:boolean) => val === true);
         if(result) return true
         throw new UnauthorizedException('Sorry , you are not authorized')
     }

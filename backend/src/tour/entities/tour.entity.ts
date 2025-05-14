@@ -8,6 +8,7 @@ import { OrderHistory } from "src/order-history/entities/order-history.entity";
 import { Rating } from "src/rating/entities/rating.entity";
 import { Column, CreateDateColumn, Entity, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Blog } from "src/blog/entities/blog.entity";
+import { Car } from "src/car/entities/car.entity";
 
 @Entity('Tour')
 export class Tour {
@@ -41,7 +42,7 @@ export class Tour {
     @Column({ type: 'text', array: true, nullable: true })
     Excludes: string[];
 
-    @Column({ type: 'varchar', length: 500 })
+    @Column({ type: 'varchar', length: 500  , nullable:true})
     Overview: string;
 
     @ManyToOne(() => Location, location => location.Tours)
@@ -70,4 +71,7 @@ export class Tour {
 
     @OneToMany(() => Blog, blog => blog.Tour)
     Blogs: Blog[];
+
+    @ManyToOne(() => Car , car => car.tours)
+    car:Car
 }

@@ -94,6 +94,9 @@ export class BookingTourService {
       Deposit: deposit,
       MustPaid:mustPaid,
       Acc: user,
+      EmailClient:user.Email,
+      NameClient:user.Name,
+      CccdClient:''
     });
     await this.billRepo.save(bill);
   

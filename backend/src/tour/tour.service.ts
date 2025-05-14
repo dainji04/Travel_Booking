@@ -8,24 +8,19 @@ import { SearchTourDto } from './dto/search-tour.dto';
 import { LocationService } from 'src/location/location.service';
 import { Itinerary } from 'src/itinerary/entities/itinerary.entity';
 import { Activity } from 'src/itinerary/entities/activity-itinerary.entity';
+import { HotelService } from 'src/hotel/hotel.service';
 
 @Injectable()
 export class TourService {
   constructor(
     @InjectRepository(Tour) private readonly tourRepository: Repository<Tour>,
     private readonly locationService: LocationService,
-    private readonly hotelService: LocationService,
+    private readonly hotelService: HotelService,
   ) {}
   async create(createTourDto: CreateTourDto) {
     const { locationId, hotelId, DayStart, DayEnd, type , Imgs , Special , itineraries , Overview , Excludes } = createTourDto;
     const location = await this.locationService.findOne(locationId);
-    if (!location) {
-      throw new NotFoundException('Không tìm thấy địa điểm');
-    }
     const hotel = await this.hotelService.findOne(hotelId);
-    if (!hotel) {
-      throw new NotFoundException('Không tìm thấy khách sạn');
-    }
     const now = new Date();
     const start = new Date(DayStart);
     const end = new Date(DayEnd);
@@ -57,20 +52,22 @@ export class TourService {
       Excludes:Excludes || []
     });
 
-    tour.Itineraries = itineraries.map((itineraryDto) => {
+    tour.Itineraries = (itineraries || []).map((itineraryDto) => {
       const itinerary = new Itinerary();
       itinerary.Title = itineraryDto.itinerary_Title;
-  
+    
       itinerary.Activities = (itineraryDto.activities || []).map((activityDto) => {
         const activity = new Activity();
         activity.Name = activityDto.name;
         return activity;
       });
-  
+    
       return itinerary;
     });
     return this.tourRepository.save(tour);
   }
+
+  
   async getOne(id: number) {
     const foundTour = await this.tourRepository.findOne({
       where: { id },

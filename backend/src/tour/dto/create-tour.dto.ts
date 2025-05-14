@@ -2,6 +2,7 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsArray, IsEnum, IsInt, IsNotEmpty, IsNumber, IsOptional, IsString, MaxLength } from 'class-validator';
 import { TypeCar } from 'src/util/common/type_Car.common';
 import { CreateItineraryDto } from 'src/itinerary/dto/create-itineraty.dto';
+import { Type } from 'class-transformer';
 
 export class CreateTourDto {
   @ApiProperty({
@@ -22,6 +23,11 @@ export class CreateTourDto {
   @IsString()
   DayEnd: Date;
 
+
+  @IsNumber()
+  @IsNotEmpty()
+  Price:number
+
   @ApiProperty({
     example: 3500000,
     description: 'Tổng giá tiền của tour',
@@ -35,7 +41,9 @@ export class CreateTourDto {
     type: String,
   })
   @IsString()
-  tour_name: string;
+  Name: string;
+
+
 
   @ApiProperty({
     example: 1,
@@ -43,6 +51,7 @@ export class CreateTourDto {
     type: Number,
   })
   @IsNumber()
+  @Type(() => Number)
   locationId: number;
 
   @IsArray()
@@ -56,6 +65,7 @@ export class CreateTourDto {
   type: TypeCar[];
   @IsInt()
   @ApiProperty({ example: 1, description: 'ID của khách sạn (hotel)' })
+  @Type(() => Number)
   @IsNumber()
   hotelId: number;
 
@@ -96,11 +106,11 @@ export class CreateTourDto {
     Overview?: string;
 
 
-  @IsNotEmpty()
+  @IsOptional()
   @ApiPropertyOptional({
     example:''
   })
-  itineraries: CreateItineraryDto[];
+  itineraries?: CreateItineraryDto[];
 
 }
 

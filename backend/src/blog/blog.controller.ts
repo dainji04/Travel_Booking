@@ -1,34 +1,38 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { BlogService } from './blog.service';
 import { CreateBlogDto } from './dto/create-blog.dto';
 import { UpdateBlogDto } from './dto/update-blog.dto';
+import { SearchBlogDto } from './dto/search-blog.dto';
 
 @Controller('blog')
 export class BlogController {
   constructor(private readonly blogService: BlogService) {}
 
+
+
   @Post()
-  create(@Body() createBlogDto: CreateBlogDto) {
-    return this.blogService.create(createBlogDto);
+  async createBlog(@Body() createBlogDto:CreateBlogDto) {
+    const res = await this.blogService.createBlog(createBlogDto)
+    return res
   }
-
   @Get()
-  findAll() {
-    return this.blogService.findAll();
+  async getAllBlogs(@Query() searchBlogDto: SearchBlogDto) {
+    const { page, limit } = searchBlogDto;
+    const res = await this.blogService.findAll({ page, limit, ...searchBlogDto });
+    return res;
   }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.blogService.findOne(+id);
-  }
-
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateBlogDto: UpdateBlogDto) {
-    return this.blogService.update(+id, updateBlogDto);
+  async updateBlog(@Param('id') id:number ,@Body() updateBlogDto:UpdateBlogDto) {
+    const res  = await this.blogService.updateBlog(id,updateBlogDto)
+    return res
   }
+  @Get(':id')
+  async findOne(@Param('id') id:number) {
+    const  res  = await this.blogService.findOne(id)
+    return res
+  }
+  
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.blogService.remove(+id);
-  }
+
+
 }

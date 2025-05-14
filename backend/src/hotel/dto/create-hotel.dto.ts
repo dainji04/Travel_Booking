@@ -31,6 +31,10 @@ export class CreateHotelDto {
   @IsString()
   city: string;
 
+  @ApiPropertyOptional({ example: "Thành phố Hồ Chí Minh", description: "Thành phố" })
+  @IsString()
+  describe: string;
+
   @ApiPropertyOptional({ example: "Quận 1", description: "Địa chỉ" })
   @IsString()
   address: string;

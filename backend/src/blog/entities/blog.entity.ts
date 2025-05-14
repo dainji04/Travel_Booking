@@ -19,11 +19,6 @@ export class Blog {
     @CreateDateColumn()
     Create_at:Date
 
-
-
-
-
-
     @ManyToOne(() => Tour , tour => tour.Blogs)
     Tour:Tour
 

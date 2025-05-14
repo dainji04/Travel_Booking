@@ -46,7 +46,7 @@ export class BookingTourController {
   
   @Post()
   @UseGuards(AuthenticationGuard, AuthorizeGuard)
-  // @AuthorizeRoles(Roles.USER)
+  @AuthorizeRoles(Roles.USER)
   @ApiCreatedResponse({ description: 'Đặt tour thành công', type: BookingTour })
   @ApiBadRequestResponse({ description: 'Dữ liệu không hợp lệ' })
   async createBookingTour(

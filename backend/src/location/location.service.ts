@@ -7,6 +7,7 @@ import { Repository } from 'typeorm';
 import { Tour } from 'src/tour/entities/tour.entity';
 import { SearchLocationDto } from './dto/search-location.dto';
 import { Hotel } from 'src/hotel/entities/hotel.entity';
+import { CreateHotelDto } from 'src/hotel/dto/create-hotel.dto';
 
 @Injectable()
 export class LocationService {
@@ -26,19 +27,21 @@ export class LocationService {
     const location = this.locationRepository.create({
       name: createLocationDto.name,
       Describe: createLocationDto.Describe,
-      avatar: createLocationDto.Image, 
+      avatar: createLocationDto.avatar,   
     });
     return await this.locationRepository.save(location);
   }
 
 
   async findOne(id: number) {
+    console.log('Finding location with id:', id);
     const foundLocation = await this.locationRepository.findOne({
       where: { id },
       relations: ['Hotel'], 
     });
     if (!foundLocation) {
-      throw new Error('Location not found');
+      console.error(`Location with id ${id} not found`);
+      throw new NotFoundException('Location not found');
     }
     return foundLocation;
   }

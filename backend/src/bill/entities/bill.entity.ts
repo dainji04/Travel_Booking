@@ -18,7 +18,7 @@ export class Bill {
     @Column({ type: 'float' })
     MustPaid: number
 
-    @Column({ type: 'float' })
+    @Column({ type: 'float'  , nullable:true})
     Payable: number
 
     @Column({ type: 'text' })

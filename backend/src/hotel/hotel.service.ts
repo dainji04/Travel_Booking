@@ -49,6 +49,7 @@ export class HotelService {
             Address: createHotelDto.address,
             Location:location,
             Avatar: createHotelDto.avatar,
+            Describes:createHotelDto.describe
           });
           return await this.hotelRepository.save(hotel);
     }

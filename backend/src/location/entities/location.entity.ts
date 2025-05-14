@@ -1,3 +1,4 @@
+import { Faqs } from "src/faqs/entities/faq.entity";
 import { Hotel } from "src/hotel/entities/hotel.entity";
 import { Tour } from "src/tour/entities/tour.entity";
 import { Column, CreateDateColumn, Entity, ManyToMany, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
@@ -24,6 +25,9 @@ export class Location {
 
     @OneToMany(() => Hotel , hotel => hotel.Location)
     Hotel: Hotel[];
+
+    @OneToMany(()=> Faqs , f => f.location)
+    faqs:Faqs[]
 
     @CreateDateColumn()
     createdAt: Date;
