@@ -46,7 +46,7 @@ export class Tour {
     Overview: string;
 
     @Column({ type: 'varchar', length: 500  , nullable:true})
-    Thumnail: string;
+    Thumbnail: string;
 
     @ManyToOne(() => Location, location => location.Tours)
     Location: Location;
