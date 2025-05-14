@@ -33,7 +33,7 @@ export class ItineraryService {
  async findByTour(tourId: number): Promise<Itinerary[]> {
     return this.itiRepo.find({
       where: { Tour: { id: tourId } },
-      relations: ['Activities'],
+      relations:['Activities']
     });
   } 
   
