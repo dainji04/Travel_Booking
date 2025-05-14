@@ -67,5 +67,5 @@ export class CreateBookingTourDto {
   @IsOptional()
   @ValidateNested()
   @Type(() => BookingTourCustomDetailsDto)
-  bookingTour_CustomDetails?: BookingTourCustomDetailsDto;
+  bookingTour_CustomDetails?: BookingTourCustomDetailsDto[];
 }

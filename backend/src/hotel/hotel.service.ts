@@ -70,11 +70,17 @@ export class HotelService {
             .leftJoin('tour.BookingTours', 'booking')
             .where('hotel.id = :id', { id })
             .select([
-                'tour.id',
-                'tour.Name',
-                'tour.DayStart',
-                'tour.DayEnd',
-                'tour.Price',
+                'hotel.id',
+                'hotel.Name',
+                'hotel.Address',
+                'hotel.Rate',
+                'hotel.Price',
+                'hotel.CreatedAt',
+                'hotel.UpdatedAt',
+                'hotel.Avatar',
+                'hotel.Images',
+                'hotel.Describes',
+                'hotel.locationId',
             ])
             .getMany();
     
@@ -116,6 +122,11 @@ export class HotelService {
                 'hotel.Price',
                 'hotel.CreatedAt',
                 'hotel.UpdatedAt',
+                'hotel.Avatar',
+                'hotel.Images',
+                'hotel.Describes',
+                'hotel.locationId',
+
         ])
         .where('1=1')
         if(address) {

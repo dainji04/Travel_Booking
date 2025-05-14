@@ -38,6 +38,10 @@ export class BookingTourService {
       bookingTour_Type,
       bookingTour_CustomDetails,
     } = dto;
+
+    
+    
+
   
     const bookingDate = new Date(bookingTour_Date);
     const now = new Date();
@@ -56,16 +60,16 @@ export class BookingTourService {
     if (existingBooking)
       throw new BadRequestException('Duplicate booking on this date');
   
-    let tour = null;
+    const tour = await this.tourService.getOne(tourId)
     if (bookingTour_Type === typeBooking.PRESET) {
       if (!tourId) throw new BadRequestException('tourId is required for PRESET booking');
-      tour = await this.tourService.getOne(tourId);
       if (!tour) throw new NotFoundException('Tour not found');
     }
   
     if (bookingTour_Type === typeBooking.CUSTOM && !bookingTour_CustomDetails) {
       throw new BadRequestException('Custom details are required for CUSTOM booking');
     }
+    
   
     const deposit = Math.floor(bookingTour_TotalPrice * 0.3);
     const mustPaid = bookingTour_TotalPrice - deposit;
