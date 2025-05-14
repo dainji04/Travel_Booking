@@ -2,8 +2,10 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { FaqsService } from './faqs.service';
 import { CreateFaqDto } from './dto/create-faq.dto';
 import { UpdateFaqDto } from './dto/update-faq.dto';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('faqs')
+@ApiTags('Fags')
 export class FaqsController {
   constructor(private readonly faqsService: FaqsService) {}
 

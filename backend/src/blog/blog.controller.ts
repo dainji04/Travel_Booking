@@ -3,8 +3,10 @@ import { BlogService } from './blog.service';
 import { CreateBlogDto } from './dto/create-blog.dto';
 import { UpdateBlogDto } from './dto/update-blog.dto';
 import { SearchBlogDto } from './dto/search-blog.dto';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('blog')
+@ApiTags('Blog')
 export class BlogController {
   constructor(private readonly blogService: BlogService) {}
 
