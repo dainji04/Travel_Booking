@@ -9,9 +9,10 @@ import { Bill } from 'src/bill/entities/bill.entity';
 import { TourModule } from 'src/tour/tour.module';
 import { PdfService } from './pdf-booking.service';
 import { OrderHistory } from 'src/order-history/entities/order-history.entity';
+import { Payment_Method } from 'src/payment/entities/payment.entity';
 
 @Module({
-  imports:[TypeOrmModule.forFeature([BookingTour , Bill , OrderHistory]),EmailModule,UserModule  , TourModule],
+  imports:[TypeOrmModule.forFeature([BookingTour , Bill , OrderHistory , Payment_Method]),EmailModule,UserModule  , TourModule],
   controllers: [BookingTourController],
   providers: [BookingTourService , PdfService],
 })

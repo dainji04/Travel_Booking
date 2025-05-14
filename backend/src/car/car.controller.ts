@@ -8,4 +8,12 @@ export class CarController {
   constructor(private readonly carService: CarService) {}
 
 
+
+  @Post()
+  async create(@Body() dto:CreateCarDto)
+  {
+    const res = await this.carService.create(dto)
+    return res
+  }
+
 }

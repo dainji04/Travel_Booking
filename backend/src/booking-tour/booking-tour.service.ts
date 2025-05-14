@@ -13,6 +13,7 @@ import { TourService } from 'src/tour/tour.service';
 import { PdfService } from './pdf-booking.service';
 import { typeBooking } from 'src/util/common/type_Booking.common';
 import { OrderHistory } from 'src/order-history/entities/order-history.entity';
+import { Payment_Method } from 'src/payment/entities/payment.entity';
 
 @Injectable()
 export class BookingTourService {
@@ -20,6 +21,7 @@ export class BookingTourService {
     @InjectRepository(BookingTour) private readonly bookingTourRepo:Repository<BookingTour>,
     @InjectRepository(OrderHistory) private readonly orderHistoryRepo:Repository<OrderHistory>,
     @InjectRepository(Bill) private readonly billRepo:Repository<Bill>,
+    @InjectRepository(Payment_Method) private readonly pmRepo:Repository<Payment_Method>,
     private readonly userService:UserService,
     private readonly emailService:EmailService,
     private readonly tourService:TourService,
@@ -107,6 +109,13 @@ export class BookingTourService {
       bill
       
     })
+    const payment = this.pmRepo.create({
+      Method: 'Cash',
+      Describe: 'Trả tiền mặt tại trụ sở công ty',
+      Bills: [bill], 
+      Book: [newBookingTour], 
+    });
+    await this.pmRepo.save(payment)
     try {
       await this.emailService.handleSendMailBookingTour(
         user.Email,
@@ -134,7 +143,7 @@ export class BookingTourService {
   async getBookingTour(id:number) {
     const found = await this.bookingTourRepo.findOne({
       where:{id},
-      relations:['Acc' , 'tour'],
+      relations:['Acc' , 'Tour'],
       select: {
         id: true,
         Day: true,
@@ -236,7 +245,7 @@ export class BookingTourService {
   async getBookingTourByUserId(userId:number) {
     const found = await this.bookingTourRepo.find({
       where:{Acc:{id:userId}},
-      relations:['bookingTour_user'],
+      relations:['Acc'],
       select: {
         id: true,
         Day: true,
@@ -258,7 +267,7 @@ export class BookingTourService {
   async findByIdBookingTour(id:number) {
     const booking = await this.bookingTourRepo.findOne({
       where:{id},
-      relations:['bookingTour_user']
+      relations:['Acc']
     })
     if(!booking) throw new NotFoundException('Booking tour not found')
     return booking

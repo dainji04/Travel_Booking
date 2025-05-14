@@ -78,7 +78,7 @@ export class TourService {
   async getOne(id: number) {
     const foundTour = await this.tourRepository.findOne({
       where: { id },
-      relations: ['BookingTours' , 'Location' , 'Ratings' , 'Hotel'],
+      relations: [ 'Location' , 'Ratings' , 'Hotel'], 
     });
     if (!foundTour) {
       throw new NotFoundException('Không tìm thấy tour');
