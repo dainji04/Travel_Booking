@@ -15,7 +15,7 @@ export class Tour {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column({ length: 255 })
+    @Column({ length: 255 , nullable:true })
     Name: string;
 
     @Column({ nullable: true })
@@ -44,6 +44,9 @@ export class Tour {
 
     @Column({ type: 'varchar', length: 500  , nullable:true})
     Overview: string;
+
+    @Column({ type: 'varchar', length: 500  , nullable:true})
+    Thumnail: string;
 
     @ManyToOne(() => Location, location => location.Tours)
     Location: Location;
