@@ -26,9 +26,6 @@ export class BookingTourService {
     private readonly emailService:EmailService,
     private readonly tourService:TourService,
     private readonly pdfService:PdfService,
-
-
-
   ){}
   async createBookingTour(user: Account, dto: CreateBookingTourDto) {
     const {
@@ -60,9 +57,11 @@ export class BookingTourService {
     if (existingBooking)
       throw new BadRequestException('Duplicate booking on this date');
   
-    const tour = await this.tourService.getOne(tourId)
+    let tour = null;
+
     if (bookingTour_Type === typeBooking.PRESET) {
       if (!tourId) throw new BadRequestException('tourId is required for PRESET booking');
+      tour = await this.tourService.getOne(tourId);
       if (!tour) throw new NotFoundException('Tour not found');
     }
   

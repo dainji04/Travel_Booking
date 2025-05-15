@@ -8,10 +8,10 @@ export class Payment_Method {
     @PrimaryGeneratedColumn()
     id:number
     
-    @Column({type:'varchar'})
+    @Column({type:'varchar' ,nullable:true})
     Method:string
 
-    @Column({type:'varchar'})
+    @Column({type:'varchar',nullable:true})
     Describe:string
 
     @CreateDateColumn()

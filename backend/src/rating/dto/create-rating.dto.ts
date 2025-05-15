@@ -6,7 +6,7 @@ export class CreateRatingDto {
     @Min(1)
     @Max(5)
     @ApiPropertyOptional({ example: '5 sao', description: 'Đánh giá số sao' })
-    rating: number;
+    rate: number;
     @IsOptional ()
     @ApiPropertyOptional({ example: 'Cảnh đẹp quá', description: 'nội dung của rating' })
     comment: string;

@@ -74,15 +74,15 @@ export class Tour {
     @OneToMany(() => Blog, blog => blog.Tour)
     Blogs: Blog[];
 
-    @ManyToMany(() => Car , car => car.tours)
+    @ManyToMany(() => Car , car => car.tours )
     @JoinTable({
       name: 'car_of_tour', 
       joinColumn: {
-        name: 'tour_id',
+        name: 'tourId',
         referencedColumnName: 'id'
       },
       inverseJoinColumn: {
-        name: 'car_id',
+        name: 'carId',
         referencedColumnName: 'id'
       }
     })

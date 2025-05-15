@@ -28,7 +28,7 @@ export class RatingService {
       throw new BadRequestException('You have already rated this tour');
     }
 
-    if(createRatingDto.rating < 1 || createRatingDto.rating > 5) {
+    if(createRatingDto.rate < 1 || createRatingDto.rate > 5) {
       throw new NotFoundException('Rating must be between 1 and 5');
     }
 
@@ -52,7 +52,7 @@ export class RatingService {
     if(!rating) {
       throw new NotFoundException('Rating not found');
     }
-    if(updateRatingDto.rating && (updateRatingDto.rating < 1 || updateRatingDto.rating > 5)) {
+    if(updateRatingDto.rate && (updateRatingDto.rate < 1 || updateRatingDto.rate > 5)) {
       throw new BadRequestException('Rating must be between 1 and 5');
     }
     return await this.ratingRepository.save({
