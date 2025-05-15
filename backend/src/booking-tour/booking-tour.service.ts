@@ -81,7 +81,7 @@ export class BookingTourService {
       Acc: user,
       bookingTour_Type,
       Tour:tour,
-      bookingTour_CustomDetails: bookingTour_CustomDetails ? JSON.stringify(bookingTour_CustomDetails) : null,
+      bookingTour_CustomDetails: bookingTour_CustomDetails ? bookingTour_CustomDetails : null,
     });
     await this.bookingTourRepo.save(newBookingTour);
   
@@ -234,7 +234,7 @@ export class BookingTourService {
       ...updateBookingTourDto,
       bookingTour_Type: updateBookingTourDto.bookingTour_Type as any,
       bookingTour_CustomDetails: updateBookingTourDto.bookingTour_CustomDetails
-        ? JSON.stringify(updateBookingTourDto.bookingTour_CustomDetails)
+        ? updateBookingTourDto.bookingTour_CustomDetails
         : undefined,
     };
     await this.bookingTourRepo.update(id, updateData);

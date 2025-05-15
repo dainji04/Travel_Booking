@@ -27,8 +27,8 @@ export class BookingTour {
     @Column({ type: 'enum', enum: typeBooking , default:typeBooking.CUSTOM })
     bookingTour_Type: typeBooking;  
 
-    @Column({ type: 'text', nullable: true })
-    bookingTour_CustomDetails?: string;
+    @Column({ type: 'jsonb', nullable: true })
+    bookingTour_CustomDetails?: any;
 
 
 
