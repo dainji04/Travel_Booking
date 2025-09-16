@@ -1,66 +1,11 @@
 <script setup lang="ts">
-import { ref, useTemplateRef } from 'vue';
+import { ref, useTemplateRef, onMounted } from 'vue';
 
-import hueTicketImg from '@/assets/images/hueTicket.png';
-import phuyenTicketImg from '@/assets/images/phuyenTicket.png';
-import hanoiTicketImg from '@/assets/images/hanoiTicket.png';
+import { tourStore } from '@/stores/tourStore.ts';
 
-const tourTicket = [
-    {
-        img: 'https://i2.ex-cdn.com/crystalbay.com/files/content/2024/06/03/cam-nang-du-lich-hue-1-1550.jpg',
-        title: 'Hue tour',
-        locate: 'Hue city',
-        guide: 'Mr.Tuan',
-        times: '7 days 6 nights',
-        dollarsPrice: '600$',
-        VietNamDongPrice: '14,400,000VND',
-    },
-    {
-        img: 'https://photo.znews.vn/w1920/Uploaded/jac_iik/2015_05_04/mui_dai_lanh_18.jpg',
-        title: 'Phu Yen tour',
-        locate: 'Tuy Hoa city',
-        guide: 'Mr.Minh Quy',
-        times: '3 days 2 nights',
-        dollarsPrice: '400$',
-        VietNamDongPrice: '9,600,000VND',
-    },
-    {
-        img: 'https://vcdn1-dulich.vnecdn.net/2022/05/12/Hanoi2-1652338755-3632-1652338809.jpg?w=0&h=0&q=100&dpr=2&fit=crop&s=NxMN93PTvOTnHNryMx3xJw',
-        title: 'Hue tour',
-        locate: 'Hue city',
-        guide: 'Mr.Thanh Nhan',
-        times: '7 days 6 nights',
-        dollarsPrice: '500$',
-        VietNamDongPrice: '12,000,000VND',
-    },
-    {
-        img: 'https://photo.znews.vn/w1920/Uploaded/jac_iik/2015_05_04/mui_dai_lanh_18.jpg',
-        title: 'Phu Yen tour',
-        locate: 'Tuy Hoa city',
-        guide: 'Mr.Minh Quy',
-        times: '3 days 2 nights',
-        dollarsPrice: '400$',
-        VietNamDongPrice: '9,600,000VND',
-    },
-    {
-        img: 'https://vcdn1-dulich.vnecdn.net/2022/05/12/Hanoi2-1652338755-3632-1652338809.jpg?w=0&h=0&q=100&dpr=2&fit=crop&s=NxMN93PTvOTnHNryMx3xJw',
-        title: 'Hue tour',
-        locate: 'Hue city',
-        guide: 'Mr.Thanh Nhan',
-        times: '7 days 6 nights',
-        dollarsPrice: '500$',
-        VietNamDongPrice: '12,000,000VND',
-    },
-    // {
-    //     img: 'https://photo.znews.vn/w1920/Uploaded/jac_iik/2015_05_04/mui_dai_lanh_18.jpg',
-    //     title: 'Phu Yen tour',
-    //     locate: 'Tuy Hoa city',
-    //     guide: 'Mr.Minh Quy',
-    //     times: '3 days 2 nights',
-    //     dollarsPrice: '400$',
-    //     VietNamDongPrice: '9,600,000VND',
-    // },
-];
+import type { Tour } from '@/types/tour.ts';
+
+const tourTicket = ref<Tour[]>([]);
 
 const tourList = useTemplateRef('tour-list');
 const currentIndex = ref(0);
@@ -68,11 +13,10 @@ const itemsPerSlide = 3;
 
 const nextSlide = () => {
     if (tourList.value) {
-        const totalItems = tourTicket.length;
+        const totalItems = 6;
         const maxIndex = Math.ceil(totalItems / itemsPerSlide) - 1;
         currentIndex.value = Math.min(currentIndex.value + 1, maxIndex);
         const offset = -currentIndex.value * 69;
-        console.log(offset);
 
         tourList.value.style.transform = `translateX(${offset}%)`;
     }
@@ -85,6 +29,29 @@ const prevSlide = () => {
         tourList.value.style.transform = `translateX(${offset}%)`;
     }
 };
+
+const calculatorDate = (startDate: any, endDate: any) => {
+    if (!startDate || !endDate) {
+        return 0;
+    }
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    const timeDiff = Math.abs(end.getTime() - start.getTime());
+    const dayDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
+    return dayDiff + 1;
+};
+
+const calculatorMoney = (price: any) => {
+    const priceVND = price * 24000;
+    return `${priceVND.toLocaleString('vi-VN')} VND`;
+};
+
+const useTourStore = tourStore();
+
+onMounted(async () => {
+    await useTourStore.getTourList(1, 6);
+    tourTicket.value = useTourStore.getTours;
+});
 </script>
 
 <template>
@@ -115,10 +82,7 @@ const prevSlide = () => {
             <button
                 class="ticket__btn-next ticket__btn-primary"
                 @click="nextSlide"
-                :disabled="
-                    currentIndex ===
-                    Math.ceil(tourTicket.length / itemsPerSlide) - 1
-                "
+                :disabled="currentIndex === Math.ceil(6 / itemsPerSlide) - 1"
             >
                 <img
                     loading="lazy"
@@ -135,13 +99,13 @@ const prevSlide = () => {
                         <div
                             class="ticket__image"
                             :style="{
-                                backgroundImage: `url(${ticket.img})`,
+                                backgroundImage: `url(${ticket.Thumbnail})`,
                             }"
                         >
                             <!-- <img :src="ticket.img" alt="" /> -->
                         </div>
                         <div class="ticket__content">
-                            <h1 class="ticket__title">{{ ticket.title }}</h1>
+                            <h1 class="ticket__title">{{ ticket.Name }}</h1>
                             <div class="ticket__box">
                                 <div class="ticket__information">
                                     <div
@@ -153,7 +117,7 @@ const prevSlide = () => {
                                             alt=""
                                         />
                                         <p class="ticket__text">
-                                            {{ ticket.locate }}
+                                            {{ ticket.Name }}
                                         </p>
                                     </div>
                                     <div class="ticket__info-item ticket__user">
@@ -163,7 +127,7 @@ const prevSlide = () => {
                                             alt=""
                                         />
                                         <p class="ticket__text">
-                                            {{ ticket.guide }}
+                                            {{ ticket.Name }}
                                         </p>
                                     </div>
                                     <div
@@ -175,25 +139,38 @@ const prevSlide = () => {
                                             alt=""
                                         />
                                         <p class="ticket__text">
-                                            {{ ticket.times }}
+                                            {{
+                                                calculatorDate(
+                                                    ticket.DayStart,
+                                                    ticket.DayEnd
+                                                )
+                                            }}
+                                            days
                                         </p>
                                     </div>
                                 </div>
                                 <span class="ticket__line"></span>
                                 <div class="ticket__price">
                                     <p class="ticket__price-text">
-                                        {{ ticket.dollarsPrice }}
+                                        {{ ticket.Price }}
                                     </p>
                                     <p class="ticket__price-text">OR</p>
                                     <p class="ticket__price-text">
-                                        {{ ticket.VietNamDongPrice }}
+                                        {{ calculatorMoney(ticket.Price) }}
                                     </p>
                                 </div>
                             </div>
                         </div>
                         <div class="ticket__button-box">
                             <button class="ticket__button button-primary">
-                                Booking now
+                                <router-link
+                                    :to="{
+                                        name: 'tourDetail',
+                                        params: { id: ticket.id },
+                                    }"
+                                >
+                                    Booking now
+                                </router-link>
                             </button>
                         </div>
                     </div>
@@ -312,6 +289,11 @@ const prevSlide = () => {
     }
 
     &__title {
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 3; /* Limit to 3 lines */
+        -webkit-box-orient: vertical;
         text-align: center;
         font-size: 40px;
         font-style: normal;
@@ -375,6 +357,7 @@ const prevSlide = () => {
     &__button {
         width: 100%;
         padding: 10px 0;
+        color: $color--black;
     }
 }
 </style>

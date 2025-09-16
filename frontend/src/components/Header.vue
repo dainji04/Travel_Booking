@@ -39,7 +39,9 @@ const checkLogin = computed(() => useAuth.isAuthenticated);
     <header class="header">
         <div class="navbar">
             <div class="logo">
-                <img src="@/assets/images/admin/logo.png" alt="logo" />
+                <router-link to="/home">
+                    <img src="@/assets/images/admin/logo.png" alt="logo" />
+                </router-link>
             </div>
             <ul class="list">
                 <router-link class="list-item" :to="{ name: 'home' }">

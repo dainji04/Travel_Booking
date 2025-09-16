@@ -10,15 +10,13 @@ import checkEmail from '@/plugins/checkEmail';
 
 const route = useRoute();
 
-// Access query parameters
 const date = route.query.date;
 const adults = route.query.adults;
 const children = route.query.children;
-const tourId = route.query.tourId;
+const tour = route.query?.tourId;
+const hotel = route.query?.hotelId;
 
 const total = Number(adults) * 600 + Number(children) * 400;
-
-console.log(date, adults, children, tourId); // Debugging: Check the values
 
 interface AdultForm {
     name: string;
@@ -81,7 +79,6 @@ const handleFormSubmit = () => {
                 date,
                 adults,
                 children,
-                tourId,
                 adultForms: JSON.stringify(adultForms.value),
                 childForms: JSON.stringify(childForms.value),
             },
@@ -202,7 +199,8 @@ const clearForms = () => {
                     <div class="right">
                         <h1 class="heading">Tour booking information</h1>
                         <div class="about-tour">
-                            <h1>Ha Noi - Capital of VietNam</h1>
+                            <h1 v-if="tour">{{ tour }}</h1>
+                            <h1 v-else>{{ hotel }}</h1>
                             <p class="date">Starting Date: May 1 2025</p>
                             <p class="tripcode">Tripcode: WTE-2957</p>
                         </div>

@@ -3,24 +3,13 @@ import Pagination from '@/components/Pagination.vue';
 import { blogStore } from '@/stores/blogStore';
 import type { Blog } from '@/types/blog';
 import { onMounted, ref } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
 
 const { getBlogList } = blogStore();
 
 const blogList = ref<Blog[]>([]);
 
-const route = useRoute();
-const router = useRouter();
-const page = Number(route.query.page || 1);
 onMounted(async () => {
-    router.replace({
-        query: {
-            page: page,
-            limit: 3,
-        },
-    });
-
-    await getBlogList(page, 3);
+    await getBlogList(1, 3);
     blogList.value = blogStore().getBlogs;
 });
 </script>
@@ -47,7 +36,14 @@ onMounted(async () => {
                         </p>
                     </div>
                     <button class="blogs__button button-primary">
-                        see details
+                        <router-link
+                            :to="{
+                                name: 'blog-detail',
+                                params: { id: blog.id },
+                            }"
+                        >
+                            see details
+                        </router-link>
                     </button>
                 </div>
             </template>

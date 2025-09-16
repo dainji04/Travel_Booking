@@ -13,7 +13,6 @@ const isLoading = ref(false);
 const formData = ref({
     email: '',
     password: '',
-    remember: false,
 });
 
 const errorCredentials = ref('');

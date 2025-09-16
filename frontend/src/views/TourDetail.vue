@@ -52,7 +52,6 @@ onMounted(async () => {
 
     await getListItinerary(props.id);
     itinerary.value = useTourStore.getItinerary;
-    console.log(itinerary.value);
 });
 
 const calculatorDate = (startDate: any, endDate: any) => {
@@ -327,7 +326,11 @@ const modules = [Autoplay, Navigation];
             </div>
         </div>
     </div>
-    <checkout-popup v-if="showPopUp" @close="showPopUp = false" />
+    <checkout-popup
+        v-if="showPopUp"
+        :tour="tour?.Name"
+        @close="showPopUp = false"
+    />
 </template>
 
 <style lang="scss" scoped>

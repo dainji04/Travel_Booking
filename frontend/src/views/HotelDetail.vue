@@ -3,6 +3,8 @@ import { hotelStore } from '@/stores/hotelStore';
 import { onMounted, ref } from 'vue';
 import type { Hotel } from '@/types/hotel';
 
+import CheckoutPopup from '@/components/CheckoutPopup.vue';
+
 const props = defineProps({
     id: {
         type: Number,
@@ -138,7 +140,10 @@ onMounted(async () => {
             <h1>Available Room</h1>
             <div class="rooms">
                 <div class="card">
-                    <img :src="hotel?.Avatar" alt="" />
+                    <img
+                        src="https://khachsandep.vn/storage/files/0%200%20%20bi%20quyet%20thiet%20ke%20homestay%20dep/0%20tieu%20chuan%20thiet%20ke%20phong%20tong%20thong/anh-bia-tieu-chuan-thiet-ke-phong-tong-thong.jpg"
+                        alt=""
+                    />
                     <div class="info">
                         <h1 class="name">Presidential Suite</h1>
                         <div class="facilities">
@@ -169,11 +174,16 @@ onMounted(async () => {
                         </div>
                     </div>
                     <button class="button-primary btn-reverse">
-                        Book Presidential Suite
+                        <router-link to="/car"
+                            >Book Presidential Suite</router-link
+                        >
                     </button>
                 </div>
                 <div class="card">
-                    <img :src="hotel?.Avatar" alt="" />
+                    <img
+                        src="https://lh5.googleusercontent.com/proxy/Myk7d-QQRiINHu6MpL4KajQIdkUXdzBiulocLfDPDPTGwI0vJ-O1zkr91f-mU298dGLbOyYLHVrYwvDEwdazfVzcsufwVsNEyis"
+                        alt=""
+                    />
                     <div class="info">
                         <h1 class="name">Two-Bedroom Suite</h1>
                         <div class="facilities">
@@ -201,11 +211,16 @@ onMounted(async () => {
                         </div>
                     </div>
                     <button class="button-primary btn-reverse">
-                        Book Two-Bedroom Suite
+                        <router-link to="/car"
+                            >Book Two-Bedroom Suite</router-link
+                        >
                     </button>
                 </div>
                 <div class="card">
-                    <img :src="hotel?.Avatar" alt="" />
+                    <img
+                        src="https://lamanhhotel.com/wp-content/uploads/2024/01/DSC05403-scaled.jpg"
+                        alt=""
+                    />
                     <div class="info">
                         <h1 class="name">Single-Bedroom Suite</h1>
                         <div class="facilities">
@@ -235,7 +250,9 @@ onMounted(async () => {
                         </div>
                     </div>
                     <button class="button-primary btn-reverse">
-                        Book Single-Bedroom Suite
+                        <router-link to="/car"
+                            >Book Single-Bedroom Suite</router-link
+                        >
                     </button>
                 </div>
             </div>

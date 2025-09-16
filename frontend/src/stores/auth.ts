@@ -16,7 +16,6 @@ export const authStore = defineStore('auth', {
     },
     getters: {
         isAdmin: (state) => {
-            console.log(state.user?.Role);
             return false;
         },
         isAuthenticated: (state: any) => {
@@ -31,8 +30,8 @@ export const authStore = defineStore('auth', {
             try {
                 // Fetch users from json-server
                 const response = await axios.post('/user/signIn', {
-                    email: data.Email,
-                    password: data.Password,
+                    email: data.email,
+                    password: data.password,
                 });
                 if (response.status === 201) {
                     localStorage.setItem(

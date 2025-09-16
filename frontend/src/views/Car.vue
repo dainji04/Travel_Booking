@@ -25,10 +25,15 @@
             </div>
         </div>
     </div>
+    <checkout-popup v-if="showPopUp" :tour="tour" @close="showPopUp = false" />
 </template>
 
 <script setup lang="ts">
+import checkoutPopup from '@/components/CheckoutPopup.vue';
 import { ref } from 'vue';
+const showPopUp = ref(false);
+const tour = 'hello';
+
 const fourWheelerCars = ref([
     {
         id: 1,
@@ -74,7 +79,7 @@ const twoWheelerBikes = ref([
 ]);
 
 function rentCar(vehicle: { name: string }) {
-    alert(`Bạn đã chọn thuê: ${vehicle.name}`);
+    showPopUp.value = true;
 }
 </script>
 <style scoped>

@@ -10,6 +10,12 @@ const step = ref(0);
 const dateUser = ref('');
 const quantityAdult = ref(0);
 const quantityChildren = ref(0);
+
+const props = defineProps<{
+    tour?: string;
+    hotel?: string;
+}>();
+
 const total = computed(() => {
     return quantityAdult.value * 600 + quantityChildren.value * 400;
 });
@@ -21,8 +27,6 @@ const onSelect = (date: any, { source }: any) => {
 };
 
 const nextStep = () => {
-    console.log(step.value);
-
     if (step.value == 1) {
         if (quantityAdult.value == 0 && quantityChildren.value == 0) {
             alert('Please select at least one person!');
@@ -38,7 +42,7 @@ const nextStep = () => {
                 date: dateUser.value,
                 adults: quantityAdult.value,
                 children: quantityChildren.value,
-                tourId: 1,
+                tourId: props.tour,
             },
         });
     }
@@ -52,6 +56,8 @@ const prevStep = () => {
 const isActive = (stepNumber: number) => {
     return step.value === stepNumber;
 };
+
+console.log(props.tour, props.hotel);
 </script>
 
 <template>

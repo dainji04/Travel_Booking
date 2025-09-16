@@ -1,21 +1,19 @@
 interface User {
-    Name: string;
-    Email: string;
-    Roles: string[];
-    Phone: string;
+    name: string;
+    email: string;
+    roles: string[];
+    phone: string;
 }
 
 interface AuthCredentials {
-    Email: string;
-    Password: string;
+    email: string;
+    password: string;
 }
 
-interface UserLogin extends AuthCredentials {
-    remember: boolean;
-}
+interface UserLogin extends AuthCredentials {}
 
 interface UserSignUp extends AuthCredentials {
-    Name: string;
+    name: string;
 }
 
 export type { UserLogin, UserSignUp, User };

@@ -11,6 +11,18 @@ import slide2 from '@/assets/images/image2.jpg';
 import slide3 from '@/assets/images/image3.jpg';
 import slide4 from '@/assets/images/image4.jpg';
 import slide5 from '@/assets/images/image5.jpg';
+import type { Blog } from '@/types/blog';
+import { blogStore } from '@/stores/blogStore';
+
+const blogList = ref<Blog[]>([]);
+const { getBlogList } = blogStore();
+
+const ytb = ref(false);
+
+onMounted(async () => {
+    await getBlogList(1, 2);
+    blogList.value = blogStore().getBlogs;
+});
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -208,7 +220,7 @@ onMounted(() => {
                             {{ image.description }}
                         </p>
                         <button class="slide__button button-primary">
-                            <p>Booking now</p>
+                            <router-link to="/tour">Booking now</router-link>
                         </button>
                     </div>
                     <div class="slide__right">
@@ -370,7 +382,7 @@ onMounted(() => {
             </div>
             <div class="cities__box">
                 <div class="cities__image">
-                    <button class="cities__image-btn">
+                    <button class="cities__image-btn" @click="ytb = true">
                         <img
                             loading="lazy"
                             src="@/assets/fonts/circle-play.svg"
@@ -477,6 +489,18 @@ onMounted(() => {
             </div>
         </div>
         <BlogsList />
+    </div>
+    <div class="show-youtube" v-if="ytb" @click="ytb = false">
+        <iframe
+            width="1300"
+            height="731"
+            src="https://www.youtube.com/embed/NSnkb1IAjbE"
+            title="VIETNAM | My Home - Masew, MyoMouse, Nguyen Loi"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+        ></iframe>
     </div>
 </template>
 

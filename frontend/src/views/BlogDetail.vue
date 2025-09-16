@@ -22,13 +22,13 @@ onMounted(async () => {
 <template>
     <div class="blog-detail">
         <img :src="blog?.Cover_img" alt="" />
-        <h1>{{ blog?.Content }}</h1>
+        <p v-html="blog?.Content"></p>
     </div>
 </template>
 
 <style scoped>
 .blog-detail {
-    max-width: 800px;
+    max-width: 1300px;
     margin: 0 auto;
     padding: 20px;
 }
